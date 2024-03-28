@@ -120,6 +120,8 @@ int main(void)
   MX_SPI2_Init();
   MX_TSC_Init();
   MX_USB_PCD_Init();
+
+  initUsart3();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */

@@ -1,0 +1,243 @@
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc0o6POC.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.arch armv6s-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.file	"stm32f0xx_it.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Core/Src/stm32f0xx_it.c"
+  18              		.section	.text.NMI_Handler,"ax",%progbits
+  19              		.align	1
+  20              		.global	NMI_Handler
+  21              		.syntax unified
+  22              		.code	16
+  23              		.thumb_func
+  25              	NMI_Handler:
+  26              	.LFB43:
+   1:Core/Src/stm32f0xx_it.c **** /* USER CODE BEGIN Header */
+   2:Core/Src/stm32f0xx_it.c **** /**
+   3:Core/Src/stm32f0xx_it.c ****   ******************************************************************************
+   4:Core/Src/stm32f0xx_it.c ****   * @file    stm32f0xx_it.c
+   5:Core/Src/stm32f0xx_it.c ****   * @brief   Interrupt Service Routines.
+   6:Core/Src/stm32f0xx_it.c ****   ******************************************************************************
+   7:Core/Src/stm32f0xx_it.c ****   * @attention
+   8:Core/Src/stm32f0xx_it.c ****   *
+   9:Core/Src/stm32f0xx_it.c ****   * Copyright (c) 2024 STMicroelectronics.
+  10:Core/Src/stm32f0xx_it.c ****   * All rights reserved.
+  11:Core/Src/stm32f0xx_it.c ****   *
+  12:Core/Src/stm32f0xx_it.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  13:Core/Src/stm32f0xx_it.c ****   * in the root directory of this software component.
+  14:Core/Src/stm32f0xx_it.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:Core/Src/stm32f0xx_it.c ****   *
+  16:Core/Src/stm32f0xx_it.c ****   ******************************************************************************
+  17:Core/Src/stm32f0xx_it.c ****   */
+  18:Core/Src/stm32f0xx_it.c **** /* USER CODE END Header */
+  19:Core/Src/stm32f0xx_it.c **** 
+  20:Core/Src/stm32f0xx_it.c **** /* Includes ------------------------------------------------------------------*/
+  21:Core/Src/stm32f0xx_it.c **** #include "main.h"
+  22:Core/Src/stm32f0xx_it.c **** #include "stm32f0xx_it.h"
+  23:Core/Src/stm32f0xx_it.c **** /* Private includes ----------------------------------------------------------*/
+  24:Core/Src/stm32f0xx_it.c **** /* USER CODE BEGIN Includes */
+  25:Core/Src/stm32f0xx_it.c **** /* USER CODE END Includes */
+  26:Core/Src/stm32f0xx_it.c **** 
+  27:Core/Src/stm32f0xx_it.c **** /* Private typedef -----------------------------------------------------------*/
+  28:Core/Src/stm32f0xx_it.c **** /* USER CODE BEGIN TD */
+  29:Core/Src/stm32f0xx_it.c **** 
+  30:Core/Src/stm32f0xx_it.c **** /* USER CODE END TD */
+  31:Core/Src/stm32f0xx_it.c **** 
+  32:Core/Src/stm32f0xx_it.c **** /* Private define ------------------------------------------------------------*/
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc0o6POC.s 			page 2
+
+
+  33:Core/Src/stm32f0xx_it.c **** /* USER CODE BEGIN PD */
+  34:Core/Src/stm32f0xx_it.c **** 
+  35:Core/Src/stm32f0xx_it.c **** /* USER CODE END PD */
+  36:Core/Src/stm32f0xx_it.c **** 
+  37:Core/Src/stm32f0xx_it.c **** /* Private macro -------------------------------------------------------------*/
+  38:Core/Src/stm32f0xx_it.c **** /* USER CODE BEGIN PM */
+  39:Core/Src/stm32f0xx_it.c **** 
+  40:Core/Src/stm32f0xx_it.c **** /* USER CODE END PM */
+  41:Core/Src/stm32f0xx_it.c **** 
+  42:Core/Src/stm32f0xx_it.c **** /* Private variables ---------------------------------------------------------*/
+  43:Core/Src/stm32f0xx_it.c **** /* USER CODE BEGIN PV */
+  44:Core/Src/stm32f0xx_it.c **** 
+  45:Core/Src/stm32f0xx_it.c **** /* USER CODE END PV */
+  46:Core/Src/stm32f0xx_it.c **** 
+  47:Core/Src/stm32f0xx_it.c **** /* Private function prototypes -----------------------------------------------*/
+  48:Core/Src/stm32f0xx_it.c **** /* USER CODE BEGIN PFP */
+  49:Core/Src/stm32f0xx_it.c **** 
+  50:Core/Src/stm32f0xx_it.c **** /* USER CODE END PFP */
+  51:Core/Src/stm32f0xx_it.c **** 
+  52:Core/Src/stm32f0xx_it.c **** /* Private user code ---------------------------------------------------------*/
+  53:Core/Src/stm32f0xx_it.c **** /* USER CODE BEGIN 0 */
+  54:Core/Src/stm32f0xx_it.c **** 
+  55:Core/Src/stm32f0xx_it.c **** /* USER CODE END 0 */
+  56:Core/Src/stm32f0xx_it.c **** 
+  57:Core/Src/stm32f0xx_it.c **** /* External variables --------------------------------------------------------*/
+  58:Core/Src/stm32f0xx_it.c **** extern TIM_HandleTypeDef htim6;
+  59:Core/Src/stm32f0xx_it.c **** 
+  60:Core/Src/stm32f0xx_it.c **** /* USER CODE BEGIN EV */
+  61:Core/Src/stm32f0xx_it.c **** 
+  62:Core/Src/stm32f0xx_it.c **** /* USER CODE END EV */
+  63:Core/Src/stm32f0xx_it.c **** 
+  64:Core/Src/stm32f0xx_it.c **** /******************************************************************************/
+  65:Core/Src/stm32f0xx_it.c **** /*           Cortex-M0 Processor Interruption and Exception Handlers          */
+  66:Core/Src/stm32f0xx_it.c **** /******************************************************************************/
+  67:Core/Src/stm32f0xx_it.c **** /**
+  68:Core/Src/stm32f0xx_it.c ****   * @brief This function handles Non maskable interrupt.
+  69:Core/Src/stm32f0xx_it.c ****   */
+  70:Core/Src/stm32f0xx_it.c **** void NMI_Handler(void)
+  71:Core/Src/stm32f0xx_it.c **** {
+  27              		.loc 1 71 1 view -0
+  28              		.cfi_startproc
+  29              		@ Volatile: function does not return.
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.L2:
+  72:Core/Src/stm32f0xx_it.c ****   /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
+  73:Core/Src/stm32f0xx_it.c **** 
+  74:Core/Src/stm32f0xx_it.c ****   /* USER CODE END NonMaskableInt_IRQn 0 */
+  75:Core/Src/stm32f0xx_it.c ****   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
+  76:Core/Src/stm32f0xx_it.c ****    while (1)
+  34              		.loc 1 76 4 view .LVU1
+  77:Core/Src/stm32f0xx_it.c ****   {
+  78:Core/Src/stm32f0xx_it.c ****   }
+  35              		.loc 1 78 3 view .LVU2
+  76:Core/Src/stm32f0xx_it.c ****   {
+  36              		.loc 1 76 10 view .LVU3
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc0o6POC.s 			page 3
+
+
+  37 0000 FEE7     		b	.L2
+  38              		.cfi_endproc
+  39              	.LFE43:
+  41              		.section	.text.HardFault_Handler,"ax",%progbits
+  42              		.align	1
+  43              		.global	HardFault_Handler
+  44              		.syntax unified
+  45              		.code	16
+  46              		.thumb_func
+  48              	HardFault_Handler:
+  49              	.LFB44:
+  79:Core/Src/stm32f0xx_it.c ****   /* USER CODE END NonMaskableInt_IRQn 1 */
+  80:Core/Src/stm32f0xx_it.c **** }
+  81:Core/Src/stm32f0xx_it.c **** 
+  82:Core/Src/stm32f0xx_it.c **** /**
+  83:Core/Src/stm32f0xx_it.c ****   * @brief This function handles Hard fault interrupt.
+  84:Core/Src/stm32f0xx_it.c ****   */
+  85:Core/Src/stm32f0xx_it.c **** void HardFault_Handler(void)
+  86:Core/Src/stm32f0xx_it.c **** {
+  50              		.loc 1 86 1 view -0
+  51              		.cfi_startproc
+  52              		@ Volatile: function does not return.
+  53              		@ args = 0, pretend = 0, frame = 0
+  54              		@ frame_needed = 0, uses_anonymous_args = 0
+  55              		@ link register save eliminated.
+  56              	.L4:
+  87:Core/Src/stm32f0xx_it.c ****   /* USER CODE BEGIN HardFault_IRQn 0 */
+  88:Core/Src/stm32f0xx_it.c **** 
+  89:Core/Src/stm32f0xx_it.c ****   /* USER CODE END HardFault_IRQn 0 */
+  90:Core/Src/stm32f0xx_it.c ****   while (1)
+  57              		.loc 1 90 3 view .LVU5
+  91:Core/Src/stm32f0xx_it.c ****   {
+  92:Core/Src/stm32f0xx_it.c ****     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+  93:Core/Src/stm32f0xx_it.c ****     /* USER CODE END W1_HardFault_IRQn 0 */
+  94:Core/Src/stm32f0xx_it.c ****   }
+  58              		.loc 1 94 3 view .LVU6
+  90:Core/Src/stm32f0xx_it.c ****   {
+  59              		.loc 1 90 9 view .LVU7
+  60 0000 FEE7     		b	.L4
+  61              		.cfi_endproc
+  62              	.LFE44:
+  64              		.section	.text.TIM6_DAC_IRQHandler,"ax",%progbits
+  65              		.align	1
+  66              		.global	TIM6_DAC_IRQHandler
+  67              		.syntax unified
+  68              		.code	16
+  69              		.thumb_func
+  71              	TIM6_DAC_IRQHandler:
+  72              	.LFB45:
+  95:Core/Src/stm32f0xx_it.c **** }
+  96:Core/Src/stm32f0xx_it.c **** 
+  97:Core/Src/stm32f0xx_it.c **** /******************************************************************************/
+  98:Core/Src/stm32f0xx_it.c **** /* STM32F0xx Peripheral Interrupt Handlers                                    */
+  99:Core/Src/stm32f0xx_it.c **** /* Add here the Interrupt Handlers for the used peripherals.                  */
+ 100:Core/Src/stm32f0xx_it.c **** /* For the available peripheral interrupt handler names,                      */
+ 101:Core/Src/stm32f0xx_it.c **** /* please refer to the startup file (startup_stm32f0xx.s).                    */
+ 102:Core/Src/stm32f0xx_it.c **** /******************************************************************************/
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc0o6POC.s 			page 4
+
+
+ 103:Core/Src/stm32f0xx_it.c **** 
+ 104:Core/Src/stm32f0xx_it.c **** /**
+ 105:Core/Src/stm32f0xx_it.c ****   * @brief This function handles TIM6 global and DAC channel underrun error interrupts.
+ 106:Core/Src/stm32f0xx_it.c ****   */
+ 107:Core/Src/stm32f0xx_it.c **** void TIM6_DAC_IRQHandler(void)
+ 108:Core/Src/stm32f0xx_it.c **** {
+  73              		.loc 1 108 1 view -0
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 0
+  76              		@ frame_needed = 0, uses_anonymous_args = 0
+  77 0000 10B5     		push	{r4, lr}
+  78              	.LCFI0:
+  79              		.cfi_def_cfa_offset 8
+  80              		.cfi_offset 4, -8
+  81              		.cfi_offset 14, -4
+ 109:Core/Src/stm32f0xx_it.c ****   /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
+ 110:Core/Src/stm32f0xx_it.c **** 
+ 111:Core/Src/stm32f0xx_it.c ****   /* USER CODE END TIM6_DAC_IRQn 0 */
+ 112:Core/Src/stm32f0xx_it.c ****   HAL_TIM_IRQHandler(&htim6);
+  82              		.loc 1 112 3 view .LVU9
+  83 0002 0248     		ldr	r0, .L6
+  84 0004 FFF7FEFF 		bl	HAL_TIM_IRQHandler
+  85              	.LVL0:
+ 113:Core/Src/stm32f0xx_it.c ****   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
+ 114:Core/Src/stm32f0xx_it.c **** 
+ 115:Core/Src/stm32f0xx_it.c ****   /* USER CODE END TIM6_DAC_IRQn 1 */
+ 116:Core/Src/stm32f0xx_it.c **** }
+  86              		.loc 1 116 1 is_stmt 0 view .LVU10
+  87              		@ sp needed
+  88 0008 10BD     		pop	{r4, pc}
+  89              	.L7:
+  90 000a C046     		.align	2
+  91              	.L6:
+  92 000c 00000000 		.word	htim6
+  93              		.cfi_endproc
+  94              	.LFE45:
+  96              		.text
+  97              	.Letext0:
+  98              		.file 2 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
+  99              		.file 3 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
+ 100              		.file 4 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h"
+ 101              		.file 5 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
+ 102              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_dma.h"
+ 103              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h"
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc0o6POC.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f0xx_it.c
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc0o6POC.s:19     .text.NMI_Handler:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc0o6POC.s:25     .text.NMI_Handler:00000000 NMI_Handler
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc0o6POC.s:42     .text.HardFault_Handler:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc0o6POC.s:48     .text.HardFault_Handler:00000000 HardFault_Handler
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc0o6POC.s:65     .text.TIM6_DAC_IRQHandler:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc0o6POC.s:71     .text.TIM6_DAC_IRQHandler:00000000 TIM6_DAC_IRQHandler
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc0o6POC.s:92     .text.TIM6_DAC_IRQHandler:0000000c $d
+
+UNDEFINED SYMBOLS
+HAL_TIM_IRQHandler
+htim6
