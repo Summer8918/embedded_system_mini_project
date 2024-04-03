@@ -20,6 +20,10 @@
 #include "main.h"
 #include "cmsis_os.h"
 
+//Global variables
+volatile uint16_t commandLED = 0;
+
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -49,21 +53,22 @@ TSC_HandleTypeDef htsc;
 
 PCD_HandleTypeDef hpcd_USB_FS;
 
-/* Definitions for task blink1 */
-osThreadId_t blink1TaskHandle;
-const osThreadAttr_t blink1Task_attributes = {
-  .name = "blink1Task",
+/* Definitions for task router */
+osThreadId_t routerTaskHandle;
+const osThreadAttr_t routerTask_attributes = {
+  .name = "routerTask",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 
-/* Definitions for task blink2 */
-osThreadId_t blink2TaskHandle;
-const osThreadAttr_t blink2Task_attributes = {
-  .name = "blink2Task",
+/* Definitions for task blink1 */
+osThreadId_t LEDTaskHandle;
+const osThreadAttr_t LEDTask_attributes = {
+  .name = "LEDTask",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -75,8 +80,8 @@ static void MX_I2C2_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_TSC_Init(void);
 static void MX_USB_PCD_Init(void);
-void StartBlink1Task(void *argument);
-void StartBlink2Task(void *argument);
+void StartRouterTask(void *argument);
+void StartLEDTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -146,10 +151,10 @@ int main(void)
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* creation of blink1Task */
-  blink1TaskHandle = osThreadNew(StartBlink1Task, NULL, &blink1Task_attributes);
-  /* creation of blink2Task */
-  blink2TaskHandle = osThreadNew(StartBlink2Task, NULL, &blink2Task_attributes);
+  /* creation of routerTask */
+  routerTaskHandle = osThreadNew(StartRouterTask, NULL, &routerTask_attributes);
+  /* creation of LEDTask */
+  LEDTaskHandle = osThreadNew(StartLEDTask, NULL, &LEDTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -434,41 +439,52 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE END 4 */
 
-/* USER CODE BEGIN Header_StarBlink1Task */
+/* USER CODE BEGIN Header_StartRouterTask */
 /**
-  * @brief  Function implementing the blink1Task thread.
+  * @brief  Function implementing the routerTask thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_StartBlink1Task */
-void StartBlink1Task(void *argument)
+/* USER CODE END Header_StartRouterTask */
+void StartRouterTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
   for(;;)
   {
-    GPIOC->ODR ^= GPIO_ODR_6;
-    osDelay(1000);
+    //If queue is not empty
+      //Retrieve command from queue
+      //Determine which worker task corresponds to command
+      //Wait until worker task is not busy/full
+      //Send command to worker
+        //Write command to global variable
+        //wake worker - vtaskresume
   }
   
   /* USER CODE END 5 */
 }
 
-/* USER CODE BEGIN Header_StarBlink2Task */
+/* USER CODE BEGIN Header_StartLEDTask */
 /**
-  * @brief  Function implementing the blink2Task thread.
+  * @brief  Function implementing the LEDTask thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_StartBlink2Task */
-void StartBlink2Task(void *argument)
+/* USER CODE END Header_StartLEDTask */
+void StartLEDTask(void *argument)
 {
-  /* USER CODE BEGIN 5 */
+
+  //command 0xA color action dont care
+  uint32_t color;
+  uint32_t action;
+
   /* Infinite loop */
   for(;;)
   {
-    GPIOC->ODR ^= GPIO_ODR_7;
-    osDelay(1000);
+    switch (commandLED >> 12) {    
+      case 0xA1:
+        break;
+      case 0xA2:
   }
 }
 
