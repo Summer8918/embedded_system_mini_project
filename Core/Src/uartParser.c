@@ -1,12 +1,14 @@
 #include "uartParser.h"
 #include "stm32f072xb.h"
-
+#include "main.h"
 volatile uint8_t strIndex = 0;
 volatile uint8_t cmdIndex = 0;
 volatile uint8_t cmdStrIndex = 0;
 volatile char tmpStr[TMP_STR_LEN];
 volatile char cmd[4][TMP_STR_LEN];
 volatile uint16_t commandOut = 0x0000;
+
+volatile uint16_t commandLED = 0;
 
 //Initialize USART3 - PC4 TX, PC5 RX
 void initUsart3(void) {
@@ -139,14 +141,19 @@ void USART3_4_IRQHandler(void) {
 
         //
 
+      //Dummy pass command straight to worker
+      commandLED = commandOut;
+
       //Dummy queue-router-worker to demonstrate correct uart parsing
       //Enables UART commands for green LED
+      
       if (commandOut == 0xA210)
         GPIOC->ODR |= GPIO_ODR_9;
       else if (commandOut == 0xA220)
         GPIOC->ODR &= ~GPIO_ODR_9;
       else if (commandOut == 0xA230)
         GPIOC->ODR ^= GPIO_ODR_9;
+
 
       //Reset commandOut before starting next command receive
       commandOut = 0;

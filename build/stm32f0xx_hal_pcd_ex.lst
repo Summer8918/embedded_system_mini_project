@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
   29:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c **** 
   30:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c **** /** @defgroup PCDEx PCDEx
   31:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   * @brief PCD Extended HAL module driver
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 2
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 2
 
 
   32:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   * @{
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
   31              		@ frame_needed = 0, uses_anonymous_args = 0
   32              		.loc 1 82 1 is_stmt 0 view .LVU1
   33 0000 10B5     		push	{r4, lr}
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 3
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 3
 
 
   34              	.LCFI0:
@@ -178,7 +178,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  103:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c **** #if (USE_USB_DOUBLE_BUFFER == 1U)
  104:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   else /* USB_DBL_BUF */
  105:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   {
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 4
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 4
 
 
  106:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****     /* Double Buffer Endpoint */
@@ -238,7 +238,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  101              		.loc 1 110 20 is_stmt 0 view .LVU27
  102 0034 1B0C     		lsrs	r3, r3, #16
  103              	.LVL9:
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 5
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 5
 
 
  110:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   }
@@ -298,7 +298,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  129:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c **** 
  130:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   /* Enable DCD : Data Contact Detect */
  131:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   USBx->BCDR &= ~(USB_BCDR_PDEN);
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 6
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 6
 
 
  146              		.loc 1 131 3 is_stmt 1 view .LVU38
@@ -358,7 +358,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  189              		@ frame_needed = 0, uses_anonymous_args = 0
  190              		@ link register save eliminated.
  145:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   USB_TypeDef *USBx = hpcd->Instance;
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 7
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 7
 
 
  191              		.loc 1 145 3 view .LVU50
@@ -418,7 +418,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  164:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   /* Wait for Min DCD Timeout */
  165:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   HAL_Delay(300U);
  166:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c **** 
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 8
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 8
 
 
  167:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   /* Data Pin Contact ? Check Detect flag */
@@ -478,7 +478,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  221:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   }
  222:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c **** 
  223:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   /* Battery Charging capability discovery finished Start Enumeration */
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 9
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 9
 
 
  224:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   (void)HAL_PCDEx_DeActivateBCD(hpcd);
@@ -538,7 +538,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  258:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   USBx->LPMCSR |= USB_LPMCSR_LMPEN;
  249              		.loc 1 258 3 is_stmt 1 view .LVU67
  250              		.loc 1 258 7 is_stmt 0 view .LVU68
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 10
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 10
 
 
  251 0010 5432     		adds	r2, r2, #84
@@ -598,7 +598,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  294              	.LVL20:
  272:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c **** 
  273:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   hpcd->lpm_active = 0U;
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 11
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 11
 
 
  295              		.loc 1 273 3 is_stmt 1 view .LVU79
@@ -658,7 +658,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  289:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c **** __weak void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef msg)
  290:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c **** {
  336              		.loc 1 290 1 is_stmt 1 view -0
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 12
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 12
 
 
  337              		.cfi_startproc
@@ -718,7 +718,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  368 0000 7047     		bx	lr
  369              		.cfi_endproc
  370              	.LFE47:
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 13
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 13
 
 
  372              		.section	.text.HAL_PCDEx_BCD_VBUSDetect,"ax",%progbits
@@ -778,7 +778,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  416              		.loc 1 168 12 is_stmt 0 view .LVU108
  417 0014 5823     		movs	r3, #88
  418 0016 E35A     		ldrh	r3, [r4, r3]
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 14
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 14
 
 
  168:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****   {
@@ -838,7 +838,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  458 0046 9343     		bics	r3, r2
  459 0048 A353     		strh	r3, [r4, r6]
  189:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c ****     USBx->BCDR |= (USB_BCDR_SDEN);
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 15
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 15
 
 
  460              		.loc 1 189 5 is_stmt 1 view .LVU124
@@ -898,7 +898,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  503              		.loc 1 219 5 view .LVU135
  504 0084 FD21     		movs	r1, #253
  505 0086 2800     		movs	r0, r5
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 16
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 16
 
 
  506 0088 FFF7FEFF 		bl	HAL_PCDEx_BCD_Callback
@@ -958,7 +958,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  550              		.text
  551              	.Letext0:
  552              		.file 2 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 17
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 17
 
 
  553              		.file 3 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
@@ -967,27 +967,27 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 1
  556              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_usb.h"
  557              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pcd.h"
  558              		.file 8 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s 			page 18
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s 			page 18
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f0xx_hal_pcd_ex.c
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:19     .text.HAL_PCDEx_PMAConfig:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:25     .text.HAL_PCDEx_PMAConfig:00000000 HAL_PCDEx_PMAConfig
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:111    .text.HAL_PCDEx_ActivateBCD:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:117    .text.HAL_PCDEx_ActivateBCD:00000000 HAL_PCDEx_ActivateBCD
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:177    .text.HAL_PCDEx_DeActivateBCD:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:183    .text.HAL_PCDEx_DeActivateBCD:00000000 HAL_PCDEx_DeActivateBCD
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:220    .text.HAL_PCDEx_ActivateLPM:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:226    .text.HAL_PCDEx_ActivateLPM:00000000 HAL_PCDEx_ActivateLPM
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:277    .text.HAL_PCDEx_DeActivateLPM:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:283    .text.HAL_PCDEx_DeActivateLPM:00000000 HAL_PCDEx_DeActivateLPM
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:327    .text.HAL_PCDEx_LPM_Callback:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:333    .text.HAL_PCDEx_LPM_Callback:00000000 HAL_PCDEx_LPM_Callback
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:350    .text.HAL_PCDEx_BCD_Callback:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:356    .text.HAL_PCDEx_BCD_Callback:00000000 HAL_PCDEx_BCD_Callback
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:373    .text.HAL_PCDEx_BCD_VBUSDetect:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccspdjPU.s:379    .text.HAL_PCDEx_BCD_VBUSDetect:00000000 HAL_PCDEx_BCD_VBUSDetect
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:19     .text.HAL_PCDEx_PMAConfig:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:25     .text.HAL_PCDEx_PMAConfig:00000000 HAL_PCDEx_PMAConfig
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:111    .text.HAL_PCDEx_ActivateBCD:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:117    .text.HAL_PCDEx_ActivateBCD:00000000 HAL_PCDEx_ActivateBCD
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:177    .text.HAL_PCDEx_DeActivateBCD:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:183    .text.HAL_PCDEx_DeActivateBCD:00000000 HAL_PCDEx_DeActivateBCD
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:220    .text.HAL_PCDEx_ActivateLPM:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:226    .text.HAL_PCDEx_ActivateLPM:00000000 HAL_PCDEx_ActivateLPM
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:277    .text.HAL_PCDEx_DeActivateLPM:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:283    .text.HAL_PCDEx_DeActivateLPM:00000000 HAL_PCDEx_DeActivateLPM
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:327    .text.HAL_PCDEx_LPM_Callback:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:333    .text.HAL_PCDEx_LPM_Callback:00000000 HAL_PCDEx_LPM_Callback
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:350    .text.HAL_PCDEx_BCD_Callback:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:356    .text.HAL_PCDEx_BCD_Callback:00000000 HAL_PCDEx_BCD_Callback
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:373    .text.HAL_PCDEx_BCD_VBUSDetect:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVCugPx.s:379    .text.HAL_PCDEx_BCD_VBUSDetect:00000000 HAL_PCDEx_BCD_VBUSDetect
 
 UNDEFINED SYMBOLS
 HAL_GetTick

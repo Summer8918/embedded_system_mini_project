@@ -29,7 +29,9 @@ build/uartParser.o: Core/Src/uartParser.c Core/Inc/uartParser.h \
  Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_spi_ex.h \
  Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h \
  Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h \
- Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tsc.h
+ Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tsc.h \
+ Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h Core/Inc/main.h \
+ Core/Inc/uartParser.h
 Core/Inc/uartParser.h:
 Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f0xx.h:
 Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h:
@@ -64,3 +66,6 @@ Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_spi_ex.h:
 Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h:
 Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h:
 Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tsc.h:
+Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h:
+Core/Inc/main.h:
+Core/Inc/uartParser.h:

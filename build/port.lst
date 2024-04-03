@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
   31:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 
   32:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** /* Scheduler includes. */
   33:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** #include "FreeRTOS.h"
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 2
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 2
 
 
   34:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** #include "task.h"
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
   88:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c ****  * Start first task is a separate function so it can be tested in isolation.
   89:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c ****  */
   90:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** static void vPortStartFirstTask( void ) __attribute__ (( naked ));
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 3
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 3
 
 
   91:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 
@@ -178,7 +178,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  145:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 	pxTopOfStack -= 8; /* R11..R4. */
  146:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 
  147:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 	return pxTopOfStack;
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 4
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 4
 
 
  148:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** }
@@ -238,7 +238,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
   64              	.L4:
  164:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 	{
  165:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 		/* This file calls prvTaskExitError() after the scheduler has been
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 5
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 5
 
 
  166:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 		started to remove a compiler warning about the function being defined
@@ -298,7 +298,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
   97              			.syntax unified				
   98 0000 0B4A     		ldr  r2, pxCurrentTCBConst2	
   99 0002 1368     		ldr  r3, [r2]				
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 6
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 6
 
 
  100 0004 1868     		ldr  r0, [r3]				
@@ -358,7 +358,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  211:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** /*
  212:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c ****  * See header file for description.
  213:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c ****  */
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 7
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 7
 
 
  214:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** BaseType_t xPortStartScheduler( void )
@@ -418,7 +418,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  268:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 	__asm volatile( "dsb" ::: "memory" );
  269:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 	__asm volatile( "isb" );
  270:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** }
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 8
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 8
 
 
  271:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** /*-----------------------------------------------------------*/
@@ -478,7 +478,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  325:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 	"	.syntax unified						\n"
  326:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 	"	mrs r0, psp							\n"
  327:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 	"										\n"
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 9
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 9
 
 
  328:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 	"	ldr	r3, pxCurrentTCBConst			\n" /* Get the location of the current TCB. */
@@ -538,7 +538,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  382:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** }
  383:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** /*-----------------------------------------------------------*/
  384:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 10
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 10
 
 
  385:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** #if configUSE_TICKLESS_IDLE == 1
@@ -598,7 +598,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  439:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 			portNVIC_SYSTICK_LOAD = ulReloadValue;
  440:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 
  441:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 			/* Clear the SysTick count flag and set the count value back to
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 11
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 11
 
 
  442:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 			zero. */
@@ -658,7 +658,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  496:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 				processed as soon as this function exits, the tick value
  497:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 				maintained by the tick is stepped forward by one less than the
  498:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 				time spent waiting. */
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 12
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 12
 
 
  499:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 				ulCompleteTickPeriods = xExpectedIdleTime - 1UL;
@@ -718,7 +718,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  544:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c ****  #if configUSE_TICKLESS_IDLE == 1
  545:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c ****  {
  546:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c ****    ulTimerCountsForOneTick = ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ );
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 13
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 13
 
 
  547:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c ****    xMaximumPossibleSuppressedTicks = portMAX_24_BIT_NUMBER / ulTimerCountsForOneTick;
@@ -778,7 +778,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  182              		.syntax unified
  183              		.code	16
  184              		.thumb_func
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 14
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 14
 
 
  186              	pxPortInitialiseStack:
@@ -838,7 +838,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  142:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 	pxTopOfStack -= 5;	/* R12, R3, R2 and R1. */
  226              		.loc 1 142 16 view .LVU42
  227 0014 0B60     		str	r3, [r1]
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 15
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 15
 
 
  143:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** 	*pxTopOfStack = ( StackType_t ) pvParameters;	/* R0 */
@@ -898,7 +898,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  275              		.syntax unified
  276              		.code	16
  277              		.thumb_func
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 16
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 16
 
 
  279              	xPortStartScheduler:
@@ -958,7 +958,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  240:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** }
  322              		.loc 1 240 2 view .LVU64
  241:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** /*-----------------------------------------------------------*/
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 17
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 17
 
 
  323              		.loc 1 241 1 is_stmt 0 view .LVU65
@@ -1018,7 +1018,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  373              	.L21:
  374 0014 00000000 		.word	uxCriticalNesting
  375              		.cfi_endproc
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 18
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 18
 
 
  376              	.LFE5:
@@ -1078,7 +1078,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  265:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c ****     portDISABLE_INTERRUPTS();
  428              		.loc 1 265 1 is_stmt 1 view -0
  429              		.cfi_startproc
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 19
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 19
 
 
  430              		@ args = 0, pretend = 0, frame = 0
@@ -1138,7 +1138,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  479              		@ frame_needed = 0, uses_anonymous_args = 0
  480              		@ link register save eliminated.
  275:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c ****     uxCriticalNesting--;
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 20
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 20
 
 
  481              		.loc 1 275 2 view .LVU86
@@ -1198,7 +1198,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  526              		.section	.text.ulSetInterruptMaskFromISR,"ax",%progbits
  527              		.align	1
  528              		.global	ulSetInterruptMaskFromISR
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 21
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 21
 
 
  529              		.syntax unified
@@ -1258,7 +1258,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  581              		.align	1
  582              		.global	PendSV_Handler
  583              		.syntax unified
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 22
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 22
 
 
  584              		.code	16
@@ -1318,7 +1318,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  365:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** /*-----------------------------------------------------------*/
  637              		.loc 1 365 1 is_stmt 0 view .LVU105
  638              		.thumb
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 23
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 23
 
 
  639              		.syntax unified
@@ -1378,7 +1378,7 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  685              	.LVL19:
  382:Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c **** /*-----------------------------------------------------------*/
  686              		.loc 1 382 1 is_stmt 0 view .LVU116
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 24
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 24
 
 
  687              		@ sp needed
@@ -1404,54 +1404,54 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 1
  709              		.file 5 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/portmacro.h"
  710              		.file 6 "Core/Inc/FreeRTOSConfig.h"
  711              		.file 7 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s 			page 25
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s 			page 25
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 port.c
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:19     .text.prvTaskExitError:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:24     .text.prvTaskExitError:00000000 prvTaskExitError
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:77     .text.prvTaskExitError:00000020 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:702    .data.uxCriticalNesting:00000000 uxCriticalNesting
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:82     .text.vPortStartFirstTask:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:87     .text.vPortStartFirstTask:00000000 vPortStartFirstTask
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:114    .text.vPortStartFirstTask:00000030 pxCurrentTCBConst2
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:114    .text.vPortStartFirstTask:00000030 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:124    .text.prvSetupTimerInterrupt:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:129    .text.prvSetupTimerInterrupt:00000000 prvSetupTimerInterrupt
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:172    .text.prvSetupTimerInterrupt:00000024 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:180    .text.pxPortInitialiseStack:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:186    .text.pxPortInitialiseStack:00000000 pxPortInitialiseStack
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:248    .text.pxPortInitialiseStack:00000020 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:253    .text.SVC_Handler:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:259    .text.SVC_Handler:00000000 SVC_Handler
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:273    .text.xPortStartScheduler:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:279    .text.xPortStartScheduler:00000000 xPortStartScheduler
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:330    .text.xPortStartScheduler:00000034 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:336    .text.vPortEndScheduler:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:342    .text.vPortEndScheduler:00000000 vPortEndScheduler
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:374    .text.vPortEndScheduler:00000014 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:379    .text.vPortYield:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:385    .text.vPortYield:00000000 vPortYield
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:415    .text.vPortYield:00000014 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:420    .text.vPortEnterCritical:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:426    .text.vPortEnterCritical:00000000 vPortEnterCritical
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:463    .text.vPortEnterCritical:00000014 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:468    .text.vPortExitCritical:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:474    .text.vPortExitCritical:00000000 vPortExitCritical
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:522    .text.vPortExitCritical:0000001c $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:527    .text.ulSetInterruptMaskFromISR:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:533    .text.ulSetInterruptMaskFromISR:00000000 ulSetInterruptMaskFromISR
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:554    .text.vClearInterruptMaskFromISR:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:560    .text.vClearInterruptMaskFromISR:00000000 vClearInterruptMaskFromISR
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:581    .text.PendSV_Handler:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:587    .text.PendSV_Handler:00000000 PendSV_Handler
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:635    .text.PendSV_Handler:00000040 pxCurrentTCBConst
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:635    .text.PendSV_Handler:00000040 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:644    .text.SysTick_Handler:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:650    .text.SysTick_Handler:00000000 SysTick_Handler
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:694    .text.SysTick_Handler:00000020 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccZIZ90B.s:699    .data.uxCriticalNesting:00000000 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:19     .text.prvTaskExitError:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:24     .text.prvTaskExitError:00000000 prvTaskExitError
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:77     .text.prvTaskExitError:00000020 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:702    .data.uxCriticalNesting:00000000 uxCriticalNesting
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:82     .text.vPortStartFirstTask:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:87     .text.vPortStartFirstTask:00000000 vPortStartFirstTask
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:114    .text.vPortStartFirstTask:00000030 pxCurrentTCBConst2
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:114    .text.vPortStartFirstTask:00000030 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:124    .text.prvSetupTimerInterrupt:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:129    .text.prvSetupTimerInterrupt:00000000 prvSetupTimerInterrupt
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:172    .text.prvSetupTimerInterrupt:00000024 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:180    .text.pxPortInitialiseStack:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:186    .text.pxPortInitialiseStack:00000000 pxPortInitialiseStack
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:248    .text.pxPortInitialiseStack:00000020 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:253    .text.SVC_Handler:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:259    .text.SVC_Handler:00000000 SVC_Handler
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:273    .text.xPortStartScheduler:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:279    .text.xPortStartScheduler:00000000 xPortStartScheduler
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:330    .text.xPortStartScheduler:00000034 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:336    .text.vPortEndScheduler:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:342    .text.vPortEndScheduler:00000000 vPortEndScheduler
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:374    .text.vPortEndScheduler:00000014 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:379    .text.vPortYield:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:385    .text.vPortYield:00000000 vPortYield
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:415    .text.vPortYield:00000014 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:420    .text.vPortEnterCritical:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:426    .text.vPortEnterCritical:00000000 vPortEnterCritical
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:463    .text.vPortEnterCritical:00000014 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:468    .text.vPortExitCritical:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:474    .text.vPortExitCritical:00000000 vPortExitCritical
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:522    .text.vPortExitCritical:0000001c $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:527    .text.ulSetInterruptMaskFromISR:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:533    .text.ulSetInterruptMaskFromISR:00000000 ulSetInterruptMaskFromISR
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:554    .text.vClearInterruptMaskFromISR:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:560    .text.vClearInterruptMaskFromISR:00000000 vClearInterruptMaskFromISR
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:581    .text.PendSV_Handler:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:587    .text.PendSV_Handler:00000000 PendSV_Handler
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:635    .text.PendSV_Handler:00000040 pxCurrentTCBConst
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:635    .text.PendSV_Handler:00000040 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:644    .text.SysTick_Handler:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:650    .text.SysTick_Handler:00000000 SysTick_Handler
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:694    .text.SysTick_Handler:00000020 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccgivWYs.s:699    .data.uxCriticalNesting:00000000 $d
 
 UNDEFINED SYMBOLS
 pxCurrentTCB

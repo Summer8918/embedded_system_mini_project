@@ -20,10 +20,6 @@
 #include "main.h"
 #include "cmsis_os.h"
 
-//Global variables
-volatile uint16_t commandLED = 0;
-
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -52,7 +48,6 @@ SPI_HandleTypeDef hspi2;
 TSC_HandleTypeDef htsc;
 
 PCD_HandleTypeDef hpcd_USB_FS;
-
 /* Definitions for task router */
 osThreadId_t routerTaskHandle;
 const osThreadAttr_t routerTask_attributes = {
@@ -473,18 +468,48 @@ void StartRouterTask(void *argument)
 /* USER CODE END Header_StartLEDTask */
 void StartLEDTask(void *argument)
 {
-
+  extern volatile uint16_t commandLED;
   //command 0xA color action dont care
-  uint32_t color;
-  uint32_t action;
+  volatile uint32_t color;
+  int LED_case; // LED to update
 
   /* Infinite loop */
   for(;;)
   {
-    switch (commandLED >> 12) {    
-      case 0xA1:
+    switch (commandLED >> 8) {    
+      //Red LED - PC6
+      case 0xA1:  
+        LED_case = 1; // red LED
         break;
+      //Green LED - PC9
       case 0xA2:
+        LED_case = 2; // blue LED
+        break;
+      //Blue LED - PC7  
+      case 0xA3:
+        LED_case = 3; // green LED
+        break;
+      //Orange LED - PC8
+      case 0xA4:
+        LED_case = 4; // orange LED
+        break;
+      default:
+    }
+
+    switch (commandLED >> 4) {
+      case 0x1:
+        // if (LED_case == 1) GPIOC->ODR |= GPIO_ODR_6;
+        GPIOC->ODR |= color;
+        break;
+      case 0x2:
+        GPIOC->ODR &= ~color;
+        break;
+      case 0x3:
+        GPIOC->ODR ^= color;
+        break;
+      default:
+    }
+    osDelay(1000);
   }
 }
 
