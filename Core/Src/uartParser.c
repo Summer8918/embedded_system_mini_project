@@ -1,4 +1,5 @@
 #include "uartParser.h"
+#include "stm32f072xb.h"
 
 volatile uint8_t strIndex = 0;
 volatile uint8_t cmdIndex = 0;
