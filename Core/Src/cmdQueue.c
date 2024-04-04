@@ -1,11 +1,15 @@
 #include "cmdQueue.h"
 
 Cmd_Queue createQueue(uint8_t cap, uint8_t itemBytes) {
+    /* Create the semaphores(s) */
+    /* definition and creation of myBinarySem01 */
+    osSemaphoreDef(myBinarySem01);
+    binarySem01CmdQueueHandle = osSemaphoreCreate(osSemaphore(myBinarySem01), 1);
     Cmd_Queue *q = NULL;
     uint16_t xQueueSizeInBytes = itemBytes * cap;
-    q = (Cmd_Queue *)pvPortMalloc(xQueueSizeInBytes + sizeof(Cmd_Queue_t));
+    q = (Cmd_Queue *)pvPortMalloc(xQueueSizeInBytes + sizeof(Cmd_Queue));
     // storage area
-    q->data = ( uint16_t * )q + sizeof(Cmd_Queue_t);
+    q->data = ( uint16_t * )q + sizeof(Cmd_Queue);
     q->capacity = cap;
     q->front = 0;
     q->back = -1;
@@ -14,36 +18,50 @@ Cmd_Queue createQueue(uint8_t cap, uint8_t itemBytes) {
 }
 
 uint8_t isQueueEmpty(Cmd_Queue *q) {
-    return q->itemNum == 0;
+    osSemaphoreWait(binarySem01CmdQueueHandle, osWaitForever);
+    uint8_t res = (q->itemNum == 0);
+    osSemaphoreRelease(binarySem01CmdQueueHandle);
+    return res;
 }
 
 uint8_t isQueueFull(Cmd_Queue *q) {
-    return q->itemNum == q->capacity;
+    osSemaphoreWait(binarySem01CmdQueueHandle, osWaitForever);
+    uint8_t res =(q->itemNum == q->capacity);
+    osSemaphoreRelease(binarySem01CmdQueueHandle);
+    return res;
 }
 
 int queuePush(Cmd_Queue *q, uint16_t item) {
-    if (isQueueFull(q)) {
+    osSemaphoreWait(binarySem01CmdQueueHandle, osWaitForever);
+    if (q->itemNum == q->capacity) {
+        osSemaphoreRelease(binarySem01CmdQueueHandle);
         return -1;
     }
     int pos = (q->back + 1) % q->capacity;
     q->back = pos;
     q->data[pos] = item;
     q->itemNum += 1;
+    osSemaphoreRelease(binarySem01CmdQueueHandle);
     return 0;
 }
 
 uint16_t queuePop(Cmd_Queue *q) {
-    if (isQueueEmpty(q)) {
+    osSemaphoreWait(binarySem01CmdQueueHandle, osWaitForever);
+    if (q->itemNum == 0) {
+        osSemaphoreRelease(binarySem01CmdQueueHandle);
         return -1;
     }
     uint16_t item = q->data[q->front];
     q->front = ((q->front + 1) % q->capacity);
     q->itemNum--;
+    osSemaphoreRelease(binarySem01CmdQueueHandle);
     return item;
 }
 
 void freeQueue(Cmd_Queue* q) {
+    osSemaphoreWait(binarySem01CmdQueueHandle, osWaitForever);
 	vPortFree(q);
+    osSemaphoreRelease(binarySem01CmdQueueHandle);
 }
 
 /*

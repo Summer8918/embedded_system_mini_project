@@ -4,6 +4,8 @@
 #include "stm32f072xb.h"
 #include "cmsis_os.h"
 
+osSemaphoreId binarySem01CmdQueueHandle;
+
 typedef struct Cmd_Queue_t {
     volatile int8_t front;
     volatile int8_t back;
