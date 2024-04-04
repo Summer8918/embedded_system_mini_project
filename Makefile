@@ -37,6 +37,7 @@ BUILD_DIR = build
 # C sources
 C_SOURCES =  \
 Core/Src/main.c \
+Core/Src/cmdQueue.c \
 Core/Src/uartParser.c \
 Core/Src/freertos.c \
 Core/Src/stm32f0xx_it.c \

@@ -1,6 +1,11 @@
 #include "uartParser.h"
-#include "stm32f072xb.h"
-#include "main.h"
+#include "cmsis_os2.h"
+#include <string.h>
+
+osThreadId_t UARTTaskHandle;
+Cmd_Queue * cmdQueue = NULL;
+osSemaphoreId_t binarySem02UartParserHandle;
+
 volatile uint8_t strIndex = 0;
 volatile uint8_t cmdIndex = 0;
 volatile uint8_t cmdStrIndex = 0;
@@ -9,6 +14,140 @@ volatile char cmd[4][TMP_STR_LEN];
 volatile uint16_t commandOut = 0x0000;
 
 volatile uint16_t commandLED = 0;
+
+// 0 not working, 1 working
+volatile uint8_t uartStatus = 0;
+
+const osThreadAttr_t UARTTask_attributes = {
+  .name = "UARTParseTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal1, // higher priority than osPriorityNormal
+};
+
+/* UART CODE BEGIN Header_StartLEDTask */
+/**
+  * @brief  Function implementing the LEDTask thread.
+  * @param  argument: Not used
+  * @retval None
+  */
+/* USER CODE END Header_StartLEDTask */
+void StartParseUartTask(void *argument) {
+  // TODO: add a timer to limit the max execution time
+  osSemaphoreAcquire(binarySem02UartParserHandle, osWaitForever);
+  while (1) {
+    while((USART3->ISR & USART_ISR_RXNE) == 0) {
+	  }
+    //Pull character from UART
+	  volatile uint8_t usartReceivedData = USART3->RDR;
+    //Command string terminated with enter key
+	  if (usartReceivedData == '\r') {
+      //Parse words from received command string
+      volatile uint8_t strLen = strIndex + 1;
+      strIndex = 0;
+      //transmitCharArray(tmpStr);
+      cmdStrIndex = 0;
+      cmdIndex = 0;
+      while (strIndex < strLen) {
+        if (tmpStr[strIndex] == ' ') {
+          cmdIndex++;
+          cmdStrIndex = 0;
+        } else {
+          cmd[cmdIndex][cmdStrIndex] = tmpStr[strIndex];
+          cmdStrIndex++;
+        }
+        strIndex++;
+      }
+      //Convert words into command format
+      //First digit
+      if (strcmp(cmd[0], "led") == 0) {
+        commandOut |= 0xA000;
+        //Second digit - LED
+        if (strcmp(cmd[1], "red") == 0) {
+          commandOut |= 0x0100;
+        } else if (strcmp(cmd[1], "green") == 0) {
+          commandOut |= 0x0200;
+        } else if (strcmp(cmd[1], "blue") == 0) {
+          commandOut |= 0x0300;
+        } else if (strcmp(cmd[1], "orange") == 0) {
+          commandOut |= 0x0400;
+        } else {
+          commandError(tmpStr);
+          break;
+        }
+
+        //Third digit - LED
+        if (strcmp(cmd[2], "on") == 0) {
+          commandOut |= 0x0010;
+        } else if (strcmp(cmd[2], "off") == 0) {
+          commandOut |= 0x0020;
+        } else if (strcmp(cmd[2], "toggle") == 0) {
+          commandOut |= 0x0030;
+        } else {
+          commandError(tmpStr);
+          break;
+        }
+      } else if (strcmp(cmd[0], "motor") == 0) {
+        commandOut |= 0xB000;
+      } else {
+        commandError(tmpStr);
+        break;
+      }
+
+      //Echo successful command
+      transmitCharArray("Command:");
+      transmitCharArray(tmpStr);
+
+      //Reset command string and index
+      strIndex = 0;
+      for (uint8_t i = 0; i < TMP_STR_LEN; i++) {
+        tmpStr[i] = '\0';
+        cmd[0][i] = '\0';
+        cmd[1][i] = '\0';
+        cmd[2][i] = '\0';
+        cmd[3][i] = '\0';
+      }
+      
+      // Store the commandOut in queue
+      if (queuePush(cmdQueue, commandOut) != -1) {
+        transmitCharArray("Push command to queue success.\n");
+      } else {
+        transmitCharArray("Fail to push command to queue, try again.\n");
+      }
+        /*
+         * TODO:
+         * if queue not full, push the command to the tail of queue, tell user command is stored successfully.
+         * else tell the user that queue is full, wait and try again.
+         * */
+
+        //
+
+      //Dummy pass command straight to worker
+      commandLED = commandOut;
+
+      //Reset commandOut before starting next command receive
+      commandOut = 0;
+
+	  } else {
+      //Command too long
+      if (strIndex == TMP_STR_LEN) {
+      	transmitCharArray("Command is too long!");
+        strIndex = 0;
+        for (uint8_t i = 0; i < TMP_STR_LEN; i++){
+          tmpStr[i] = '\0';
+        }
+      	break;
+      }
+      //Move to next character in command
+      else {
+		    tmpStr[strIndex] = usartReceivedData;
+		    strIndex++;
+	    }
+    }
+  }
+  uartStatus = 0;
+  // Enable Uart RX interrupt
+  USART3->CR1 |= USART_CR1_RXNEIE;
+}
 
 //Initialize USART3 - PC4 TX, PC5 RX
 void initUsart3(void) {
@@ -39,131 +178,29 @@ void initUsart3(void) {
 
   // Enable USART peripheral.
   USART3->CR1 |= USART_CR1_UE;
+  transmitCharArray("UART enabled");
 
   // Enable the receive register not empty interrupt.
   USART3->CR1 |= USART_CR1_RXNEIE;
   // Enable and set the USART interrupt priority in the NVIC.
   NVIC_EnableIRQ(USART3_4_IRQn);
   NVIC_SetPriority(USART3_4_IRQn, 3);
-  transmitCharArray("UART enabled");
+  /* Create the semaphores(s) */
+  /* definition and creation of myBinarySem02 */
+  // The semaphore is created with an initial count of 0 
+  // ,which means it is not available initially. 
+  binarySem02UartParserHandle = osSemaphoreNew(1, 0, NULL);
+  cmdQueue = createQueue(CMD_QUEUE_CAPACITY, 2);
 }
 
 // Handle uart RX with interrupt
 void USART3_4_IRQHandler(void) {
-	while((USART3->ISR & USART_ISR_RXNE) == 0) {
-	}
-    //Pull character from UART
-	  volatile uint8_t usartReceivedData = USART3->RDR;
-    //Command string terminated with enter key
-	  if (usartReceivedData == '\r') {
-      //Parse words from received command string
-      volatile uint8_t strLen = strIndex + 1;
-      strIndex = 0;
-      //transmitCharArray(tmpStr);
-      cmdStrIndex = 0;
-      cmdIndex = 0;
-      while (strIndex < strLen) {
-        if (tmpStr[strIndex] == ' ') {
-          cmdIndex++;
-          cmdStrIndex = 0;
-        }
-        else {
-          cmd[cmdIndex][cmdStrIndex] = tmpStr[strIndex];
-          cmdStrIndex++;
-        }
-        strIndex++;
-      }
-      //Convert words into command format
-      //First digit
-      if (strcmp(cmd[0], "led") == 0) {
-        commandOut |= 0xA000;
-        //Second digit - LED
-        if (strcmp(cmd[1], "red") == 0) {
-          commandOut |= 0x0100;
-        }
-        else if (strcmp(cmd[1], "green") == 0) {
-          commandOut |= 0x0200;
-        }
-        else if (strcmp(cmd[1], "blue") == 0) {
-          commandOut |= 0x0300;
-        }
-        else if (strcmp(cmd[1], "orange") == 0) {
-          commandOut |= 0x0400;
-        }
-        else {
-          commandError(tmpStr);
-          return;
-        }
-
-        //Third digit - LED
-        if (strcmp(cmd[2], "on") == 0) {
-          commandOut |= 0x0010;
-        }
-        else if (strcmp(cmd[2], "off") == 0) {
-          commandOut |= 0x0020;
-        }
-        else if (strcmp(cmd[2], "toggle") == 0) {
-          commandOut |= 0x0030;
-        }
-        else {
-          commandError(tmpStr);
-          return;
-        }
-      }    
-      else if (strcmp(cmd[0], "motor") == 0) {
-        commandOut |= 0xB000;
-      }
-      else {
-        commandError(tmpStr);
-        return;
-      }
-
-      //Echo successful command
-      transmitCharArray("Command:");
-      transmitCharArray(tmpStr);
-
-      //Reset command string and index
-      strIndex = 0;
-      for (uint8_t i = 0; i < TMP_STR_LEN; i++) {
-        tmpStr[i] = '\0';
-        cmd[0][i] = '\0';
-        cmd[1][i] = '\0';
-        cmd[2][i] = '\0';
-        cmd[3][i] = '\0';
-      }
-      
-      // Store the commandOut in queue
-        /*
-         * TODO:
-         * if queue not full, push the command to the tail of queue, tell user command is stored successfully.
-         * else tell the user that queue is full, wait and try again.
-         * */
-
-        //
-
-      //Dummy pass command straight to worker
-      commandLED = commandOut;
-
-      //Reset commandOut before starting next command receive
-      commandOut = 0;
-
-	  } else {
-      //Command too long
-      if (strIndex == TMP_STR_LEN) {
-      	transmitCharArray("Command is too long!");
-        strIndex = 0;
-        for (uint8_t i = 0; i < TMP_STR_LEN; i++)
-          tmpStr[i] = '\0';
-      	return;
-      }
-      //Move to next character in command
-      else {
-		    tmpStr[strIndex] = usartReceivedData;
-		    strIndex++;
-	    }
-    }
-	// Transmit the characters sent by the user back to the user.
-	//transmitOneChar(usartReceivedData);
+  if (uartStatus == 0) {
+    osSemaphoreRelease(binarySem02UartParserHandle);
+    uartStatus = 1;
+    // Disable the receive register not empty interrupt.
+    USART3->CR1 &= ~USART_CR1_RXNEIE;
+  }
 }
 
 void transmitOneChar(uint8_t ch) {

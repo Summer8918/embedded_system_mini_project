@@ -65,6 +65,7 @@ const osThreadAttr_t LEDTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
 };
 
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -151,6 +152,8 @@ int main(void)
   routerTaskHandle = osThreadNew(StartRouterTask, NULL, &routerTask_attributes);
   /* creation of LEDTask */
   LEDTaskHandle = osThreadNew(StartLEDTask, NULL, &LEDTask_attributes);
+  /* creation of UART Task */
+  UARTTaskHandle = osThreadNew(StartParseUartTask, NULL, &UARTTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
