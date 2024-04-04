@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "stm32f072xb.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -471,44 +472,43 @@ void StartLEDTask(void *argument)
   extern volatile uint16_t commandLED;
   //command 0xA color action dont care
   volatile uint32_t color;
-  int LED_case; // LED to update
 
   /* Infinite loop */
   for(;;)
   {
-    switch (commandLED >> 8) {    
+    switch (commandLED & 0x0F00) {    
       //Red LED - PC6
-      case 0xA1:  
-        LED_case = 1; // red LED
+      case 0x0100:  
+        color = GPIO_ODR_6;
         break;
       //Green LED - PC9
-      case 0xA2:
-        LED_case = 2; // blue LED
+      case 0x0200:
+        color = GPIO_ODR_9;
         break;
       //Blue LED - PC7  
-      case 0xA3:
-        LED_case = 3; // green LED
+      case 0x0300:
+        color = GPIO_ODR_7;
         break;
       //Orange LED - PC8
-      case 0xA4:
-        LED_case = 4; // orange LED
+      case 0x0400:
+        color = GPIO_ODR_8;
         break;
       default:
     }
 
-    switch (commandLED >> 4) {
-      case 0x1:
-        // if (LED_case == 1) GPIOC->ODR |= GPIO_ODR_6;
+    switch (commandLED & 0x00F0) {
+      case 0x0010:
         GPIOC->ODR |= color;
         break;
-      case 0x2:
+      case 0x0020:
         GPIOC->ODR &= ~color;
         break;
-      case 0x3:
+      case 0x0030:
         GPIOC->ODR ^= color;
         break;
       default:
     }
+    commandLED = 0;
     osDelay(1000);
   }
 }

@@ -144,17 +144,6 @@ void USART3_4_IRQHandler(void) {
       //Dummy pass command straight to worker
       commandLED = commandOut;
 
-      //Dummy queue-router-worker to demonstrate correct uart parsing
-      //Enables UART commands for green LED
-      
-      if (commandOut == 0xA210)
-        GPIOC->ODR |= GPIO_ODR_9;
-      else if (commandOut == 0xA220)
-        GPIOC->ODR &= ~GPIO_ODR_9;
-      else if (commandOut == 0xA230)
-        GPIOC->ODR ^= GPIO_ODR_9;
-
-
       //Reset commandOut before starting next command receive
       commandOut = 0;
 
