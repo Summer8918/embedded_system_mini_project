@@ -12,6 +12,7 @@ volatile uint8_t cmdStrIndex = 0;
 volatile char tmpStr[TMP_STR_LEN];
 volatile char cmd[4][TMP_STR_LEN];
 volatile uint16_t commandOut = 0x0000;
+volatile uint8_t error = 0;
 
 volatile uint16_t commandLED = 0;
 
@@ -71,8 +72,7 @@ void StartParseUartTask(void *argument) {
         } else if (strcmp(cmd[1], "orange") == 0) {
           commandOut |= 0x0400;
         } else {
-          commandError(tmpStr);
-          break;
+          error = 1;
         }
 
         //Third digit - LED
@@ -83,20 +83,31 @@ void StartParseUartTask(void *argument) {
         } else if (strcmp(cmd[2], "toggle") == 0) {
           commandOut |= 0x0030;
         } else {
-          commandError(tmpStr);
-          break;
+          error = 1;
         }
       } else if (strcmp(cmd[0], "motor") == 0) {
         commandOut |= 0xB000;
       } else {
-        commandError(tmpStr);
-        break;
+        error = 1;
       }
 
-      //Echo successful command
-      transmitCharArray("Command:");
-      transmitCharArray(tmpStr);
+      //Command syntax correct
+      if (error == 0) {
+        //Echo successful command
+        transmitCharArray("Command:");
+        transmitCharArray(tmpStr);
 
+        // Store the commandOut in queue
+        if (queuePush(cmdQueue, commandOut) != -1) {
+          transmitCharArray("Push command to queue success.\n");
+        } else {
+          transmitCharArray("Fail to push command to queue, try again.\n");
+        }
+      //Command syntax malformed
+      } else {
+        transmitCharArray("Command not recognized");
+        transmitCharArray(tmpStr);
+      }
       //Reset command string and index
       strIndex = 0;
       for (uint8_t i = 0; i < TMP_STR_LEN; i++) {
@@ -106,27 +117,13 @@ void StartParseUartTask(void *argument) {
         cmd[2][i] = '\0';
         cmd[3][i] = '\0';
       }
-      
-      // Store the commandOut in queue
-      if (queuePush(cmdQueue, commandOut) != -1) {
-        transmitCharArray("Push command to queue success.\n");
-      } else {
-        transmitCharArray("Fail to push command to queue, try again.\n");
-      }
-        /*
-         * TODO:
-         * if queue not full, push the command to the tail of queue, tell user command is stored successfully.
-         * else tell the user that queue is full, wait and try again.
-         * */
-
-        //
-
-      //Dummy pass command straight to worker
-      commandLED = commandOut;
-
+      //Reset error flag
+      error = 0;
       //Reset commandOut before starting next command receive
       commandOut = 0;
-
+      // Enable Uart RX interrupt
+      uartStatus = 0;
+      USART3->CR1 |= USART_CR1_RXNEIE;
 	  } else {
       //Command too long
       if (strIndex == TMP_STR_LEN) {
@@ -135,7 +132,9 @@ void StartParseUartTask(void *argument) {
         for (uint8_t i = 0; i < TMP_STR_LEN; i++){
           tmpStr[i] = '\0';
         }
-      	break;
+        // Enable Uart RX interrupt
+        uartStatus = 0;
+        USART3->CR1 |= USART_CR1_RXNEIE;
       }
       //Move to next character in command
       else {
@@ -144,9 +143,6 @@ void StartParseUartTask(void *argument) {
 	    }
     }
   }
-  uartStatus = 0;
-  // Enable Uart RX interrupt
-  USART3->CR1 |= USART_CR1_RXNEIE;
 }
 
 //Initialize USART3 - PC4 TX, PC5 RX
@@ -217,19 +213,3 @@ void transmitCharArray (char *arr) {
   transmitOneChar('\n');
   transmitOneChar('\r');
 }
-
-//Print error message and reset strings when command is bad
-void commandError(char *arr) {
-  transmitCharArray("Command not recognized");
-  transmitCharArray(tmpStr);
-  //Reset command string and index
-  strIndex = 0;
-  for (uint8_t i = 0; i < TMP_STR_LEN; i++) {
-    tmpStr[i] = '\0';
-    cmd[0][i] = '\0';
-    cmd[1][i] = '\0';
-    cmd[2][i] = '\0';
-    cmd[3][i] = '\0';
-  }
-  commandOut = 0;
-}    

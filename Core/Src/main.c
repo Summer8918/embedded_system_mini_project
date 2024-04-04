@@ -447,17 +447,35 @@ static void MX_GPIO_Init(void)
 /* USER CODE END Header_StartRouterTask */
 void StartRouterTask(void *argument)
 {
-  /* USER CODE BEGIN 5 */
+  //Global variables to pass command to worker threads
+  extern volatile uint16_t commandLED;
+  //Command popped from queue
+  uint16_t commandIn = 0;
   /* Infinite loop */
   for(;;)
   {
     //If queue is not empty
-      //Retrieve command from queue
-      //Determine which worker task corresponds to command
-      //Wait until worker task is not busy/full
-      //Send command to worker
-        //Write command to global variable
-        //wake worker - vtaskresume
+      if (isQueueEmpty == 1) 
+        GPIOC->ODR |= GPIO_ODR_7;
+      else 
+        GPIOC->ODR &= ~GPIO_ODR_7;
+      /*{
+        //Retrieve command from queue
+        commandIn = queuePop(cmdQueue);
+        //Determine which worker task corresponds to command
+        switch (commandIn & 0xF000) {
+          //LED command
+          case 0xA:
+            commandLED = commandIn;
+            break;
+          //Motor command
+          case 0xB:
+            break;
+          default:
+            break;
+        }
+      }*/
+      
   }
   
   /* USER CODE END 5 */
