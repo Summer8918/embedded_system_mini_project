@@ -57,7 +57,7 @@ uint16_t queuePop(Cmd_Queue *q) {
     osSemaphoreAcquire(binarySem01CmdQueueHandle, osWaitForever);
     if (q->itemNum == 0) {
         osSemaphoreRelease(binarySem01CmdQueueHandle);
-        return -1;
+        return 0xffff;
     }
     uint16_t item = q->data[q->front];
     q->front = ((q->front + 1) % q->capacity);

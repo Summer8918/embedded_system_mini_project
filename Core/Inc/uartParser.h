@@ -11,12 +11,20 @@
 #define CMD_QUEUE_CAPACITY 20
 
 void initUsart3(void);
+
 void transmitOneChar(uint8_t ch);
+
 void transmitCharArray (char *arr);
+
 void USART3_4_IRQHandler(void);
+
 void commandError(char *arr);
 
 void StartParseUartTask(void *argument);
+
+void sendUint16BinToUart(uint16_t x);
+
+uint8_t parseCmd(void);
 
 extern osThreadId_t UARTTaskHandle;
 

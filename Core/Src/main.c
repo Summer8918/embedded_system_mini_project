@@ -79,7 +79,7 @@ static void MX_TSC_Init(void);
 static void MX_USB_PCD_Init(void);
 void StartRouterTask(void *argument);
 void StartLEDTask(void *argument);
-
+void initLEDs(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -124,6 +124,7 @@ int main(void)
   MX_USB_PCD_Init();
 
   initUsart3();
+  initLEDs();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -148,6 +149,7 @@ int main(void)
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
+  // comment thread temprariely.
   /* creation of routerTask */
   routerTaskHandle = osThreadNew(StartRouterTask, NULL, &routerTask_attributes);
   /* creation of LEDTask */
@@ -452,6 +454,8 @@ void StartRouterTask(void *argument)
   //Command popped from queue
   uint16_t commandIn = 0;
   /* Infinite loop */
+  uint16_t item = queuePop(cmdQueue);
+  
   for(;;)
   {
     //If queue is not empty
@@ -479,6 +483,39 @@ void StartRouterTask(void *argument)
   }
   
   /* USER CODE END 5 */
+}
+
+void initLEDs(void) {
+	// red LED PC6, blue LED (PC7), green LED PC9, orange LED PC8
+  RCC->AHBENR |= RCC_AHBENR_GPIOCEN; // Enable peripheral clock to PC
+  // set the MODER, 01: General purpose output mode
+	// init PC6 MODER
+	GPIOC->MODER |= (1 << 12);
+	GPIOC->MODER &= ~(1 << 13);
+    // init PC7 MODER
+	GPIOC->MODER |= (1 << 14);
+	GPIOC->MODER &= ~(1 << 15);
+	// init PC8 MODER
+	GPIOC->MODER |= (1 << 16);
+	GPIOC->MODER &= ~(1 << 17);
+	// init PC9 MODER
+	GPIOC->MODER |= (1 << 18);
+	GPIOC->MODER &= ~(1 << 19);
+  // Set the pins to low speed in the OSPEEDR register
+	GPIOC->OSPEEDR &= ~((1 << 12) | (1 << 13));
+	GPIOC->OSPEEDR &= ~((1 << 14) | (1 << 15));
+	GPIOC->OSPEEDR &= ~((1 << 16) | (1 << 17));
+	GPIOC->OSPEEDR &= ~((1 << 18) | (1 << 19));
+
+	// Set LED to no pull-up/down resistors in the PUPDR register
+	// 00: No pull-up, pull-down
+	GPIOC->PUPDR &= ~((1 << 16) | (1 << 17) | (1 << 18) | (1 << 19));
+	GPIOC->PUPDR &= ~((1 << 12) | (1 << 13) | (1 << 14) | (1 << 15));
+	// set PC6-9 to 1
+	GPIOC->ODR |= (1 << 6);
+	GPIOC->ODR |= (1 << 7);
+	GPIOC->ODR |= (1 << 8);
+	GPIOC->ODR |= (1 << 9);
 }
 
 /* USER CODE BEGIN Header_StartLEDTask */
