@@ -20,6 +20,8 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "stm32f072xb.h"
+#include "motor.h"
+#include "motor.c"
 
 /**************** IN MOTOR WORKER ****************/
 
@@ -52,6 +54,9 @@ SPI_HandleTypeDef hspi2;
 TSC_HandleTypeDef htsc;
 
 PCD_HandleTypeDef hpcd_USB_FS;
+
+/* For motor */
+volatile uint32_t debouncer; 
 /* Definitions for task router */
 osThreadId_t routerTaskHandle;
 const osThreadAttr_t routerTask_attributes = {
@@ -83,14 +88,6 @@ static void MX_USB_PCD_Init(void);
 void StartRouterTask(void *argument);
 void StartLEDTask(void *argument);
 void initLEDs(void);
-/* USER CODE BEGIN PFP */
-
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
@@ -98,26 +95,16 @@ void initLEDs(void);
   */
 int main(void)
 {
-
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
+  debouncer = 0;
+  volatile uint32_t encoder_count = 0;
 
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
   /* Configure the system clock */
   SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -125,12 +112,12 @@ int main(void)
   MX_SPI2_Init();
   MX_TSC_Init();
   MX_USB_PCD_Init();
+  // Initialize button --> Will need to re-configure for milestone #4, this is here for testing purposes to ensure motor is working properly
+  button_init(); 
+  motor_init();                           // Initialize motor code
 
   initUsart3();
   initLEDs();
-  /* USER CODE BEGIN 2 */
-
-  /* USER CODE END 2 */
 
   /* Init scheduler */
   osKernelInitialize();
@@ -174,14 +161,51 @@ int main(void)
   /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
+    /* For turning on the motor */
+    encoder_count = TIM2->CNT;
+    HAL_Delay(128);                      // Delay 1/8 second
   }
-  /* USER CODE END 3 */
+}
+
+void  button_init(void) {
+    // Initialize PA0 for button input
+    RCC->AHBENR |= RCC_AHBENR_GPIOAEN;                                          // Enable peripheral clock to GPIOA
+    GPIOA->MODER &= ~(GPIO_MODER_MODER0_0 | GPIO_MODER_MODER0_1);               // Set PA0 to input
+    GPIOC->OSPEEDR &= ~(GPIO_OSPEEDR_OSPEEDR0_0 | GPIO_OSPEEDR_OSPEEDR0_1);     // Set to low speed
+    GPIOC->PUPDR |= GPIO_PUPDR_PUPDR0_1;                                        // Set to pull-down
+}
+
+/* Called by SysTick Interrupt
+ * Performs button debouncing, changes wave type on button rising edge
+ * Updates frequency output from ADC value
+ */
+void HAL_SYSTICK_Callback(void) {
+    // Remember that this function is called by the SysTick interrupt
+    // You can't call any functions in here that use delay
+
+    debouncer = (debouncer << 1);
+    if(GPIOA->IDR & (1 << 0)) {
+        debouncer |= 0x1;
+    }
+
+    if(debouncer == 0x7FFFFFFF) {
+    switch(target_rpm) {
+        case 80:
+            target_rpm = 50;
+            break;
+        case 50:
+            target_rpm = 81;
+            break;
+        case 0:
+            target_rpm = 80;
+            break;
+        default:
+            target_rpm = 0;
+            break;
+        }
+    }
 }
 
 /**

@@ -3,6 +3,8 @@
  * -------------------------------------------------------------------------------------------------------------
  */
 #include "motor.h"
+#include "stm32f0xx.h"
+#include "stm32f072xb.h"
 
 volatile int16_t error_integral = 0;    // Integrated error signal
 volatile uint8_t duty_cycle = 0;    	// Output PWM duty cycle
@@ -69,6 +71,7 @@ void encoder_init(void) {
     // Set up encoder input pins (TIMER 3 CH1 and CH2)
     RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
 
+    // PB4(ENCA) and PB5(ENCB) are encoder 
     GPIOB->MODER &= ~(GPIO_MODER_MODER4_0 | GPIO_MODER_MODER5_0);
     GPIOB->MODER |= (GPIO_MODER_MODER4_1 | GPIO_MODER_MODER5_1);
     GPIOB->AFR[0] |= ( (1 << 16) | (1 << 20) );
@@ -159,6 +162,7 @@ void PI_update(void) {
      */
     
     /// TODO: calculate error signal and write to "error" variable
+    error = target_rpm - motor_speed/2; // 2-to-1 conversion
     
     /* Hint: Remember that your calculated motor speed may not be directly in RPM!
      *       You will need to convert the target or encoder speeds to the same units.
@@ -168,6 +172,7 @@ void PI_update(void) {
     
     
     /// TODO: Calculate integral portion of PI controller, write to "error_integral" variable
+    error_integral = error_integral + Ki * error; 
     
     /// TODO: Clamp the value of the integral to a limited positive range
     
@@ -177,9 +182,16 @@ void PI_update(void) {
      *       Recommend that you clamp between 0 and 3200 (what is used in the lab solution)
      */
     
+    if (error_integral < 0) {
+        error_integral = 0;
+    }
+
+    else if (error_integral > 3200){
+        error_integral = 3200;
+    }
     /// TODO: Calculate proportional portion, add integral and write to "output" variable
+    int16_t output = (Kp * error) + error_integral; // Change this!
     
-    int16_t output = 0; // Change this!
     
     /* Because the calculated values for the PI controller are significantly larger than 
      * the allowable range for duty cycle, you'll need to divide the result down into 
@@ -198,9 +210,10 @@ void PI_update(void) {
      */
 
      /// TODO: Divide the output into the proper range for output adjustment
-     
+     output = output / 32;
      /// TODO: Clamp the output value between 0 and 100 
-    
+    if (output < 0) output = 0;
+    else if (output > 100) output = 100;
     pwm_setDutyCycle(output);
     duty_cycle = output;            // For debug viewing
 
