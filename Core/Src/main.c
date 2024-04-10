@@ -57,7 +57,7 @@ const osThreadAttr_t routerTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
 };
 
-/* Definitions for task blink1 */
+/* Definitions for LED worker task */
 osThreadId_t LEDTaskHandle;
 const osThreadAttr_t LEDTask_attributes = {
   .name = "LEDTask",
@@ -448,42 +448,40 @@ static void MX_GPIO_Init(void)
   */
 /* USER CODE END Header_StartRouterTask */
 void StartRouterTask(void *argument)
-{
+{ 
+  //Global command queue
+  extern Cmd_Queue * cmdQueue;
   //Global variables to pass command to worker threads
   extern volatile uint16_t commandLED;
   //Command popped from queue
   uint16_t commandIn = 0;
   /* Infinite loop */
-  uint16_t item = queuePop(cmdQueue);
+  //uint16_t item = queuePop(cmdQueue);
   
   for(;;)
   {
     //If queue is not empty
-      if (isQueueEmpty == 1) 
-        GPIOC->ODR |= GPIO_ODR_7;
-      else 
-        GPIOC->ODR &= ~GPIO_ODR_7;
-      /*{
-        //Retrieve command from queue
-        commandIn = queuePop(cmdQueue);
-        //Determine which worker task corresponds to command
+    if (!isQueueEmpty(cmdQueue)) {
+      //Placeholder for task priorities
+      osDelay(1);
+      //Retrieve command from queue
+      commandIn = queuePop(cmdQueue);
+      //Determine which worker task corresponds to command
         switch (commandIn & 0xF000) {
-          //LED command
-          case 0xA:
-            commandLED = commandIn;
-            break;
-          //Motor command
-          case 0xB:
-            break;
-          default:
-            break;
-        }
-      }*/
-      
+        //LED command
+        case 0xA000:
+          commandLED = commandIn;
+          break;
+        //Motor command
+        case 0xB000:
+          break;
+        default:
+        break;
+      }
+    }
   }
-  
-  /* USER CODE END 5 */
 }
+  /* USER CODE END 5 */
 
 void initLEDs(void) {
 	// red LED PC6, blue LED (PC7), green LED PC9, orange LED PC8
@@ -511,11 +509,11 @@ void initLEDs(void) {
 	// 00: No pull-up, pull-down
 	GPIOC->PUPDR &= ~((1 << 16) | (1 << 17) | (1 << 18) | (1 << 19));
 	GPIOC->PUPDR &= ~((1 << 12) | (1 << 13) | (1 << 14) | (1 << 15));
-	// set PC6-9 to 1
-	GPIOC->ODR |= (1 << 6);
-	GPIOC->ODR |= (1 << 7);
-	GPIOC->ODR |= (1 << 8);
-	GPIOC->ODR |= (1 << 9);
+	// set PC6-9 to 0
+	GPIOC->ODR &= ~(1 << 6);
+	GPIOC->ODR &= ~(1 << 7);
+	GPIOC->ODR &= ~(1 << 8);
+	GPIOC->ODR &= ~(1 << 9);
 }
 
 /* USER CODE BEGIN Header_StartLEDTask */
@@ -528,7 +526,7 @@ void initLEDs(void) {
 void StartLEDTask(void *argument)
 {
   extern volatile uint16_t commandLED;
-  //command 0xA color action dont care
+  //command 0xA-color-action-unused
   volatile uint32_t color;
 
   /* Infinite loop */
@@ -567,7 +565,8 @@ void StartLEDTask(void *argument)
       default:
     }
     commandLED = 0;
-    osDelay(1000);
+    //Placeholder for task priorities
+    osDelay(1);
   }
 }
 

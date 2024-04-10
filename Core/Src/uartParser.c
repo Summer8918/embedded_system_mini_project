@@ -97,11 +97,11 @@ uint8_t parseCmd(void) {
 /* USER CODE END Header_StartLEDTask */
 void StartParseUartTask(void *argument) {
   // TODO: add a timer to limit the max execution time
-  uint8_t cnt = 0;
+  //uint8_t cnt = 0;
 
-  while (cnt < 5) { // for test, after test, change it back to while (1)
+  while (1) { // for test, after test, change it back to while (1)
     //transmitCharArray("cnt\n");
-    cnt += 1;
+    //cnt += 1;
     //transmitCharArray("Waiting to get sem02.\n");
     osSemaphoreAcquire(binarySem02UartParserHandle, osWaitForever);
     //transmitCharArray("get sem02!\n");
@@ -161,14 +161,14 @@ void StartParseUartTask(void *argument) {
     //transmitCharArray("Enable Uart RX interrupt");
     USART3->CR1 |= USART_CR1_RXNEIE;
   }
-
+/*
   // test queue pop
   uint16_t item = queuePop(cmdQueue);
   transmitCharArray("Pop items from queue\n");
   while (item != 0xffff) {
     sendUint16BinToUart(item);
     item = queuePop(cmdQueue);
-  }
+  }*/
 }
 
 //Initialize USART3 - PC4 TX, PC5 RX
