@@ -86,6 +86,7 @@ static void MX_SPI2_Init(void);
 static void MX_TSC_Init(void);
 static void MX_USB_PCD_Init(void);
 void StartRouterTask(void *argument);
+void StartMotorTask(void *argument);
 void StartLEDTask(void *argument);
 void initLEDs(void);
 
@@ -548,7 +549,7 @@ void initLEDs(void) {
   * @brief  Function implementing the LEDTask thread.
   * @param  argument: Not used
   * @retval None
-  */
+  */ 
 /* USER CODE END Header_StartLEDTask */
 void StartLEDTask(void *argument)
 {
@@ -592,6 +593,50 @@ void StartLEDTask(void *argument)
       default:
     }
     commandLED = 0;
+    //Placeholder for task priorities
+    osDelay(1);
+  }
+}
+
+/* USER CODE BEGIN Header_StartLEDTask */
+/**
+  * @brief  Function implementing the MotorTask thread.
+  * @param  argument: Not used
+  * @retval None
+  */ 
+/* USER CODE END Header_StartLEDTask */
+void StartMotorTask(void *argument)
+{
+  extern volatile uint16_t commandMotor;
+  //command 0xB-[1/2/3/4]
+  /* 2nd Digit
+  *   - 1: Turn motor on (enable 3rd and 4th digit)
+  *   - 2: Turn motor off
+  *   - 3: Change motor speed (enable 3rd and 4th digit)
+  * 3rd & 4th Digit: RPM of speed --> Clamped at < 100 
+  */
+
+
+  // TODO: Will need to feed speed into motor.c (PI_Update)
+  /* Infinite loop */
+  for(;;)
+  {
+    switch (commandMotor & 0x00F0) { // [To do] : This mask may be incorrect, need to figure out motor
+      case 0x0010: 
+        
+        break;
+      case 0x0020:
+        
+        break;
+      case 0x0030:
+    
+        break;
+      case 0x0040:
+    
+        break;
+      default:
+    }
+    commandMotor = 0;
     //Placeholder for task priorities
     osDelay(1);
   }
