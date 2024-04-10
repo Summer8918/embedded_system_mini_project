@@ -21,6 +21,9 @@
 #include "cmsis_os.h"
 #include "stm32f072xb.h"
 
+/**************** IN MOTOR WORKER ****************/
+
+/**************** IN MOTOR WORKER ****************/
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
