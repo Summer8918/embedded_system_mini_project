@@ -16,8 +16,6 @@ volatile char tmpStr[TMP_STR_LEN];
 volatile char cmd[4][TMP_STR_LEN];
 volatile uint16_t commandOut = 0x0000;
 
-volatile uint16_t commandLED = 0;
-
 // 0 not working, 1 working
 volatile uint8_t uartStatus = 0;
 

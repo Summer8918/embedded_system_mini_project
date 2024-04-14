@@ -21,6 +21,11 @@
 #include "cmsis_os.h"
 #include "stm32f072xb.h"
 
+//Global variables
+
+volatile uint16_t commandLED = 0;
+volatile uint16_t commandMotor = 0;
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -455,6 +460,7 @@ void StartRouterTask(void *argument)
   extern Cmd_Queue * cmdQueue;
   //Global variables to pass command to worker threads
   extern volatile uint16_t commandLED;
+  extern volatile uint16_t commandMotor;
   //Command popped from queue
   uint16_t commandIn = 0;
   /* Infinite loop */
@@ -476,6 +482,7 @@ void StartRouterTask(void *argument)
           break;
         //Motor command
         case 0xB000:
+          commandMotor = commandIn;
           break;
         default:
         break;
