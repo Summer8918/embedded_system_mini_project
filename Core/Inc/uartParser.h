@@ -26,6 +26,8 @@ void sendUint16BinToUart(uint16_t x);
 
 uint8_t parseCmd(void);
 
+uint8_t convertSpeed(char *ascii);
+
 extern osThreadId_t UARTTaskHandle;
 
 extern Cmd_Queue * cmdQueue;

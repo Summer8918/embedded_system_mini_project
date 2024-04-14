@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccDzRImU.s 			page 1
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
   30:Core/Src/stm32f0xx_hal_msp.c **** /* USER CODE END TD */
   31:Core/Src/stm32f0xx_hal_msp.c **** 
   32:Core/Src/stm32f0xx_hal_msp.c **** /* Private define ------------------------------------------------------------*/
-ARM GAS  /tmp/ccDzRImU.s 			page 2
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 2
 
 
   33:Core/Src/stm32f0xx_hal_msp.c **** /* USER CODE BEGIN Define */
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
   43 0006 9969     		ldr	r1, [r3, #24]
   44 0008 0122     		movs	r2, #1
   45 000a 1143     		orrs	r1, r2
-ARM GAS  /tmp/ccDzRImU.s 			page 3
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 3
 
 
   46 000c 9961     		str	r1, [r3, #24]
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
   91              		.align	1
   92              		.global	HAL_I2C_MspInit
   93              		.syntax unified
-ARM GAS  /tmp/ccDzRImU.s 			page 4
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 4
 
 
   94              		.code	16
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
   98:Core/Src/stm32f0xx_hal_msp.c ****     /**I2C2 GPIO Configuration
   99:Core/Src/stm32f0xx_hal_msp.c ****     PB10     ------> I2C2_SCL
  100:Core/Src/stm32f0xx_hal_msp.c ****     PB11     ------> I2C2_SDA
-ARM GAS  /tmp/ccDzRImU.s 			page 5
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 5
 
 
  101:Core/Src/stm32f0xx_hal_msp.c ****     */
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  161 0032 1B01     		lsls	r3, r3, #4
  162 0034 0393     		str	r3, [sp, #12]
  103:Core/Src/stm32f0xx_hal_msp.c ****     GPIO_InitStruct.Pull = GPIO_PULLUP;
-ARM GAS  /tmp/ccDzRImU.s 			page 6
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 6
 
 
  163              		.loc 1 103 5 is_stmt 1 view .LVU33
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  203              		.align	2
  204              	.L7:
  205 0060 00580040 		.word	1073764352
-ARM GAS  /tmp/ccDzRImU.s 			page 7
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 7
 
 
  206 0064 00100240 		.word	1073876992
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  139:Core/Src/stm32f0xx_hal_msp.c **** 
  140:Core/Src/stm32f0xx_hal_msp.c ****     HAL_GPIO_DeInit(I2C2_SDA_GPIO_Port, I2C2_SDA_Pin);
  141:Core/Src/stm32f0xx_hal_msp.c **** 
-ARM GAS  /tmp/ccDzRImU.s 			page 8
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 8
 
 
  142:Core/Src/stm32f0xx_hal_msp.c ****   /* USER CODE BEGIN I2C2_MspDeInit 1 */
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  286              	.LVL14:
  287              	.LFB46:
  148:Core/Src/stm32f0xx_hal_msp.c **** 
-ARM GAS  /tmp/ccDzRImU.s 			page 9
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 9
 
 
  149:Core/Src/stm32f0xx_hal_msp.c **** /**
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  172:Core/Src/stm32f0xx_hal_msp.c ****     GPIO_InitStruct.Pin = SPI2_SCK_Pin|SPI2_MISO_Pin|SPI2_MOSI_Pin;
  173:Core/Src/stm32f0xx_hal_msp.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
  174:Core/Src/stm32f0xx_hal_msp.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
-ARM GAS  /tmp/ccDzRImU.s 			page 10
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 10
 
 
  175:Core/Src/stm32f0xx_hal_msp.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  166:Core/Src/stm32f0xx_hal_msp.c ****     /**SPI2 GPIO Configuration
  354              		.loc 1 166 5 view .LVU79
  355 003a 5B69     		ldr	r3, [r3, #20]
-ARM GAS  /tmp/ccDzRImU.s 			page 11
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 11
 
 
  356 003c 0B40     		ands	r3, r1
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  401              	.LVL20:
  402              	.LFB47:
  185:Core/Src/stm32f0xx_hal_msp.c **** 
-ARM GAS  /tmp/ccDzRImU.s 			page 12
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 12
 
 
  186:Core/Src/stm32f0xx_hal_msp.c **** /**
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  427              		.loc 1 200 5 is_stmt 1 view .LVU98
  428 000c 064A     		ldr	r2, .L22+4
  429 000e D369     		ldr	r3, [r2, #28]
-ARM GAS  /tmp/ccDzRImU.s 			page 13
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 13
 
 
  430 0010 0649     		ldr	r1, .L22+8
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  475              		.cfi_offset 14, -4
  476 0002 C646     		mov	lr, r8
  477 0004 00B5     		push	{lr}
-ARM GAS  /tmp/ccDzRImU.s 			page 14
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 14
 
 
  478              	.LCFI9:
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  253:Core/Src/stm32f0xx_hal_msp.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  254:Core/Src/stm32f0xx_hal_msp.c ****     GPIO_InitStruct.Alternate = GPIO_AF3_TSC;
  255:Core/Src/stm32f0xx_hal_msp.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-ARM GAS  /tmp/ccDzRImU.s 			page 15
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 15
 
 
  256:Core/Src/stm32f0xx_hal_msp.c **** 
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  529              		.loc 1 233 5 view .LVU117
  530              	.LBB9:
  233:Core/Src/stm32f0xx_hal_msp.c ****     __HAL_RCC_GPIOB_CLK_ENABLE();
-ARM GAS  /tmp/ccDzRImU.s 			page 16
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 16
 
 
  531              		.loc 1 233 5 view .LVU118
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  245:Core/Src/stm32f0xx_hal_msp.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  571              		.loc 1 245 5 is_stmt 1 view .LVU133
  246:Core/Src/stm32f0xx_hal_msp.c ****     GPIO_InitStruct.Alternate = GPIO_AF3_TSC;
-ARM GAS  /tmp/ccDzRImU.s 			page 17
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 17
 
 
  572              		.loc 1 246 5 view .LVU134
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  610              		.loc 1 257 5 view .LVU150
  257:Core/Src/stm32f0xx_hal_msp.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
  611              		.loc 1 257 25 is_stmt 0 view .LVU151
-ARM GAS  /tmp/ccDzRImU.s 			page 18
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 18
 
 
  612 008e 0123     		movs	r3, #1
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  647 00ae 0795     		str	r5, [sp, #28]
  269:Core/Src/stm32f0xx_hal_msp.c **** 
  648              		.loc 1 269 5 is_stmt 1 view .LVU171
-ARM GAS  /tmp/ccDzRImU.s 			page 19
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 19
 
 
  649 00b0 03A9     		add	r1, sp, #12
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  289:Core/Src/stm32f0xx_hal_msp.c **** 
  290:Core/Src/stm32f0xx_hal_msp.c ****   /* USER CODE END TSC_MspDeInit 0 */
  291:Core/Src/stm32f0xx_hal_msp.c ****     /* Peripheral clock disable */
-ARM GAS  /tmp/ccDzRImU.s 			page 20
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 20
 
 
  292:Core/Src/stm32f0xx_hal_msp.c ****     __HAL_RCC_TSC_CLK_DISABLE();
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  723 0030 00100240 		.word	1073876992
  724 0034 FFFFFFFE 		.word	-16777217
  725 0038 00040048 		.word	1207960576
-ARM GAS  /tmp/ccDzRImU.s 			page 21
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 21
 
 
  726              		.cfi_endproc
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  760              	.L36:
  327:Core/Src/stm32f0xx_hal_msp.c ****   /* USER CODE BEGIN USB_MspInit 1 */
  761              		.loc 1 327 5 is_stmt 1 view .LVU190
-ARM GAS  /tmp/ccDzRImU.s 			page 22
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 22
 
 
  762              	.LBB11:
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  343:Core/Src/stm32f0xx_hal_msp.c ****   if(hpcd->Instance==USB)
  804              		.loc 1 343 3 view .LVU198
  805              		.loc 1 343 10 is_stmt 0 view .LVU199
-ARM GAS  /tmp/ccDzRImU.s 			page 23
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 23
 
 
  806 0000 0268     		ldr	r2, [r0]
@@ -1363,8 +1363,8 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  833              		.text
  834              	.Letext0:
  835              		.file 2 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h"
- 836              		.file 3 "/usr/share/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/arm-none-eabi/include/machine
- 837              		.file 4 "/usr/share/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/arm-none-eabi/include/sys/_st
+ 836              		.file 3 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
+ 837              		.file 4 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
  838              		.file 5 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f0xx.h"
  839              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
  840              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio.h"
@@ -1376,38 +1376,38 @@ ARM GAS  /tmp/ccDzRImU.s 			page 1
  846              		.file 13 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tsc.h"
  847              		.file 14 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_cortex.h"
  848              		.file 15 "<built-in>"
-ARM GAS  /tmp/ccDzRImU.s 			page 24
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s 			page 24
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f0xx_hal_msp.c
-     /tmp/ccDzRImU.s:19     .text.HAL_MspInit:00000000 $t
-     /tmp/ccDzRImU.s:25     .text.HAL_MspInit:00000000 HAL_MspInit
-     /tmp/ccDzRImU.s:86     .text.HAL_MspInit:00000038 $d
-     /tmp/ccDzRImU.s:91     .text.HAL_I2C_MspInit:00000000 $t
-     /tmp/ccDzRImU.s:97     .text.HAL_I2C_MspInit:00000000 HAL_I2C_MspInit
-     /tmp/ccDzRImU.s:205    .text.HAL_I2C_MspInit:00000060 $d
-     /tmp/ccDzRImU.s:212    .text.HAL_I2C_MspDeInit:00000000 $t
-     /tmp/ccDzRImU.s:218    .text.HAL_I2C_MspDeInit:00000000 HAL_I2C_MspDeInit
-     /tmp/ccDzRImU.s:271    .text.HAL_I2C_MspDeInit:00000030 $d
-     /tmp/ccDzRImU.s:279    .text.HAL_SPI_MspInit:00000000 $t
-     /tmp/ccDzRImU.s:285    .text.HAL_SPI_MspInit:00000000 HAL_SPI_MspInit
-     /tmp/ccDzRImU.s:387    .text.HAL_SPI_MspInit:0000005c $d
-     /tmp/ccDzRImU.s:394    .text.HAL_SPI_MspDeInit:00000000 $t
-     /tmp/ccDzRImU.s:400    .text.HAL_SPI_MspDeInit:00000000 HAL_SPI_MspDeInit
-     /tmp/ccDzRImU.s:446    .text.HAL_SPI_MspDeInit:00000024 $d
-     /tmp/ccDzRImU.s:454    .text.HAL_TSC_MspInit:00000000 $t
-     /tmp/ccDzRImU.s:460    .text.HAL_TSC_MspInit:00000000 HAL_TSC_MspInit
-     /tmp/ccDzRImU.s:658    .text.HAL_TSC_MspInit:000000bc $d
-     /tmp/ccDzRImU.s:665    .text.HAL_TSC_MspDeInit:00000000 $t
-     /tmp/ccDzRImU.s:671    .text.HAL_TSC_MspDeInit:00000000 HAL_TSC_MspDeInit
-     /tmp/ccDzRImU.s:722    .text.HAL_TSC_MspDeInit:0000002c $d
-     /tmp/ccDzRImU.s:730    .text.HAL_PCD_MspInit:00000000 $t
-     /tmp/ccDzRImU.s:736    .text.HAL_PCD_MspInit:00000000 HAL_PCD_MspInit
-     /tmp/ccDzRImU.s:784    .text.HAL_PCD_MspInit:00000024 $d
-     /tmp/ccDzRImU.s:790    .text.HAL_PCD_MspDeInit:00000000 $t
-     /tmp/ccDzRImU.s:796    .text.HAL_PCD_MspDeInit:00000000 HAL_PCD_MspDeInit
-     /tmp/ccDzRImU.s:827    .text.HAL_PCD_MspDeInit:00000018 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:19     .text.HAL_MspInit:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:25     .text.HAL_MspInit:00000000 HAL_MspInit
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:86     .text.HAL_MspInit:00000038 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:91     .text.HAL_I2C_MspInit:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:97     .text.HAL_I2C_MspInit:00000000 HAL_I2C_MspInit
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:205    .text.HAL_I2C_MspInit:00000060 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:212    .text.HAL_I2C_MspDeInit:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:218    .text.HAL_I2C_MspDeInit:00000000 HAL_I2C_MspDeInit
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:271    .text.HAL_I2C_MspDeInit:00000030 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:279    .text.HAL_SPI_MspInit:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:285    .text.HAL_SPI_MspInit:00000000 HAL_SPI_MspInit
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:387    .text.HAL_SPI_MspInit:0000005c $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:394    .text.HAL_SPI_MspDeInit:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:400    .text.HAL_SPI_MspDeInit:00000000 HAL_SPI_MspDeInit
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:446    .text.HAL_SPI_MspDeInit:00000024 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:454    .text.HAL_TSC_MspInit:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:460    .text.HAL_TSC_MspInit:00000000 HAL_TSC_MspInit
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:658    .text.HAL_TSC_MspInit:000000bc $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:665    .text.HAL_TSC_MspDeInit:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:671    .text.HAL_TSC_MspDeInit:00000000 HAL_TSC_MspDeInit
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:722    .text.HAL_TSC_MspDeInit:0000002c $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:730    .text.HAL_PCD_MspInit:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:736    .text.HAL_PCD_MspInit:00000000 HAL_PCD_MspInit
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:784    .text.HAL_PCD_MspInit:00000024 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:790    .text.HAL_PCD_MspDeInit:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:796    .text.HAL_PCD_MspDeInit:00000000 HAL_PCD_MspDeInit
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cco1qOvD.s:827    .text.HAL_PCD_MspDeInit:00000018 $d
 
 UNDEFINED SYMBOLS
 HAL_NVIC_SetPriority

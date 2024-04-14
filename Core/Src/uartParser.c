@@ -38,10 +38,11 @@ void sendUint16BinToUart(uint16_t x) {
 }
 
 uint8_t parseCmd(void) {
+  uint8_t error = 0;
+  uint8_t speed = 0;
   //Parse words from received command string
   volatile uint8_t strLen = strIndex + 1;
   strIndex = 0;
-  uint8_t error = 0;
   cmdStrIndex = 0;
   cmdIndex = 0;
   while (strIndex < strLen) {
@@ -82,10 +83,65 @@ uint8_t parseCmd(void) {
     }
   } else if (strcmp(cmd[0], "motor") == 0) {
     commandOut |= 0xB000;
+    //Second digit - Motor
+    if (strcmp(cmd[1], "on") == 0) {
+      commandOut |= 0x0100;
+      speed = convertSpeed(cmd[2]);
+    } else if (strcmp(cmd[1], "off") == 0) {
+      commandOut |= 0x0200;
+    } else if (strcmp(cmd[1], "speed") == 0) {
+      commandOut |= 0x0300;
+      speed = convertSpeed(cmd[2]);
+    } else {
+      error = 1;
+    }
+    //Motor speed
+    if (speed == 255)
+      error = 1;
+    else
+      if (speed == 101) {
+        transmitCharArray("Speed limited to 100 RPM");
+        commandOut |= 100U;
+      }
+      else
+        commandOut |= speed;
   } else {
     error = 1;
   }
   return error;
+}
+
+//Convert UART ascii sped into into uint8 to add to command
+uint8_t convertSpeed(char *ascii) {
+  uint8_t tens = 0, ones = 0;
+  //Throw error if speed is not a number
+  for (int i = 0; i < strlen(ascii); i ++){
+    if ((ascii[i] < 48 && ascii[i] != 0) || ascii[i] > 57) {
+      return 255;
+    }
+  }
+  //input >100 gets clamped to 100
+  if (ascii[2] != 0) {
+    if (strcmp(ascii, "100") == 0)
+      return 100;
+    else
+      return 101;
+  }
+  else {
+    //Convert input <100
+    if (ascii[1] == 0) {
+      tens = 0;
+      if (ascii[0] == 0)
+        return 0;
+      else
+      ones = ascii[0] - 48;
+    }
+    else {
+      tens = ascii[0] - 48;
+      ones = ascii[1] - 48;
+    } 
+    return tens*10 + ones;
+  }
 }
 
 /* UART CODE BEGIN Header_StartLEDTask */
@@ -97,11 +153,8 @@ uint8_t parseCmd(void) {
 /* USER CODE END Header_StartLEDTask */
 void StartParseUartTask(void *argument) {
   // TODO: add a timer to limit the max execution time
-  //uint8_t cnt = 0;
 
-  while (1) { // for test, after test, change it back to while (1)
-    //transmitCharArray("cnt\n");
-    //cnt += 1;
+  while (1) {
     //transmitCharArray("Waiting to get sem02.\n");
     osSemaphoreAcquire(binarySem02UartParserHandle, osWaitForever);
     //transmitCharArray("get sem02!\n");
@@ -119,6 +172,7 @@ void StartParseUartTask(void *argument) {
           // Store the commandOut in queue
           if (queuePush(cmdQueue, commandOut) != -1) {
             transmitCharArray("Push command to queue success.\n");
+            transmitCharArray(tmpStr);
             sendUint16BinToUart(commandOut);
           } else {
             transmitCharArray("Fail to push command to queue, try again.\n");
