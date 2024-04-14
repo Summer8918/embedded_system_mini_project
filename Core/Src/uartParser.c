@@ -76,9 +76,24 @@ uint8_t parseCmd(void) {
       commandOut |= 0x0020;
     } else if (strcmp(cmd[2], "toggle") == 0) {
       commandOut |= 0x0030;
+    } else if (strcmp(cmd[2], "blink") == 0) {
+      commandOut |= 0x0040;
+      speed = convertSpeed(cmd[3]);
     } else {
       error = 1;
     }
+
+    //LED blink speed
+    if (speed == 255)
+      error = 1;
+    else 
+      if (speed > 15) {
+        transmitCharArray("Blink speed limited to 1500 ms");
+        commandOut |= 15U;
+      }
+      else
+        commandOut |= speed;
+
   } else if (strcmp(cmd[0], "motor") == 0) {
     commandOut |= 0xB000;
     //Second digit - Motor
@@ -96,9 +111,9 @@ uint8_t parseCmd(void) {
     //Motor speed
     if (speed == 255)
       error = 1;
-    else
-      if (speed == 101) {
-        transmitCharArray("Speed limited to 100 RPM");
+    else 
+      if (speed > 100) {
+        transmitCharArray("Motor speed limited to 100 RPM");
         commandOut |= 100U;
       }
       else
@@ -111,35 +126,37 @@ uint8_t parseCmd(void) {
 
 //Convert UART ascii sped into into uint8 to add to command
 uint8_t convertSpeed(char *ascii) {
-  uint8_t tens = 0, ones = 0;
+  uint8_t hundreds = 0, tens = 0, ones = 0;
   //Throw error if speed is not a number
   for (int i = 0; i < strlen(ascii); i ++){
     if ((ascii[i] < 48 && ascii[i] != 0) || ascii[i] > 57) {
       return 255;
     }
   }
-  //input >100 gets clamped to 100
+  //3 digit number
   if (ascii[2] != 0) {
-    if (strcmp(ascii, "100") == 0)
-      return 100;
-    else
-      return 101;
-  }
-  else {
-    //Convert input <100
-    if (ascii[1] == 0) {
-      tens = 0;
-      if (ascii[0] == 0)
-        return 0;
-      else
-      ones = ascii[0] - 48;
-    }
-    else {
+    hundreds = ascii[0] - 48;
+    tens = ascii[1] - 48;
+    ones = ascii[2] - 48;
+  } else {
+    hundreds = 0;
+    //2 digit number
+    if (ascii[1] != 0) {
       tens = ascii[0] - 48;
       ones = ascii[1] - 48;
-    } 
-    return tens*10 + ones;
+    }
+    else {
+      tens = 0;
+      //1 digit number
+      if (ascii[0] != 0) {
+        ones = ascii[0] - 48;
+      }
+      else {
+        ones = 0;
+      }
+    }
   }
+  return hundreds*100 + tens*10 + ones;
 }
 
 /* UART CODE BEGIN Header_StartLEDTask */
