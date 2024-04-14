@@ -22,9 +22,12 @@
 #include "stm32f072xb.h"
 
 //Global variables
-
 volatile uint16_t commandLED = 0;
 volatile uint16_t commandMotor = 0;
+
+//Semaphores
+osSemaphoreId_t binarySem03LEDWorkerHandle;
+osSemaphoreId_t binarySem04MotorWorkerHandle;
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -534,6 +537,8 @@ void initLEDs(void) {
 /* USER CODE END Header_StartLEDTask */
 void StartLEDTask(void *argument)
 {
+  binarySem03LEDWorkerHandle = osSemaphoreNew(1, 1, NULL);
+
   extern volatile uint16_t commandLED;
   //command 0xA-color-action-unused
   volatile uint32_t color;
@@ -541,6 +546,7 @@ void StartLEDTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
+    osSemaphoreAcquire(binarySem03LEDWorkerHandle, osWaitForever);
     switch (commandLED & 0x0F00) {    
       //Red LED - PC6
       case 0x0100:  
@@ -574,8 +580,7 @@ void StartLEDTask(void *argument)
       default:
     }
     commandLED = 0;
-    //Placeholder for task priorities
-    osDelay(1);
+    osSemaphoreRelease(binarySem03LEDWorkerHandle);
   }
 }
 

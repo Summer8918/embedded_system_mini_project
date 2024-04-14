@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "cmsis_os2.h": "c",
+        "uartparser.h": "c"
+    }
+}
