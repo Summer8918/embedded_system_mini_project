@@ -560,23 +560,62 @@ void StartLEDTask(void *argument)
       //On
       case 1:
         GPIOC->ODR |= colorMask[LEDColor-1];
-        blink[LEDColor-1] = 0;
+        if (LEDColor == 5) {
+          blink[0] = 0;
+          blink[1] = 0;
+          blink[2] = 0;
+          blink[3] = 0;
+        }
+        else
+          blink[LEDColor-1] = 0;
         break;
       //Off
       case 2:
         GPIOC->ODR &= ~colorMask[LEDColor-1];
-        blink[LEDColor-1] = 0;
+        if (LEDColor == 5) {
+          blink[0] = 0;
+          blink[1] = 0;
+          blink[2] = 0;
+          blink[3] = 0;
+        }
+        else
+          blink[LEDColor-1] = 0;
         break;
       //Toggle
       case 3:
         GPIOC->ODR ^= colorMask[LEDColor-1];
-        blink[LEDColor-1] = 0;
+        if (LEDColor == 5) {
+          blink[0] = 0;
+          blink[1] = 0;
+          blink[2] = 0;
+          blink[3] = 0;
+        }
+        else
+          blink[LEDColor-1] = 0;
         break;
       //Blink
       case 4:
-        blink[LEDColor-1] = 1;
+        if (LEDColor == 5) {
+          blink[0] = 1;
+          blink[1] = 1;
+          blink[2] = 1;
+          blink[3] = 1;
+        }
+        else
+          blink[LEDColor-1] = 1;
         break;
       default:
+    }
+
+    //Blinking
+    currentTime = xTaskGetTickCount();
+    for (int i = 0; i < 4; i++) {
+      if (blink[i]) {
+        if (currentTime - startTime[i] > 500) {
+          GPIOC->ODR ^= colorMask[i];
+          startTime[i] = currentTime;
+        }
+      }
     }
 
     commandLED = 0;
