@@ -55,30 +55,36 @@ uint8_t parseCmd(void) {
   } 
   //Convert words into command format
   //First digit
-  if (strcmp(cmd[0], "led") == 0) {
+  if (strcasecmp(cmd[0], "led") == 0) {
     commandOut |= 0xA000;
     //Second digit - LED
-    if (strcmp(cmd[1], "red") == 0) {
+    if (strcasecmp(cmd[1], "red") == 0) {
       commandOut |= 0x0100;
-    } else if (strcmp(cmd[1], "green") == 0) {
+    } else if (strcasecmp(cmd[1], "green") == 0) {
       commandOut |= 0x0200;
-    } else if (strcmp(cmd[1], "blue") == 0) {
+    } else if (strcasecmp(cmd[1], "blue") == 0) {
       commandOut |= 0x0300;
-    } else if (strcmp(cmd[1], "orange") == 0) {
+    } else if (strcasecmp(cmd[1], "orange") == 0) {
       commandOut |= 0x0400;
-    } else if (strcmp(cmd[1], "all") == 0) {
+    } else if (strcasecmp(cmd[1], "all") == 0) {
       commandOut |= 0x0500;
     }else {
       error = 1;
     }
     //Third digit - LED
-    if (strcmp(cmd[2], "on") == 0) {
+    if (strcasecmp(cmd[2], "on") == 0) {
       commandOut |= 0x0010;
-    } else if (strcmp(cmd[2], "off") == 0) {
+      if (cmd[3][0] != '\0')
+        error = 1;
+    } else if (strcasecmp(cmd[2], "off") == 0) {
       commandOut |= 0x0020;
-    } else if (strcmp(cmd[2], "toggle") == 0) {
+      if (cmd[3][0] != '\0')
+        error = 1;
+    } else if (strcasecmp(cmd[2], "toggle") == 0) {
       commandOut |= 0x0030;
-    } else if (strcmp(cmd[2], "blink") == 0) {
+      if (cmd[3][0] != '\0')
+        error = 1;
+    } else if (strcasecmp(cmd[2], "blink") == 0) {
       commandOut |= 0x0040;
       speed = convertSpeed(cmd[3]);
     } else {
@@ -96,20 +102,26 @@ uint8_t parseCmd(void) {
       else
         commandOut |= speed;
 
-  } else if (strcmp(cmd[0], "motor") == 0) {
+  } else if (strcasecmp(cmd[0], "motor") == 0) {
     commandOut |= 0xB000;
     //Second digit - Motor
-    if (strcmp(cmd[1], "on") == 0) {
+    if (strcasecmp(cmd[1], "on") == 0) {
       commandOut |= 0x0100;
       speed = convertSpeed(cmd[2]);
-    } else if (strcmp(cmd[1], "off") == 0) {
+    } else if (strcasecmp(cmd[1], "off") == 0) {
       commandOut |= 0x0200;
-    } else if (strcmp(cmd[1], "speed") == 0) {
+      if (cmd[2][0] != '\0')
+        error = 1;
+    } else if (strcasecmp(cmd[1], "speed") == 0) {
       commandOut |= 0x0300;
       speed = convertSpeed(cmd[2]);
     } else {
       error = 1;
     }
+
+    if (cmd[3][0] != '\0')
+      error = 1;
+
     //Motor speed
     if (speed == 255)
       error = 1;
@@ -225,7 +237,7 @@ void StartParseUartTask(void *argument) {
         strIndex += 1;
         //Command too long
         if (strIndex == TMP_STR_LEN) {
-      	  transmitCharArray("Command is too long!");
+      	  transmitCharArray("\n\rCommand is too long!");
           strIndex = 0;
           for (uint8_t i = 0; i < TMP_STR_LEN; i++){
             tmpStr[i] = '\0';
