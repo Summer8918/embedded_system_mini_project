@@ -566,6 +566,9 @@ void StartLEDTask(void *argument)
       case 0x0400:
         color = GPIO_ODR_8;
         break;
+      case 0x0500:
+        color = GPIO_ODR_6 | GPIO_ODR_7 | GPIO_ODR_8 | GPIO_ODR_9;
+        break;
       default:
     }
 

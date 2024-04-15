@@ -66,7 +66,9 @@ uint8_t parseCmd(void) {
       commandOut |= 0x0300;
     } else if (strcmp(cmd[1], "orange") == 0) {
       commandOut |= 0x0400;
-    } else {
+    } else if (strcmp(cmd[1], "all") == 0) {
+      commandOut |= 0x0500;
+    }else {
       error = 1;
     }
     //Third digit - LED
