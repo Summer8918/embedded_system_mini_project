@@ -162,7 +162,7 @@ int main(void)
   routerTaskHandle = osThreadNew(StartRouterTask, NULL, &routerTask_attributes);
   /* creation of LEDTask */
   LEDTaskHandle = osThreadNew(StartLEDTask, NULL, &LEDTask_attributes);
-  /* creation of UART Task */
+  /* creation of UARTTask */
   UARTTaskHandle = osThreadNew(StartParseUartTask, NULL, &UARTTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -540,56 +540,47 @@ void StartLEDTask(void *argument)
   binarySem03LEDWorkerHandle = osSemaphoreNew(1, 1, NULL);
 
   extern volatile uint16_t commandLED;
-  //command 0xA-color-action-unused
-  volatile uint32_t color;
+  volatile uint8_t LEDColor = 0, LEDAction = 0, LEDSpeed = 0;
+  volatile uint32_t colorMask[5] = {GPIO_ODR_6, GPIO_ODR_9, GPIO_ODR_7, GPIO_ODR_8, GPIO_ODR_6 | GPIO_ODR_7 | GPIO_ODR_8 | GPIO_ODR_9};
   volatile uint8_t blink[4] = {0,0,0,0};
-  uint16_t blinkTicks[4] = {0,0,0,0};
+  volatile uint8_t blinkTime[4] = {0,0,0,0};
+  volatile uint32_t startTime[4] = {0,0,0,0};
+  volatile uint32_t currentTime = 0;
 
   /* Infinite loop */
   for(;;)
   {
     osSemaphoreAcquire(binarySem03LEDWorkerHandle, osWaitForever);
-    switch (commandLED & 0x0F00) {    
-      //Red LED - PC6
-      case 0x0100:  
-        color = GPIO_ODR_6;
+
+    LEDColor = (commandLED & 0x0F00) >> 8;
+    LEDAction = (commandLED & 0x00F0) >> 4;
+
+    //LED action
+    switch (LEDAction) {
+      //On
+      case 1:
+        GPIOC->ODR |= colorMask[LEDColor-1];
+        blink[LEDColor-1] = 0;
         break;
-      //Green LED - PC9
-      case 0x0200:
-        color = GPIO_ODR_9;
+      //Off
+      case 2:
+        GPIOC->ODR &= ~colorMask[LEDColor-1];
+        blink[LEDColor-1] = 0;
         break;
-      //Blue LED - PC7  
-      case 0x0300:
-        color = GPIO_ODR_7;
+      //Toggle
+      case 3:
+        GPIOC->ODR ^= colorMask[LEDColor-1];
+        blink[LEDColor-1] = 0;
         break;
-      //Orange LED - PC8
-      case 0x0400:
-        color = GPIO_ODR_8;
-        break;
-      case 0x0500:
-        color = GPIO_ODR_6 | GPIO_ODR_7 | GPIO_ODR_8 | GPIO_ODR_9;
+      //Blink
+      case 4:
+        blink[LEDColor-1] = 1;
         break;
       default:
     }
 
-    switch (commandLED & 0x00F0) {
-      case 0x0010:
-        GPIOC->ODR |= color;
-        blink[(((commandLED & 0x0F00) >> 8)-1)] = 0;
-        break;
-      case 0x0020:
-        GPIOC->ODR &= ~color;
-        blink[(((commandLED & 0x0F00) >> 8)-1)] = 0;
-        break;
-      case 0x0030:
-        GPIOC->ODR ^= color;
-        break;
-      case 0x0040:
-        blink[(((commandLED & 0x0F00) >> 8)-1)] = 1;
-        break;
-      default:
-    }
     commandLED = 0;
+
     osSemaphoreRelease(binarySem03LEDWorkerHandle);
   }
 }
