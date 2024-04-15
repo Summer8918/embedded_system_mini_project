@@ -210,9 +210,15 @@ void StartParseUartTask(void *argument) {
 
         //Reset commandOut before starting next command receive
         commandOut = 0;
-        //transmitCharArray("break\n");
         break;
-	    } else {
+      //Allow backspace/delete key to undo last character
+	    } else if (usartReceivedData == 8 || usartReceivedData == 127) {
+          if (strIndex > 0) {
+            strIndex -= 1;
+            tmpStr[strIndex] = '\0';
+          }
+      } 
+      else {
         tmpStr[strIndex] = usartReceivedData;
         strIndex += 1;
         //Command too long
