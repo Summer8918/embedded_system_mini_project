@@ -597,12 +597,17 @@ void StartLEDTask(void *argument)
       case 4:
         if (LEDColor == 5) {
           blink[0] = 1;
+          blinkTime[0] = commandLED & 0xF;
           blink[1] = 1;
+          blinkTime[1] = commandLED & 0xF;
           blink[2] = 1;
+          blinkTime[2] = commandLED & 0xF;
           blink[3] = 1;
+          blinkTime[3] = commandLED & 0xF;
         }
         else
           blink[LEDColor-1] = 1;
+          blinkTime[LEDColor-1] = commandLED & 0xF;
         break;
       default:
     }
@@ -611,11 +616,13 @@ void StartLEDTask(void *argument)
     currentTime = xTaskGetTickCount();
     for (int i = 0; i < 4; i++) {
       if (blink[i]) {
-        if (currentTime - startTime[i] > 500) {
+        if (currentTime - startTime[i] > blinkTime[i]*100) {
           GPIOC->ODR ^= colorMask[i];
           startTime[i] = currentTime;
         }
       }
+      else
+        startTime[i] = currentTime;
     }
 
     commandLED = 0;
