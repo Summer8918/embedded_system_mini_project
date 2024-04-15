@@ -8,7 +8,7 @@
 #include "cmdQueue.h"
 
 #define TMP_STR_LEN 20
-#define CMD_QUEUE_CAPACITY 20
+#define CMD_QUEUE_CAPACITY 5
 
 void initUsart3(void);
 

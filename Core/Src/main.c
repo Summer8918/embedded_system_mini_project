@@ -542,6 +542,8 @@ void StartLEDTask(void *argument)
   extern volatile uint16_t commandLED;
   //command 0xA-color-action-unused
   volatile uint32_t color;
+  volatile uint8_t blink[4] = {0,0,0,0};
+  uint16_t blinkTicks[4] = {0,0,0,0};
 
   /* Infinite loop */
   for(;;)
@@ -570,12 +572,17 @@ void StartLEDTask(void *argument)
     switch (commandLED & 0x00F0) {
       case 0x0010:
         GPIOC->ODR |= color;
+        blink[(((commandLED & 0x0F00) >> 8)-1)] = 0;
         break;
       case 0x0020:
         GPIOC->ODR &= ~color;
+        blink[(((commandLED & 0x0F00) >> 8)-1)] = 0;
         break;
       case 0x0030:
         GPIOC->ODR ^= color;
+        break;
+      case 0x0040:
+        blink[(((commandLED & 0x0F00) >> 8)-1)] = 1;
         break;
       default:
     }
