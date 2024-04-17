@@ -607,6 +607,7 @@ void StartLEDTask(void *argument)
 void StartMotorTask(void *argument)
 {
   extern volatile uint16_t commandMotor;
+  int speedAdjust = 0; // bool if speed needs to be adjusted, 3rd and 4th digit
   //command 0xB-[1/2/3/4]
   /* 2nd Digit
   *   - 1: Turn motor on (enable 3rd and 4th digit)
@@ -620,20 +621,28 @@ void StartMotorTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    switch (commandMotor & 0x00F0) { // [To do] : This mask may be incorrect, need to figure out motor
+    // 1st character (turn motor on, off, or adjust speed)
+    switch (commandMotor & 0x0F00) { 
       case 0x0010: 
-        
+        // turn motor on (will need to adjust speed)
+        speedAdjust = 1;
         break;
       case 0x0020:
-        
+        // turn motor off
         break;
       case 0x0030:
-    
-        break;
-      case 0x0040:
-    
+        // change motor speed 
+        speedAdjust = 1;
         break;
       default:
+        break;
+    }
+    if (speedAdjust == 1){
+      // 2nd & 3rd character
+      switch (commandMotor & 0x00FF) { 
+        // set motor speed here
+      }
+      
     }
     commandMotor = 0;
     //Placeholder for task priorities
