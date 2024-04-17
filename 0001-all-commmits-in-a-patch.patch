@@ -1,0 +1,521 @@
+From 06b95e513728d07c582167d2d406c494ac1959f2 Mon Sep 17 00:00:00 2001
+From: sanjaygounder <sanjaymgounder@gmail.com>
+Date: Wed, 17 Apr 2024 15:20:03 -0600
+Subject: [PATCH] all commmits in a patch
+
+---
+ Core/Inc/motor.h |  52 +++++++++++
+ Core/Src/main.c  | 139 +++++++++++++++++++++++------
+ Core/Src/motor.c | 227 +++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 389 insertions(+), 29 deletions(-)
+ create mode 100644 Core/Inc/motor.h
+ create mode 100644 Core/Src/motor.c
+
+diff --git a/Core/Inc/motor.h b/Core/Inc/motor.h
+new file mode 100644
+index 0000000..0db0f31
+--- /dev/null
++++ b/Core/Inc/motor.h
+@@ -0,0 +1,52 @@
++
++#ifndef MOTOR_H_
++#define MOTOR_H_
++
++#include <stdio.h>
++#include <stdlib.h>
++#include "stm32f0xx.h"
++
++/* -------------------------------------------------------------------------------------------------------------
++ *  Global Variable and Type Declarations
++ *  -------------------------------------------------------------------------------------------------------------
++ */
++extern volatile int16_t error_integral;    // Integrated error signal
++extern volatile uint8_t duty_cycle;    // Output PWM duty cycle
++extern volatile int16_t target_rpm;    // Desired speed target
++extern volatile int16_t motor_speed;   // Measured motor speed
++extern volatile int8_t adc_value;      // ADC measured motor current
++extern volatile int16_t error;         // Speed error signal
++extern volatile uint8_t Kp;            // Proportional gain
++extern volatile uint8_t Ki;            // Integral gain
++
++
++/* -------------------------------------------------------------------------------------------------------------
++ *  Motor Control and Initialization Functions
++ * -------------------------------------------------------------------------------------------------------------
++ */
++
++// Sets up the entire motor drive system
++void motor_init(void);
++
++// Set the duty cycle of the PWM, accepts (0-100)
++void pwm_setDutyCycle(uint8_t duty);
++
++// PI control code is called within a timer interrupt
++void PI_update(void);
++
++
++/* -------------------------------------------------------------------------------------------------------------
++ *  Internal-Use Initialization Functions
++ * -------------------------------------------------------------------------------------------------------------
++ */
++
++// Sets up the PWM and direction signals to drive the H-Bridge
++void pwm_init(void);
++
++// Sets up encoder interface to read motor speed
++void encoder_init(void);
++
++// Sets up ADC to measure motor current
++void ADC_init(void);
++
++#endif /* MOTOR_H_ */
+diff --git a/Core/Src/main.c b/Core/Src/main.c
+index e4dbf87..d80efaa 100644
+--- a/Core/Src/main.c
++++ b/Core/Src/main.c
+@@ -20,7 +20,12 @@
+ #include "main.h"
+ #include "cmsis_os.h"
+ #include "stm32f072xb.h"
+ 
++/**************** IN MOTOR WORKER ****************/
++
++/**************** IN MOTOR WORKER ****************/
+ /* Private includes ----------------------------------------------------------*/
+ /* USER CODE BEGIN Includes */
+ 
+@@ -49,6 +54,11 @@ SPI_HandleTypeDef hspi2;
+ TSC_HandleTypeDef htsc;
+ 
+ PCD_HandleTypeDef hpcd_USB_FS;
++
++/* For motor */
++volatile uint32_t debouncer; 
++// The speed we are setting the motor to (3rd and 4th digits)
++volatile uint16_t target_rpm = 0;
+ /* Definitions for task router */
+ osThreadId_t routerTaskHandle;
+ const osThreadAttr_t routerTask_attributes = {
+@@ -78,16 +88,9 @@ static void MX_SPI2_Init(void);
+ static void MX_TSC_Init(void);
+ static void MX_USB_PCD_Init(void);
+ void StartRouterTask(void *argument);
++void StartMotorTask(void *argument);
+ void StartLEDTask(void *argument);
+ void initLEDs(void);
+-/* USER CODE BEGIN PFP */
+-
+-/* USER CODE END PFP */
+-
+-/* Private user code ---------------------------------------------------------*/
+-/* USER CODE BEGIN 0 */
+-
+-/* USER CODE END 0 */
+ 
+ /**
+   * @brief  The application entry point.
+@@ -95,39 +98,28 @@ void initLEDs(void);
+   */
+ int main(void)
+ {
+-
+-  /* USER CODE BEGIN 1 */
+-
+-  /* USER CODE END 1 */
++  debouncer = 0;
++  volatile uint32_t encoder_count = 0;
+ 
+   /* MCU Configuration--------------------------------------------------------*/
+ 
+   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+   HAL_Init();
+ 
+-  /* USER CODE BEGIN Init */
+-
+-  /* USER CODE END Init */
+-
+   /* Configure the system clock */
+   SystemClock_Config();
+ 
+-  /* USER CODE BEGIN SysInit */
+-
+-  /* USER CODE END SysInit */
+-
+   /* Initialize all configured peripherals */
+   MX_GPIO_Init();
+   MX_I2C2_Init();
+   MX_SPI2_Init();
+   MX_TSC_Init();
+   MX_USB_PCD_Init();
++  // Initialize button --> Will need to re-configure for milestone #4, this is here for testing purposes to ensure motor is working properly
++  button_init(); 
+ 
+   initUsart3();
+   initLEDs();
+-  /* USER CODE BEGIN 2 */
+-
+-  /* USER CODE END 2 */
+ 
+   /* Init scheduler */
+   osKernelInitialize();
+@@ -171,14 +163,51 @@ int main(void)
+   /* We should never get here as control is now taken by the scheduler */
+ 
+   /* Infinite loop */
+-  /* USER CODE BEGIN WHILE */
+   while (1)
+   {
+-    /* USER CODE END WHILE */
+-
+-    /* USER CODE BEGIN 3 */
++    /* For turning on the motor */
++    encoder_count = TIM2->CNT;
++    HAL_Delay(128);                      // Delay 1/8 second
+   }
+-  /* USER CODE END 3 */
++}
++
++void  button_init(void) {
++    // Initialize PA0 for button input
++    RCC->AHBENR |= RCC_AHBENR_GPIOAEN;                                          // Enable peripheral clock to GPIOA
++    GPIOA->MODER &= ~(GPIO_MODER_MODER0_0 | GPIO_MODER_MODER0_1);               // Set PA0 to input
++    GPIOC->OSPEEDR &= ~(GPIO_OSPEEDR_OSPEEDR0_0 | GPIO_OSPEEDR_OSPEEDR0_1);     // Set to low speed
++    GPIOC->PUPDR |= GPIO_PUPDR_PUPDR0_1;                                        // Set to pull-down
++}
++
++/* Called by SysTick Interrupt
++ * Performs button debouncing, changes wave type on button rising edge
++ * Updates frequency output from ADC value
++ */
++void HAL_SYSTICK_Callback(void) {
++    // Remember that this function is called by the SysTick interrupt
++    // You can't call any functions in here that use delay
++
++    debouncer = (debouncer << 1);
++    if(GPIOA->IDR & (1 << 0)) {
++        debouncer |= 0x1;
++    }
++
++    if(debouncer == 0x7FFFFFFF) {
++    switch(target_rpm) {
++        case 80:
++            target_rpm = 50;
++            break;
++        case 50:
++            target_rpm = 81;
++            break;
++        case 0:
++            target_rpm = 80;
++            break;
++        default:
++            target_rpm = 0;
++            break;
++        }
++    }
+ }
+ 
+ /**
+@@ -521,7 +550,7 @@ void initLEDs(void) {
+   * @brief  Function implementing the LEDTask thread.
+   * @param  argument: Not used
+   * @retval None
+-  */
++  */ 
+ /* USER CODE END Header_StartLEDTask */
+ void StartLEDTask(void *argument)
+ {
+@@ -570,6 +599,58 @@ void StartLEDTask(void *argument)
+   }
+ }
+ 
++/* USER CODE BEGIN Header_StartLEDTask */
++/**
++  * @brief  Function implementing the MotorTask thread.
++  * @param  argument: Not used
++  * @retval None
++  */ 
++/* USER CODE END Header_StartLEDTask */
++void StartMotorTask(void *argument)
++{
++  extern volatile uint16_t commandMotor;
++  int speedAdjust = 0; // boolean that says if speed needs to be adjusted: speed accounted for 3rd and 4th digit
++  //command 0xB-[1/2/3/4]
++  /* 2nd Digit
++  *   - 1: Turn motor on (enable 3rd and 4th digit)
++  *   - 2: Turn motor off
++  *   - 3: Change motor speed (enable 3rd and 4th digit)
++  * 3rd & 4th Digit: RPM of speed --> Clamped at < 100, done in motor.c 
++  */
++
++  /* Infinite loop */
++  for(;;)
++  {
++    extern volatile uint16_t commandMotor;
++    // 1st character (turn motor on, off, or adjust speed)
++    switch (commandMotor & 0x0F00) { 
++      case 0x0010: 
++        // turn motor on (will need to adjust speed)
++        speedAdjust = 1;
++        break;
++      case 0x0020:
++        // turn motor off
++        break;
++      case 0x0030:
++        // change motor speed 
++        speedAdjust = 1;
++        break;
++      default:
++        break;
++    }
++    if (speedAdjust == 1){
++      // 2nd & 3rd character
++      target_rpm = (commandMotor & 0x00FF);
++      
++      
++    }
++    commandMotor = 0;
++    speedAdjust = 0;
++    //Placeholder for task priorities
++    osDelay(1);
++  }
++}
++
+ /**
+   * @brief  Period elapsed callback in non blocking mode
+   * @note   This function is called  when TIM6 interrupt took place, inside
+diff --git a/Core/Src/motor.c b/Core/Src/motor.c
+new file mode 100644
+index 0000000..bc7143d
+--- /dev/null
++++ b/Core/Src/motor.c
+@@ -0,0 +1,227 @@
++/* -------------------------------------------------------------------------------------------------------------
++ *  Motor Control and Initialization Functions
++ * -------------------------------------------------------------------------------------------------------------
++ */
++#include "motor.h"
++#include "stm32f0xx.h"
++#include "stm32f072xb.h"
++
++volatile int16_t error_integral = 0;    // Integrated error signal
++volatile uint8_t duty_cycle = 0;    	// Output PWM duty cycle
++// volatile int16_t target_rpm = 0;    	// Desired speed target
++//Global variables to pass command to worker threads
++extern volatile uint16_t target_rpm;
++volatile int16_t motor_speed = 0;   	// Measured motor speed
++volatile int8_t adc_value = 0;      	// ADC measured motor current
++volatile int16_t error = 0;         	// Speed error signal
++volatile uint8_t Kp = 1;            	// Proportional gain
++volatile uint8_t Ki = 1;            	// Integral gain
++
++// Sets up the entire motor drive system
++void motor_init(void) {
++    pwm_init();
++    encoder_init();
++    ADC_init();
++}
++
++// Sets up the PWM and direction signals to drive the H-Bridge
++void pwm_init(void) {
++    
++    // Set up pin PA4 for H-bridge PWM output (TIMER 14 CH1)
++    GPIOA->MODER |= (1 << 9);
++    GPIOA->MODER &= ~(1 << 8);
++
++    // Set PA4 to AF4,
++    GPIOA->AFR[0] &= 0xFFF0FFFF; // clear PA4 bits,
++    GPIOA->AFR[0] |= (1 << 18);
++
++    // Set up a PA5, PA6 as GPIO output pins for motor direction control
++    GPIOA->MODER &= 0xFFFFC3FF; // clear PA5, PA6 bits,
++    GPIOA->MODER |= (1 << 10) | (1 << 12);
++    
++    //Initialize one direction pin to high, the other low
++    GPIOA->ODR |= (1 << 5);
++    GPIOA->ODR &= ~(1 << 6);
++
++    // Set up PWM timer
++    RCC->APB1ENR |= RCC_APB1ENR_TIM14EN;
++    TIM14->CR1 = 0;                         // Clear control registers
++    TIM14->CCMR1 = 0;                       // (prevents having to manually clear bits)
++    TIM14->CCER = 0;
++
++    // Set output-compare CH1 to PWM1 mode and enable CCR1 preload buffer
++    TIM14->CCMR1 |= (TIM_CCMR1_OC1M_2 | TIM_CCMR1_OC1M_1 | TIM_CCMR1_OC1PE);
++    TIM14->CCER |= TIM_CCER_CC1E;           // Enable capture-compare channel 1
++    TIM14->PSC = 1;                         // Run timer on 24Mhz
++    TIM14->ARR = 1200;                      // PWM at 20kHz
++    TIM14->CCR1 = 0;                        // Start PWM at 0% duty cycle
++    
++    TIM14->CR1 |= TIM_CR1_CEN;              // Enable timer
++}
++
++// Set the duty cycle of the PWM, accepts (0-100)
++void pwm_setDutyCycle(uint8_t duty) {
++    if(duty <= 100) {
++        TIM14->CCR1 = ((uint32_t)duty*TIM14->ARR)/100;  // Use linear transform to produce CCR1 value
++        // (CCR1 == "pulse" parameter in PWM struct used by peripheral library)
++    }
++}
++
++// Sets up encoder interface to read motor speed
++void encoder_init(void) {
++    
++    // Set up encoder input pins (TIMER 3 CH1 and CH2)
++    RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
++
++    // PB4(ENCA) and PB5(ENCB) are encoder 
++    GPIOB->MODER &= ~(GPIO_MODER_MODER4_0 | GPIO_MODER_MODER5_0);
++    GPIOB->MODER |= (GPIO_MODER_MODER4_1 | GPIO_MODER_MODER5_1);
++    GPIOB->AFR[0] |= ( (1 << 16) | (1 << 20) );
++
++    // Set up encoder interface (TIM3 encoder input mode)
++    RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
++    TIM3->CCMR1 = 0;
++    TIM3->CCER = 0;
++    TIM3->SMCR = 0;
++    TIM3->CR1 = 0;
++
++    TIM3->CCMR1 |= (TIM_CCMR1_CC1S_0 | TIM_CCMR1_CC2S_0);   // TI1FP1 and TI2FP2 signals connected to CH1 and CH2
++    TIM3->SMCR |= (TIM_SMCR_SMS_1 | TIM_SMCR_SMS_0);        // Capture encoder on both rising and falling edges
++    TIM3->ARR = 0xFFFF;                                     // Set ARR to top of timer (longest possible period)
++    TIM3->CNT = 0x7FFF;                                     // Bias at midpoint to allow for negative rotation
++    // (Could also cast unsigned register to signed number to get negative numbers if it rotates backwards past zero
++    //  just another option, the mid-bias is a bit simpler to understand though.)
++    TIM3->CR1 |= TIM_CR1_CEN;                               // Enable timer
++
++    // Configure a second timer (TIM6) to fire an ISR on update event
++    // Used to periodically check and update speed variable
++    RCC->APB1ENR |= RCC_APB1ENR_TIM6EN;
++    
++    // Select PSC and ARR values that give an appropriate interrupt rate
++    TIM6->PSC = 11;
++    TIM6->ARR = 30000;
++    
++    TIM6->DIER |= TIM_DIER_UIE;             // Enable update event interrupt
++    TIM6->CR1 |= TIM_CR1_CEN;               // Enable Timer
++
++    NVIC_EnableIRQ(TIM6_DAC_IRQn);          // Enable interrupt in NVIC
++    NVIC_SetPriority(TIM6_DAC_IRQn,2);
++}
++
++// Encoder interrupt to calculate motor speed, also manages PI controller
++void TIM6_DAC_IRQHandler(void) {
++    /* Calculate the motor speed in raw encoder counts
++     * Note the motor speed is signed! Motor can be run in reverse.
++     * Speed is measured by how far the counter moved from center point
++     */
++    motor_speed = (TIM3->CNT - 0x7FFF);
++    TIM3->CNT = 0x7FFF; // Reset back to center point
++    
++    // Call the PI update function
++    PI_update();
++
++    TIM6->SR &= ~TIM_SR_UIF;        // Acknowledge the interrupt
++}
++
++void ADC_init(void) {
++
++    // Configure PA1 for ADC input (used for current monitoring)
++    GPIOA->MODER |= (GPIO_MODER_MODER1_0 | GPIO_MODER_MODER1_1);
++
++    // Configure ADC to 8-bit continuous-run mode, (asynchronous clock mode)
++    RCC->APB2ENR |= RCC_APB2ENR_ADCEN;
++
++    ADC1->CFGR1 = 0;                        // Default resolution is 12-bit (RES[1:0] = 00 --> 12-bit)
++    ADC1->CFGR1 |= ADC_CFGR1_CONT;          // Set to continuous mode
++    ADC1->CHSELR |= ADC_CHSELR_CHSEL1;      // Enable channel 1
++
++    ADC1->CR = 0;
++    ADC1->CR |= ADC_CR_ADCAL;               // Perform self calibration
++    while(ADC1->CR & ADC_CR_ADCAL);         // Delay until calibration is complete
++
++    ADC1->CR |= ADC_CR_ADEN;                // Enable ADC
++    while(!(ADC1->ISR & ADC_ISR_ADRDY));    // Wait until ADC ready
++    ADC1->CR |= ADC_CR_ADSTART;             // Signal conversion start
++}
++
++void PI_update(void) {
++    
++    /* Run PI control loop
++     *
++     * Make sure to use the indicated variable names. This allows STMStudio to monitor
++     * the condition of the system!
++     *
++     * target_rpm -> target motor speed in RPM
++     * motor_speed -> raw motor speed in encoder counts
++     * error -> error signal (difference between measured speed and target)
++     * error_integral -> integrated error signal
++     * Kp -> Proportional Gain
++     * Ki -> Integral Gain
++     * output -> raw output signal from PI controller
++     * duty_cycle -> used to report the duty cycle of the system 
++     * adc_value -> raw ADC counts to report current
++     *
++     */
++    
++    /// TODO: calculate error signal and write to "error" variable
++    error = target_rpm - motor_speed/2; // 2-to-1 conversion
++    
++    /* Hint: Remember that your calculated motor speed may not be directly in RPM!
++     *       You will need to convert the target or encoder speeds to the same units.
++     *       I recommend converting to whatever units result in larger values, gives
++     *       more resolution.
++     */
++    
++    
++    /// TODO: Calculate integral portion of PI controller, write to "error_integral" variable
++    error_integral = error_integral + Ki * error; 
++    
++    /// TODO: Clamp the value of the integral to a limited positive range
++    
++    /* Hint: The value clamp is needed to prevent excessive "windup" in the integral.
++     *       You'll read more about this for the post-lab. The exact value is arbitrary
++     *       but affects the PI tuning.
++     *       Recommend that you clamp between 0 and 3200 (what is used in the lab solution)
++     */
++    
++    if (error_integral < 0) {
++        error_integral = 0;
++    }
++
++    else if (error_integral > 3200){
++        error_integral = 3200;
++    }
++    /// TODO: Calculate proportional portion, add integral and write to "output" variable
++    int16_t output = (Kp * error) + error_integral; // Change this!
++    
++    
++    /* Because the calculated values for the PI controller are significantly larger than 
++     * the allowable range for duty cycle, you'll need to divide the result down into 
++     * an appropriate range. (Maximum integral clamp / X = 100% duty cycle)
++     * 
++     * Hint: If you chose 3200 for the integral clamp you should divide by 32 (right shift by 5 bits), 
++     *       this will give you an output of 100 at maximum integral "windup".
++     *
++     * This division also turns the above calculations into pseudo fixed-point. This is because
++     * the lowest 5 bits act as if they were below the decimal point until the division where they
++     * were truncated off to result in an integer value. 
++     *
++     * Technically most of this is arbitrary, in a real system you would want to use a fixed-point
++     * math library. The main difference that these values make is the difference in the gain values
++     * required for tuning.
++     */
++
++     /// TODO: Divide the output into the proper range for output adjustment
++     output = output / 32;
++     /// TODO: Clamp the output value between 0 and 100 
++    if (output < 0) output = 0;
++    else if (output > 100) output = 100;
++    pwm_setDutyCycle(output);
++    duty_cycle = output;            // For debug viewing
++
++    // Read the ADC value for current monitoring, actual conversion into meaningful units 
++    // will be performed by STMStudio
++    if(ADC1->ISR & ADC_ISR_EOC) {   // If the ADC has new data for us
++        adc_value = ADC1->DR;       // Read the motor current for debug viewing
++    }
++}
+-- 
+2.39.2 (Apple Git-143)
+

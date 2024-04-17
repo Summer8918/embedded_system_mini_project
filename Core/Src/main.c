@@ -20,6 +20,8 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "stm32f072xb.h"
+#include "motor.h"
+#include "motor.c"
 
 //Global variables
 volatile uint16_t commandLED = 0;
@@ -55,6 +57,10 @@ I2C_HandleTypeDef hi2c2;
 SPI_HandleTypeDef hspi2;
 
 TSC_HandleTypeDef htsc;
+/* For motor */
+volatile uint32_t debouncer; 
+// The speed we are setting the motor to (3rd and 4th digits)
+volatile uint16_t target_rpm = 0;
 
 PCD_HandleTypeDef hpcd_USB_FS;
 /* Definitions for task router */
@@ -86,6 +92,7 @@ static void MX_SPI2_Init(void);
 static void MX_TSC_Init(void);
 static void MX_USB_PCD_Init(void);
 void StartRouterTask(void *argument);
+void StartMotorTask(void *argument);
 void StartLEDTask(void *argument);
 void initLEDs(void);
 /* USER CODE BEGIN PFP */
@@ -103,11 +110,13 @@ void initLEDs(void);
   */
 int main(void)
 {
-
+  debouncer = 0;
+  volatile uint32_t encoder_count = 0;
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
-
+  // Initialize button --> Will need to re-configure for milestone #4, this is here for testing purposes to ensure motor is working properly
+  button_init(); 
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -179,14 +188,51 @@ int main(void)
   /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
+    /* For turning on the motor */
+    encoder_count = TIM2->CNT;
+    HAL_Delay(128);                      // Delay 1/8 second
   }
-  /* USER CODE END 3 */
+}
+
+void  button_init(void) {
+    // Initialize PA0 for button input
+    RCC->AHBENR |= RCC_AHBENR_GPIOAEN;                                          // Enable peripheral clock to GPIOA
+    GPIOA->MODER &= ~(GPIO_MODER_MODER0_0 | GPIO_MODER_MODER0_1);               // Set PA0 to input
+    GPIOC->OSPEEDR &= ~(GPIO_OSPEEDR_OSPEEDR0_0 | GPIO_OSPEEDR_OSPEEDR0_1);     // Set to low speed
+    GPIOC->PUPDR |= GPIO_PUPDR_PUPDR0_1;                                        // Set to pull-down
+}
+
+/* Called by SysTick Interrupt
+ * Performs button debouncing, changes wave type on button rising edge
+ * Updates frequency output from ADC value
+ */
+void HAL_SYSTICK_Callback(void) {
+    // Remember that this function is called by the SysTick interrupt
+    // You can't call any functions in here that use delay
+
+    debouncer = (debouncer << 1);
+    if(GPIOA->IDR & (1 << 0)) {
+        debouncer |= 0x1;
+    }
+
+    if(debouncer == 0x7FFFFFFF) {
+    switch(target_rpm) {
+        case 80:
+            target_rpm = 50;
+            break;
+        case 50:
+            target_rpm = 81;
+            break;
+        case 0:
+            target_rpm = 80;
+            break;
+        default:
+            target_rpm = 0;
+            break;
+        }
+    }
 }
 
 /**
@@ -628,6 +674,58 @@ void StartLEDTask(void *argument)
     commandLED = 0;
 
     osSemaphoreRelease(binarySem03LEDWorkerHandle);
+  }
+}
+
+/* USER CODE BEGIN Header_StartLEDTask */
+/**
+  * @brief  Function implementing the MotorTask thread.
+  * @param  argument: Not used
+  * @retval None
+  */ 
+/* USER CODE END Header_StartLEDTask */
+void StartMotorTask(void *argument)
+{
+  extern volatile uint16_t commandMotor;
+  int speedAdjust = 0; // boolean that says if speed needs to be adjusted: speed accounted for 3rd and 4th digit
+  //command 0xB-[1/2/3/4]
+  /* 2nd Digit
+  *   - 1: Turn motor on (enable 3rd and 4th digit)
+  *   - 2: Turn motor off
+  *   - 3: Change motor speed (enable 3rd and 4th digit)
+  * 3rd & 4th Digit: RPM of speed --> Clamped at < 100, done in motor.c 
+  */
+
+  /* Infinite loop */
+  for(;;)
+  {
+    extern volatile uint16_t commandMotor;
+    // 1st character (turn motor on, off, or adjust speed)
+    switch (commandMotor & 0x0F00) { 
+      case 0x0010: 
+        // turn motor on (will need to adjust speed)
+        speedAdjust = 1;
+        break;
+      case 0x0020:
+        // turn motor off
+        break;
+      case 0x0030:
+        // change motor speed 
+        speedAdjust = 1;
+        break;
+      default:
+        break;
+    }
+    if (speedAdjust == 1){
+      // 2nd & 3rd character
+      target_rpm = (commandMotor & 0x00FF);
+      
+      
+    }
+    commandMotor = 0;
+    speedAdjust = 0;
+    //Placeholder for task priorities
+    osDelay(1);
   }
 }
 
