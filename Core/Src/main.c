@@ -115,7 +115,6 @@ int main(void)
   MX_USB_PCD_Init();
   // Initialize button --> Will need to re-configure for milestone #4, this is here for testing purposes to ensure motor is working properly
   button_init(); 
-  motor_init();                           // Initialize motor code
 
   initUsart3();
   initLEDs();
