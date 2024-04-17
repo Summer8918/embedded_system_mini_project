@@ -645,6 +645,7 @@ void StartMotorTask(void *argument)
       
     }
     commandMotor = 0;
+    speedAdjust = 0;
     //Placeholder for task priorities
     osDelay(1);
   }
