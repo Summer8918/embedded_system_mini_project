@@ -98,14 +98,14 @@ void encoder_init(void) {
     RCC->APB1ENR |= RCC_APB1ENR_TIM7EN;
     
     // Select PSC and ARR values that give an appropriate interrupt rate
-    TIM7->PSC = 11;
-    TIM7->ARR = 30000;
+    //TIM7->PSC = 11;
+    //TIM7->ARR = 30000;
+    TIM7->PSC = 15;
+    TIM7->ARR = 46875;
+    
     
     TIM7->DIER |= TIM_DIER_UIE;             // Enable update event interrupt
     TIM7->CR1 |= TIM_CR1_CEN;               // Enable Timer
-
-    NVIC_EnableIRQ(TIM7_IRQn);          // Enable interrupt in NVIC
-    NVIC_SetPriority(TIM7_IRQn,2);
 }
 
 // Encoder interrupt to calculate motor speed, also manages PI controller
@@ -116,7 +116,6 @@ void TIM7_IRQHandler(void) {
      */
     motor_speed = (TIM3->CNT - 0x7FFF);
     TIM3->CNT = 0x7FFF; // Reset back to center point
-    
     // Call the PI update function
     PI_update();
 
@@ -145,45 +144,16 @@ void ADC_init(void) {
 }
 
 void PI_update(void) {
+    transmitCharArray("measured rpm:");
+    sendUint16BinToUart(motor_speed/2);
+    // Run PI control loop
+    //error = target_rpm - motor_speed/2; // 2-to-1 conversion
+    //error_integral = error_integral + Ki * error; 
     
-    /* Run PI control loop
-     *
-     * Make sure to use the indicated variable names. This allows STMStudio to monitor
-     * the condition of the system!
-     *
-     * target_rpm -> target motor speed in RPM
-     * motor_speed -> raw motor speed in encoder counts
-     * error -> error signal (difference between measured speed and target)
-     * error_integral -> integrated error signal
-     * Kp -> Proportional Gain
-     * Ki -> Integral Gain
-     * output -> raw output signal from PI controller
-     * duty_cycle -> used to report the duty cycle of the system 
-     * adc_value -> raw ADC counts to report current
-     *
-     */
-    
-    /// TODO: calculate error signal and write to "error" variable
-    error = target_rpm - motor_speed/2; // 2-to-1 conversion
-    
-    /* Hint: Remember that your calculated motor speed may not be directly in RPM!
-     *       You will need to convert the target or encoder speeds to the same units.
-     *       I recommend converting to whatever units result in larger values, gives
-     *       more resolution.
-     */
-    
-    
-    /// TODO: Calculate integral portion of PI controller, write to "error_integral" variable
-    error_integral = error_integral + Ki * error; 
-    
-    /// TODO: Clamp the value of the integral to a limited positive range
-    
-    /* Hint: The value clamp is needed to prevent excessive "windup" in the integral.
-     *       You'll read more about this for the post-lab. The exact value is arbitrary
-     *       but affects the PI tuning.
-     *       Recommend that you clamp between 0 and 3200 (what is used in the lab solution)
-     */
-    
+    error =  (target_rpm * 5) - motor_speed;
+
+    error_integral = Ki * (error_integral + error);
+
     if (error_integral < 0) {
         error_integral = 0;
     }
@@ -191,29 +161,11 @@ void PI_update(void) {
     else if (error_integral > 3200){
         error_integral = 3200;
     }
-    /// TODO: Calculate proportional portion, add integral and write to "output" variable
+    
     int16_t output = (Kp * error) + error_integral; // Change this!
     
-    
-    /* Because the calculated values for the PI controller are significantly larger than 
-     * the allowable range for duty cycle, you'll need to divide the result down into 
-     * an appropriate range. (Maximum integral clamp / X = 100% duty cycle)
-     * 
-     * Hint: If you chose 3200 for the integral clamp you should divide by 32 (right shift by 5 bits), 
-     *       this will give you an output of 100 at maximum integral "windup".
-     *
-     * This division also turns the above calculations into pseudo fixed-point. This is because
-     * the lowest 5 bits act as if they were below the decimal point until the division where they
-     * were truncated off to result in an integer value. 
-     *
-     * Technically most of this is arbitrary, in a real system you would want to use a fixed-point
-     * math library. The main difference that these values make is the difference in the gain values
-     * required for tuning.
-     */
-
-     /// TODO: Divide the output into the proper range for output adjustment
      output = output / 32;
-     /// TODO: Clamp the output value between 0 and 100 
+
     if (output < 0) output = 0;
     else if (output > 100) output = 100;
     pwm_setDutyCycle(output);

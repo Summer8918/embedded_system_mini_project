@@ -79,6 +79,14 @@ const osThreadAttr_t LEDTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
 };
 
+/* Definitions for Motor worker task */
+osThreadId_t motorTaskHandle;
+const osThreadAttr_t motorTask_attributes = {
+  .name = "motorTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+
 
 /* USER CODE BEGIN PV */
 
@@ -110,41 +118,17 @@ void initLEDs(void);
   */
 int main(void)
 {
-  debouncer = 0;
-  volatile uint32_t encoder_count = 0;
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-  // Initialize button --> Will need to re-configure for milestone #4, this is here for testing purposes to ensure motor is working properly
-  button_init(); 
-  /* MCU Configuration--------------------------------------------------------*/
-
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
 
   /* Configure the system clock */
   SystemClock_Config();
 
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_I2C2_Init();
-  MX_SPI2_Init();
-  MX_TSC_Init();
-  MX_USB_PCD_Init();
-
   initUsart3();
   initLEDs();
-  /* USER CODE BEGIN 2 */
-
-  /* USER CODE END 2 */
+  motor_init();
 
   /* Init scheduler */
   osKernelInitialize();
@@ -157,10 +141,6 @@ int main(void)
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
-  /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
-
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -171,6 +151,8 @@ int main(void)
   routerTaskHandle = osThreadNew(StartRouterTask, NULL, &routerTask_attributes);
   /* creation of LEDTask */
   LEDTaskHandle = osThreadNew(StartLEDTask, NULL, &LEDTask_attributes);
+  /* creation of motorTask */
+  motorTaskHandle = osThreadNew(StartMotorTask, NULL, &motorTask_attributes);
   /* creation of UARTTask */
   UARTTaskHandle = osThreadNew(StartParseUartTask, NULL, &UARTTask_attributes);
 
@@ -190,49 +172,7 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-    /* For turning on the motor */
-    encoder_count = TIM2->CNT;
-    HAL_Delay(128);                      // Delay 1/8 second
   }
-}
-
-void  button_init(void) {
-    // Initialize PA0 for button input
-    RCC->AHBENR |= RCC_AHBENR_GPIOAEN;                                          // Enable peripheral clock to GPIOA
-    GPIOA->MODER &= ~(GPIO_MODER_MODER0_0 | GPIO_MODER_MODER0_1);               // Set PA0 to input
-    GPIOC->OSPEEDR &= ~(GPIO_OSPEEDR_OSPEEDR0_0 | GPIO_OSPEEDR_OSPEEDR0_1);     // Set to low speed
-    GPIOC->PUPDR |= GPIO_PUPDR_PUPDR0_1;                                        // Set to pull-down
-}
-
-/* Called by SysTick Interrupt
- * Performs button debouncing, changes wave type on button rising edge
- * Updates frequency output from ADC value
- */
-void HAL_SYSTICK_Callback(void) {
-    // Remember that this function is called by the SysTick interrupt
-    // You can't call any functions in here that use delay
-
-    debouncer = (debouncer << 1);
-    if(GPIOA->IDR & (1 << 0)) {
-        debouncer |= 0x1;
-    }
-
-    if(debouncer == 0x7FFFFFFF) {
-    switch(target_rpm) {
-        case 80:
-            target_rpm = 50;
-            break;
-        case 50:
-            target_rpm = 81;
-            break;
-        case 0:
-            target_rpm = 80;
-            break;
-        default:
-            target_rpm = 0;
-            break;
-        }
-    }
 }
 
 /**
@@ -280,169 +220,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-}
-
-/**
-  * @brief I2C2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_I2C2_Init(void)
-{
-
-  /* USER CODE BEGIN I2C2_Init 0 */
-
-  /* USER CODE END I2C2_Init 0 */
-
-  /* USER CODE BEGIN I2C2_Init 1 */
-
-  /* USER CODE END I2C2_Init 1 */
-  hi2c2.Instance = I2C2;
-  hi2c2.Init.Timing = 0x20303E5D;
-  hi2c2.Init.OwnAddress1 = 0;
-  hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c2.Init.OwnAddress2 = 0;
-  hi2c2.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
-  hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Configure Analogue filter
-  */
-  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c2, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Configure Digital filter
-  */
-  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c2, 0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN I2C2_Init 2 */
-
-  /* USER CODE END I2C2_Init 2 */
-
-}
-
-/**
-  * @brief SPI2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SPI2_Init(void)
-{
-
-  /* USER CODE BEGIN SPI2_Init 0 */
-
-  /* USER CODE END SPI2_Init 0 */
-
-  /* USER CODE BEGIN SPI2_Init 1 */
-
-  /* USER CODE END SPI2_Init 1 */
-  /* SPI2 parameter configuration*/
-  hspi2.Instance = SPI2;
-  hspi2.Init.Mode = SPI_MODE_MASTER;
-  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi2.Init.DataSize = SPI_DATASIZE_4BIT;
-  hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
-  hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi2.Init.CRCPolynomial = 7;
-  hspi2.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
-  hspi2.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
-  if (HAL_SPI_Init(&hspi2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SPI2_Init 2 */
-
-  /* USER CODE END SPI2_Init 2 */
-
-}
-
-/**
-  * @brief TSC Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TSC_Init(void)
-{
-
-  /* USER CODE BEGIN TSC_Init 0 */
-
-  /* USER CODE END TSC_Init 0 */
-
-  /* USER CODE BEGIN TSC_Init 1 */
-
-  /* USER CODE END TSC_Init 1 */
-
-  /** Configure the TSC peripheral
-  */
-  htsc.Instance = TSC;
-  htsc.Init.CTPulseHighLength = TSC_CTPH_2CYCLES;
-  htsc.Init.CTPulseLowLength = TSC_CTPL_2CYCLES;
-  htsc.Init.SpreadSpectrum = DISABLE;
-  htsc.Init.SpreadSpectrumDeviation = 1;
-  htsc.Init.SpreadSpectrumPrescaler = TSC_SS_PRESC_DIV1;
-  htsc.Init.PulseGeneratorPrescaler = TSC_PG_PRESC_DIV4;
-  htsc.Init.MaxCountValue = TSC_MCV_8191;
-  htsc.Init.IODefaultMode = TSC_IODEF_OUT_PP_LOW;
-  htsc.Init.SynchroPinPolarity = TSC_SYNC_POLARITY_FALLING;
-  htsc.Init.AcquisitionMode = TSC_ACQ_MODE_NORMAL;
-  htsc.Init.MaxCountInterrupt = DISABLE;
-  htsc.Init.ChannelIOs = TSC_GROUP1_IO3|TSC_GROUP2_IO3|TSC_GROUP3_IO2;
-  htsc.Init.ShieldIOs = 0;
-  htsc.Init.SamplingIOs = TSC_GROUP1_IO4|TSC_GROUP2_IO4|TSC_GROUP3_IO3;
-  if (HAL_TSC_Init(&htsc) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TSC_Init 2 */
-
-  /* USER CODE END TSC_Init 2 */
-
-}
-
-/**
-  * @brief USB Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USB_PCD_Init(void)
-{
-
-  /* USER CODE BEGIN USB_Init 0 */
-
-  /* USER CODE END USB_Init 0 */
-
-  /* USER CODE BEGIN USB_Init 1 */
-
-  /* USER CODE END USB_Init 1 */
-  hpcd_USB_FS.Instance = USB;
-  hpcd_USB_FS.Init.dev_endpoints = 8;
-  hpcd_USB_FS.Init.speed = PCD_SPEED_FULL;
-  hpcd_USB_FS.Init.phy_itface = PCD_PHY_EMBEDDED;
-  hpcd_USB_FS.Init.low_power_enable = DISABLE;
-  hpcd_USB_FS.Init.lpm_enable = DISABLE;
-  hpcd_USB_FS.Init.battery_charging_enable = DISABLE;
-  if (HAL_PCD_Init(&hpcd_USB_FS) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USB_Init 2 */
-
-  /* USER CODE END USB_Init 2 */
-
 }
 
 /**
@@ -699,17 +476,22 @@ void StartMotorTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
+
     extern volatile uint16_t commandMotor;
-    // 1st character (turn motor on, off, or adjust speed)
+    // 2nd character (turn motor on, off, or adjust speed)
     switch (commandMotor & 0x0F00) { 
-      case 0x0010: 
+      case 0x0100: 
         // turn motor on (will need to adjust speed)
         speedAdjust = 1;
+        NVIC_EnableIRQ(TIM7_IRQn);          // Enable interrupt in NVIC
+        NVIC_SetPriority(TIM7_IRQn,2);
         break;
-      case 0x0020:
+      case 0x0200:
         // turn motor off
+        target_rpm = 0;
+        //NVIC_DisableIRQ(TIM7_IRQn);          // Enable interrupt in NVIC
         break;
-      case 0x0030:
+      case 0x0300:
         // change motor speed 
         speedAdjust = 1;
         break;
@@ -717,13 +499,19 @@ void StartMotorTask(void *argument)
         break;
     }
     if (speedAdjust == 1){
-      // 2nd & 3rd character
+      // 3rd & 4th character
       target_rpm = (commandMotor & 0x00FF);
-      
-      
     }
     commandMotor = 0;
     speedAdjust = 0;
+    
+    //If motor is running
+      //Read encoder in timer 3
+      //osDelay known time
+      //Read encoder in timer 3
+      //Reset encoder value
+      //do PI update
+
     //Placeholder for task priorities
     osDelay(1);
   }

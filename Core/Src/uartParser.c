@@ -26,12 +26,13 @@ const osThreadAttr_t UARTTask_attributes = {
 };
 
 void sendUint16BinToUart(uint16_t x) {
-	char str[16];
+	char str[17];
 	uint8_t i = 0;
 	while (i < 16) {
 		str[15-i] = '0' + ((x >> i) & 0x1);
 	  i++;
 	}
+  str[16] = '\n';
 	transmitCharArray(str);
 }
 
