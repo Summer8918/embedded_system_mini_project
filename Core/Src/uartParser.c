@@ -16,8 +16,6 @@ volatile char tmpStr[TMP_STR_LEN];
 volatile char cmd[4][TMP_STR_LEN];
 volatile uint16_t commandOut = 0x0000;
 
-volatile uint16_t commandLED = 0;
-
 // 0 not working, 1 working
 volatile uint8_t uartStatus = 0;
 
@@ -38,10 +36,11 @@ void sendUint16BinToUart(uint16_t x) {
 }
 
 uint8_t parseCmd(void) {
+  uint8_t error = 0;
+  uint8_t speed = 0;
   //Parse words from received command string
   volatile uint8_t strLen = strIndex + 1;
   strIndex = 0;
-  uint8_t error = 0;
   cmdStrIndex = 0;
   cmdIndex = 0;
   while (strIndex < strLen) {
@@ -56,36 +55,122 @@ uint8_t parseCmd(void) {
   } 
   //Convert words into command format
   //First digit
-  if (strcmp(cmd[0], "led") == 0) {
+  if (strcasecmp(cmd[0], "led") == 0) {
     commandOut |= 0xA000;
     //Second digit - LED
-    if (strcmp(cmd[1], "red") == 0) {
+    if (strcasecmp(cmd[1], "red") == 0) {
       commandOut |= 0x0100;
-    } else if (strcmp(cmd[1], "green") == 0) {
+    } else if (strcasecmp(cmd[1], "green") == 0) {
       commandOut |= 0x0200;
-    } else if (strcmp(cmd[1], "blue") == 0) {
+    } else if (strcasecmp(cmd[1], "blue") == 0) {
       commandOut |= 0x0300;
-    } else if (strcmp(cmd[1], "orange") == 0) {
+    } else if (strcasecmp(cmd[1], "orange") == 0) {
       commandOut |= 0x0400;
-    } else {
+    } else if (strcasecmp(cmd[1], "all") == 0) {
+      commandOut |= 0x0500;
+    }else {
       error = 1;
     }
     //Third digit - LED
-    if (strcmp(cmd[2], "on") == 0) {
+    if (strcasecmp(cmd[2], "on") == 0) {
       commandOut |= 0x0010;
-    } else if (strcmp(cmd[2], "off") == 0) {
+      if (cmd[3][0] != '\0')
+        error = 1;
+    } else if (strcasecmp(cmd[2], "off") == 0) {
       commandOut |= 0x0020;
-    } else if (strcmp(cmd[2], "toggle") == 0) {
+      if (cmd[3][0] != '\0')
+        error = 1;
+    } else if (strcasecmp(cmd[2], "toggle") == 0) {
       commandOut |= 0x0030;
+      if (cmd[3][0] != '\0')
+        error = 1;
+    } else if (strcasecmp(cmd[2], "blink") == 0) {
+      commandOut |= 0x0040;
+      speed = convertSpeed(cmd[3]);
     } else {
       error = 1;
     }
-  } else if (strcmp(cmd[0], "motor") == 0) {
+
+    //LED blink speed
+    if (speed == 255)
+      error = 1;
+    else 
+      if (speed > 15) {
+        transmitCharArray("Blink speed limited to 1500 ms");
+        commandOut |= 15U;
+      }
+      else
+        commandOut |= speed;
+
+  } else if (strcasecmp(cmd[0], "motor") == 0) {
     commandOut |= 0xB000;
+    //Second digit - Motor
+    if (strcasecmp(cmd[1], "on") == 0) {
+      commandOut |= 0x0100;
+      speed = convertSpeed(cmd[2]);
+    } else if (strcasecmp(cmd[1], "off") == 0) {
+      commandOut |= 0x0200;
+      if (cmd[2][0] != '\0')
+        error = 1;
+    } else if (strcasecmp(cmd[1], "speed") == 0) {
+      commandOut |= 0x0300;
+      speed = convertSpeed(cmd[2]);
+    } else {
+      error = 1;
+    }
+
+    if (cmd[3][0] != '\0')
+      error = 1;
+
+    //Motor speed
+    if (speed == 255)
+      error = 1;
+    else 
+      if (speed > 100) {
+        transmitCharArray("Motor speed limited to 100 RPM");
+        commandOut |= 100U;
+      }
+      else
+        commandOut |= speed;
   } else {
     error = 1;
   }
   return error;
+}
+
+//Convert UART ascii sped into into uint8 to add to command
+uint8_t convertSpeed(char *ascii) {
+  uint8_t hundreds = 0, tens = 0, ones = 0;
+  //Throw error if speed is not a number
+  for (int i = 0; i < strlen(ascii); i ++){
+    if ((ascii[i] < 48 && ascii[i] != 0) || ascii[i] > 57) {
+      return 255;
+    }
+  }
+  //3 digit number
+  if (ascii[2] != 0) {
+    hundreds = ascii[0] - 48;
+    tens = ascii[1] - 48;
+    ones = ascii[2] - 48;
+  } else {
+    hundreds = 0;
+    //2 digit number
+    if (ascii[1] != 0) {
+      tens = ascii[0] - 48;
+      ones = ascii[1] - 48;
+    }
+    else {
+      tens = 0;
+      //1 digit number
+      if (ascii[0] != 0) {
+        ones = ascii[0] - 48;
+      }
+      else {
+        ones = 0;
+      }
+    }
+  }
+  return hundreds*100 + tens*10 + ones;
 }
 
 /* UART CODE BEGIN Header_StartLEDTask */
@@ -97,11 +182,8 @@ uint8_t parseCmd(void) {
 /* USER CODE END Header_StartLEDTask */
 void StartParseUartTask(void *argument) {
   // TODO: add a timer to limit the max execution time
-  //uint8_t cnt = 0;
 
-  while (1) { // for test, after test, change it back to while (1)
-    //transmitCharArray("cnt\n");
-    //cnt += 1;
+  while (1) {
     //transmitCharArray("Waiting to get sem02.\n");
     osSemaphoreAcquire(binarySem02UartParserHandle, osWaitForever);
     //transmitCharArray("get sem02!\n");
@@ -119,6 +201,7 @@ void StartParseUartTask(void *argument) {
           // Store the commandOut in queue
           if (queuePush(cmdQueue, commandOut) != -1) {
             transmitCharArray("Push command to queue success.\n");
+            transmitCharArray(tmpStr);
             sendUint16BinToUart(commandOut);
           } else {
             transmitCharArray("Fail to push command to queue, try again.\n");
@@ -141,14 +224,20 @@ void StartParseUartTask(void *argument) {
 
         //Reset commandOut before starting next command receive
         commandOut = 0;
-        //transmitCharArray("break\n");
         break;
-	    } else {
+      //Allow backspace/delete key to undo last character
+	    } else if (usartReceivedData == 8 || usartReceivedData == 127) {
+          if (strIndex > 0) {
+            strIndex -= 1;
+            tmpStr[strIndex] = '\0';
+          }
+      } 
+      else {
         tmpStr[strIndex] = usartReceivedData;
         strIndex += 1;
         //Command too long
         if (strIndex == TMP_STR_LEN) {
-      	  transmitCharArray("Command is too long!");
+      	  transmitCharArray("\n\rCommand is too long!");
           strIndex = 0;
           for (uint8_t i = 0; i < TMP_STR_LEN; i++){
             tmpStr[i] = '\0';

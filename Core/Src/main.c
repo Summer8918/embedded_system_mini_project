@@ -21,6 +21,14 @@
 #include "cmsis_os.h"
 #include "stm32f072xb.h"
 
+//Global variables
+volatile uint16_t commandLED = 0;
+volatile uint16_t commandMotor = 0;
+
+//Semaphores
+osSemaphoreId_t binarySem03LEDWorkerHandle;
+osSemaphoreId_t binarySem04MotorWorkerHandle;
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -154,7 +162,7 @@ int main(void)
   routerTaskHandle = osThreadNew(StartRouterTask, NULL, &routerTask_attributes);
   /* creation of LEDTask */
   LEDTaskHandle = osThreadNew(StartLEDTask, NULL, &LEDTask_attributes);
-  /* creation of UART Task */
+  /* creation of UARTTask */
   UARTTaskHandle = osThreadNew(StartParseUartTask, NULL, &UARTTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -440,6 +448,8 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE END 4 */
 
+//New branch
+
 /* USER CODE BEGIN Header_StartRouterTask */
 /**
   * @brief  Function implementing the routerTask thread.
@@ -453,6 +463,7 @@ void StartRouterTask(void *argument)
   extern Cmd_Queue * cmdQueue;
   //Global variables to pass command to worker threads
   extern volatile uint16_t commandLED;
+  extern volatile uint16_t commandMotor;
   //Command popped from queue
   uint16_t commandIn = 0;
   /* Infinite loop */
@@ -474,6 +485,7 @@ void StartRouterTask(void *argument)
           break;
         //Motor command
         case 0xB000:
+          commandMotor = commandIn;
           break;
         default:
         break;
@@ -525,48 +537,97 @@ void initLEDs(void) {
 /* USER CODE END Header_StartLEDTask */
 void StartLEDTask(void *argument)
 {
+  binarySem03LEDWorkerHandle = osSemaphoreNew(1, 1, NULL);
+
   extern volatile uint16_t commandLED;
-  //command 0xA-color-action-unused
-  volatile uint32_t color;
+  volatile uint8_t LEDColor = 0, LEDAction = 0, LEDSpeed = 0;
+  volatile uint32_t colorMask[5] = {GPIO_ODR_6, GPIO_ODR_9, GPIO_ODR_7, GPIO_ODR_8, GPIO_ODR_6 | GPIO_ODR_7 | GPIO_ODR_8 | GPIO_ODR_9};
+  volatile uint8_t blink[4] = {0,0,0,0};
+  volatile uint8_t blinkTime[4] = {0,0,0,0};
+  volatile uint32_t startTime[4] = {0,0,0,0};
+  volatile uint32_t currentTime = 0;
 
   /* Infinite loop */
   for(;;)
   {
-    switch (commandLED & 0x0F00) {    
-      //Red LED - PC6
-      case 0x0100:  
-        color = GPIO_ODR_6;
+    osSemaphoreAcquire(binarySem03LEDWorkerHandle, osWaitForever);
+
+    LEDColor = (commandLED & 0x0F00) >> 8;
+    LEDAction = (commandLED & 0x00F0) >> 4;
+
+    //LED action
+    switch (LEDAction) {
+      //On
+      case 1:
+        GPIOC->ODR |= colorMask[LEDColor-1];
+        if (LEDColor == 5) {
+          blink[0] = 0;
+          blink[1] = 0;
+          blink[2] = 0;
+          blink[3] = 0;
+        }
+        else
+          blink[LEDColor-1] = 0;
         break;
-      //Green LED - PC9
-      case 0x0200:
-        color = GPIO_ODR_9;
+      //Off
+      case 2:
+        GPIOC->ODR &= ~colorMask[LEDColor-1];
+        if (LEDColor == 5) {
+          blink[0] = 0;
+          blink[1] = 0;
+          blink[2] = 0;
+          blink[3] = 0;
+        }
+        else
+          blink[LEDColor-1] = 0;
         break;
-      //Blue LED - PC7  
-      case 0x0300:
-        color = GPIO_ODR_7;
+      //Toggle
+      case 3:
+        GPIOC->ODR ^= colorMask[LEDColor-1];
+        if (LEDColor == 5) {
+          blink[0] = 0;
+          blink[1] = 0;
+          blink[2] = 0;
+          blink[3] = 0;
+        }
+        else
+          blink[LEDColor-1] = 0;
         break;
-      //Orange LED - PC8
-      case 0x0400:
-        color = GPIO_ODR_8;
+      //Blink
+      case 4:
+        if (LEDColor == 5) {
+          blink[0] = 1;
+          blinkTime[0] = commandLED & 0xF;
+          blink[1] = 1;
+          blinkTime[1] = commandLED & 0xF;
+          blink[2] = 1;
+          blinkTime[2] = commandLED & 0xF;
+          blink[3] = 1;
+          blinkTime[3] = commandLED & 0xF;
+        }
+        else
+          blink[LEDColor-1] = 1;
+          blinkTime[LEDColor-1] = commandLED & 0xF;
         break;
       default:
     }
 
-    switch (commandLED & 0x00F0) {
-      case 0x0010:
-        GPIOC->ODR |= color;
-        break;
-      case 0x0020:
-        GPIOC->ODR &= ~color;
-        break;
-      case 0x0030:
-        GPIOC->ODR ^= color;
-        break;
-      default:
+    //Blinking
+    currentTime = xTaskGetTickCount();
+    for (int i = 0; i < 4; i++) {
+      if (blink[i]) {
+        if (currentTime - startTime[i] > blinkTime[i]*100) {
+          GPIOC->ODR ^= colorMask[i];
+          startTime[i] = currentTime;
+        }
+      }
+      else
+        startTime[i] = currentTime;
     }
+
     commandLED = 0;
-    //Placeholder for task priorities
-    osDelay(1);
+
+    osSemaphoreRelease(binarySem03LEDWorkerHandle);
   }
 }
 

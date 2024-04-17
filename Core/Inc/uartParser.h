@@ -8,7 +8,7 @@
 #include "cmdQueue.h"
 
 #define TMP_STR_LEN 20
-#define CMD_QUEUE_CAPACITY 20
+#define CMD_QUEUE_CAPACITY 5
 
 void initUsart3(void);
 
@@ -25,6 +25,8 @@ void StartParseUartTask(void *argument);
 void sendUint16BinToUart(uint16_t x);
 
 uint8_t parseCmd(void);
+
+uint8_t convertSpeed(char *ascii);
 
 extern osThreadId_t UARTTaskHandle;
 
