@@ -60,7 +60,7 @@ TSC_HandleTypeDef htsc;
 /* For motor */
 volatile uint32_t debouncer; 
 // The speed we are setting the motor to (3rd and 4th digits)
-volatile uint16_t target_rpm = 0;
+volatile int16_t target_rpm = 0;
 
 PCD_HandleTypeDef hpcd_USB_FS;
 /* Definitions for task router */

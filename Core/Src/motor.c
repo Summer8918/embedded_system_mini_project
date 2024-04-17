@@ -10,7 +10,7 @@ volatile int16_t error_integral = 0;    // Integrated error signal
 volatile uint8_t duty_cycle = 0;    	// Output PWM duty cycle
 // volatile int16_t target_rpm = 0;    	// Desired speed target
 //Global variables to pass command to worker threads
-extern volatile uint16_t target_rpm;
+extern volatile int16_t target_rpm;
 volatile int16_t motor_speed = 0;   	// Measured motor speed
 volatile int8_t adc_value = 0;      	// ADC measured motor current
 volatile int16_t error = 0;         	// Speed error signal
@@ -93,23 +93,23 @@ void encoder_init(void) {
     //  just another option, the mid-bias is a bit simpler to understand though.)
     TIM3->CR1 |= TIM_CR1_CEN;                               // Enable timer
 
-    // Configure a second timer (TIM6) to fire an ISR on update event
+    // Configure a second timer (TIM7) to fire an ISR on update event
     // Used to periodically check and update speed variable
-    RCC->APB1ENR |= RCC_APB1ENR_TIM6EN;
+    RCC->APB1ENR |= RCC_APB1ENR_TIM7EN;
     
     // Select PSC and ARR values that give an appropriate interrupt rate
-    TIM6->PSC = 11;
-    TIM6->ARR = 30000;
+    TIM7->PSC = 11;
+    TIM7->ARR = 30000;
     
-    TIM6->DIER |= TIM_DIER_UIE;             // Enable update event interrupt
-    TIM6->CR1 |= TIM_CR1_CEN;               // Enable Timer
+    TIM7->DIER |= TIM_DIER_UIE;             // Enable update event interrupt
+    TIM7->CR1 |= TIM_CR1_CEN;               // Enable Timer
 
-    NVIC_EnableIRQ(TIM6_DAC_IRQn);          // Enable interrupt in NVIC
-    NVIC_SetPriority(TIM6_DAC_IRQn,2);
+    NVIC_EnableIRQ(TIM7_IRQn);          // Enable interrupt in NVIC
+    NVIC_SetPriority(TIM7_IRQn,2);
 }
 
 // Encoder interrupt to calculate motor speed, also manages PI controller
-void TIM6_DAC_IRQHandler(void) {
+void TIM7_IRQHandler(void) {
     /* Calculate the motor speed in raw encoder counts
      * Note the motor speed is signed! Motor can be run in reverse.
      * Speed is measured by how far the counter moved from center point
@@ -120,7 +120,7 @@ void TIM6_DAC_IRQHandler(void) {
     // Call the PI update function
     PI_update();
 
-    TIM6->SR &= ~TIM_SR_UIF;        // Acknowledge the interrupt
+    TIM7->SR &= ~TIM_SR_UIF;        // Acknowledge the interrupt
 }
 
 void ADC_init(void) {
