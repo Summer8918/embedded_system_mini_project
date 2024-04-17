@@ -52,7 +52,7 @@ uint8_t parseCmd(void) {
       cmdStrIndex++;
     }
     strIndex++;
-  } 
+  }
   //Convert words into command format
   //First digit
   if (strcasecmp(cmd[0], "led") == 0) {
@@ -187,68 +187,35 @@ void StartParseUartTask(void *argument) {
     //transmitCharArray("Waiting to get sem02.\n");
     osSemaphoreAcquire(binarySem02UartParserHandle, osWaitForever);
     //transmitCharArray("get sem02!\n");
-    while (1) {
-      while((USART3->ISR & USART_ISR_RXNE) == 0) {
-	    }
-      //Pull character from UART
-	    volatile uint8_t usartReceivedData = USART3->RDR;
-      transmitOneChar(usartReceivedData);
-      //Command string terminated with enter key
-	    if (usartReceivedData == '\r') {
-        uint8_t error = parseCmd();
-        //Command syntax correct
-        if (error == 0) {
-          // Store the commandOut in queue
-          if (queuePush(cmdQueue, commandOut) != -1) {
-            transmitCharArray("Push command to queue success.\n");
-            transmitCharArray(tmpStr);
-            sendUint16BinToUart(commandOut);
-          } else {
-            transmitCharArray("Fail to push command to queue, try again.\n");
-          }
-        //Command syntax malformed
-        } else {
-          transmitCharArray("Command not recognized");
-          transmitCharArray(tmpStr);
-          
-        }
-        //Reset command string and index
-        strIndex = 0;
-        for (uint8_t i = 0; i < TMP_STR_LEN; i++) {
-          tmpStr[i] = '\0';
-          cmd[0][i] = '\0';
-          cmd[1][i] = '\0';
-          cmd[2][i] = '\0';
-          cmd[3][i] = '\0';
-        }
-
-        //Reset commandOut before starting next command receive
-        commandOut = 0;
-        break;
-      //Allow backspace/delete key to undo last character
-	    } else if (usartReceivedData == 8 || usartReceivedData == 127) {
-          if (strIndex > 0) {
-            strIndex -= 1;
-            tmpStr[strIndex] = '\0';
-          }
-      } 
-      else {
-        tmpStr[strIndex] = usartReceivedData;
-        strIndex += 1;
-        //Command too long
-        if (strIndex == TMP_STR_LEN) {
-      	  transmitCharArray("\n\rCommand is too long!");
-          strIndex = 0;
-          for (uint8_t i = 0; i < TMP_STR_LEN; i++){
-            tmpStr[i] = '\0';
-          }
-          break;
-        }
+    //Command string terminated with enter key
+    uint8_t error = parseCmd();
+    //Command syntax correct
+    if (error == 0) {
+      // Store the commandOut in queue
+      if (queuePush(cmdQueue, commandOut) != -1) {
+        transmitCharArray("Push command to queue success.\n");
+        transmitCharArray(tmpStr);
+        sendUint16BinToUart(commandOut);
+      } else {
+        transmitCharArray("Fail to push command to queue, try again.\n");
       }
+      //Command syntax malformed
+    } else {
+      transmitCharArray("Command not recognized");
+      transmitCharArray(tmpStr);    
     }
-    uartStatus = 0;
-    //transmitCharArray("Enable Uart RX interrupt");
-    USART3->CR1 |= USART_CR1_RXNEIE;
+    //Reset command string and index
+    strIndex = 0;
+    for (uint8_t i = 0; i < TMP_STR_LEN; i++) {
+      tmpStr[i] = '\0';
+      cmd[0][i] = '\0';
+      cmd[1][i] = '\0';
+      cmd[2][i] = '\0';
+      cmd[3][i] = '\0';
+    }
+
+    //Reset commandOut before starting next command receive
+    commandOut = 0;
   }
 /*
   // test queue pop
@@ -306,21 +273,37 @@ void initUsart3(void) {
 
 // Handle uart RX with interrupt
 void USART3_4_IRQHandler(void) {
-  transmitCharArray("UART RX interrupt.");
-  if (uartStatus == 0) {
-    while((USART3->ISR & USART_ISR_RXNE) == 0) {
-	  }
-    //transmitCharArray("Release sem02\n");
-    osSemaphoreRelease(binarySem02UartParserHandle);
-    volatile uint8_t usartReceivedData = USART3->RDR;
-    transmitCharArray("cmd:\n");
-    transmitOneChar(usartReceivedData);
+  //transmitCharArray("UART RX interrupt.");
+
+  while((USART3->ISR & USART_ISR_RXNE) == 0) {
+	}
+  //transmitCharArray("Release sem02\n");
+    
+  volatile uint8_t usartReceivedData = USART3->RDR;
+  //transmitCharArray("cmd:\n");
+  transmitOneChar(usartReceivedData);
+
+  if (usartReceivedData == 8 || usartReceivedData == 127) {
+    if (strIndex > 0) {
+      strIndex -= 1;
+      tmpStr[strIndex] = '\0';
+    }
+  } else if (usartReceivedData != '\r') {
     tmpStr[strIndex] = usartReceivedData;
-		strIndex++;
-    uartStatus = 1;
-    // Disable the receive register not empty interrupt.
-    USART3->CR1 &= ~USART_CR1_RXNEIE;
+    strIndex += 1;
+    //Command too long
+    if (strIndex == TMP_STR_LEN) {
+    	transmitCharArray("\n\rCommand is too long!");
+      strIndex = 0;
+      for (uint8_t i = 0; i < TMP_STR_LEN; i++){
+        tmpStr[i] = '\0';
+      }
+    }
+  } else {
+    osSemaphoreRelease(binarySem02UartParserHandle);
   }
+  // Disable the receive register not empty interrupt.
+  //USART3->CR1 &= ~USART_CR1_RXNEIE;
 }
 
 void transmitOneChar(uint8_t ch) {
