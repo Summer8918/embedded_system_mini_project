@@ -57,6 +57,8 @@ PCD_HandleTypeDef hpcd_USB_FS;
 
 /* For motor */
 volatile uint32_t debouncer; 
+// The speed we are setting the motor to (3rd and 4th digits)
+volatile uint16_t target_rpm = 0;
 /* Definitions for task router */
 osThreadId_t routerTaskHandle;
 const osThreadAttr_t routerTask_attributes = {
@@ -607,20 +609,19 @@ void StartLEDTask(void *argument)
 void StartMotorTask(void *argument)
 {
   extern volatile uint16_t commandMotor;
-  int speedAdjust = 0; // bool if speed needs to be adjusted, 3rd and 4th digit
+  int speedAdjust = 0; // boolean that says if speed needs to be adjusted: speed accounted for 3rd and 4th digit
   //command 0xB-[1/2/3/4]
   /* 2nd Digit
   *   - 1: Turn motor on (enable 3rd and 4th digit)
   *   - 2: Turn motor off
   *   - 3: Change motor speed (enable 3rd and 4th digit)
-  * 3rd & 4th Digit: RPM of speed --> Clamped at < 100 
+  * 3rd & 4th Digit: RPM of speed --> Clamped at < 100, done in motor.c 
   */
 
-
-  // TODO: Will need to feed speed into motor.c (PI_Update)
   /* Infinite loop */
   for(;;)
   {
+    extern volatile uint16_t commandMotor;
     // 1st character (turn motor on, off, or adjust speed)
     switch (commandMotor & 0x0F00) { 
       case 0x0010: 
@@ -639,9 +640,8 @@ void StartMotorTask(void *argument)
     }
     if (speedAdjust == 1){
       // 2nd & 3rd character
-      switch (commandMotor & 0x00FF) { 
-        // set motor speed here
-      }
+      target_rpm = (commandMotor & 0x00FF);
+      
       
     }
     commandMotor = 0;
