@@ -66,17 +66,88 @@ uint16_t queuePop(Cmd_Queue *q) {
     return item;
 }
 
+// When the return value is 0xffff, fail to find the item
+// that contain the target opcode.
+uint16_t queuePopItemByOpcode(Cmd_Queue *q, uint8_t targetOpcode) {
+    osSemaphoreAcquire(binarySem01CmdQueueHandle, osWaitForever);
+    uint16_t idx = q->front;
+    if (q->itemNum == 0) {
+        osSemaphoreRelease(binarySem01CmdQueueHandle);
+        return 0xffff;
+    }
+    uint16_t targetItem = 0xffff;
+    int8_t cnt = 0;
+    while (cnt < q->itemNum) {
+        uint8_t curOpcode = (q->data[(idx + cnt) % q->capacity] >> 12);
+        if (curOpcode == targetOpcode) {
+            targetItem = q->data[(idx + cnt) % q->capacity];
+            break;
+        }
+        cnt++;
+    }
+    if (targetItem == 0xffff) {
+        osSemaphoreRelease(binarySem01CmdQueueHandle);
+        return 0xffff;
+    }
+    // Delete the item in the queue
+    idx = ((idx + cnt) % q->capacity);
+    int8_t remain = q->itemNum - cnt;  //remaining elements number
+    while (remain > 0) {
+        uint16_t nextIdx = ((idx + 1) % q->capacity);
+        q->data[idx] = q->data[nextIdx];
+        idx = ((idx + 1) % q->capacity);
+        remain--;
+    }
+    q->itemNum--;
+    q->back = ((q->back - 1 + q->capacity) % q->capacity);
+    osSemaphoreRelease(binarySem01CmdQueueHandle);
+    return targetItem;
+}
+
 void freeQueue(Cmd_Queue* q) {
     osSemaphoreAcquire(binarySem01CmdQueueHandle, osWaitForever);
 	vPortFree(q);
     osSemaphoreRelease(binarySem01CmdQueueHandle);
 }
 
+
 /*
 
 // A sample test of your program
 // You can add as many unit tests as you like
 // We will be adding our own to test your program.
+
+// test queuePopItemByOpcode
+void unitTest0() {
+    printf("\n********Running unit test 1********");
+	Cmd_Queue* test1 = createQueue(4, 2);
+	printf("\nAttempting to add %d\n", 1);
+	push(test1, 0xa001);
+	printf("Attempting to add %d\n",0xa001);
+	push(test1, 0xb002);
+	printf("Attempting to add %d\n", 0xb002);
+	push(test1, 0xa003);
+	printf("Attempting to add %d\n", 0xa003);
+	push(test1, 0xa004);
+    printf("Attempting to add %d\n", 0xa004);
+
+    auto res = queuePopItemByOpcode(test1, 0xb);
+    printf("Removing: %x\n", res);
+    res = queuePopItemByOpcode(test1, 0xa);
+    printf("Removing: %x\n", res);
+    push(test1, 0xb004);
+	printf("Attempting to add %d\n", 0xb004);
+    res = queuePopItemByOpcode(test1, 0xa);
+    printf("Removing: %x\n", res);
+    res = queuePopItemByOpcode(test1, 0xa);
+    printf("Removing: %x\n", res);
+    res = queuePopItemByOpcode(test1, 0xb);
+    printf("Removing: %x\n", res);
+    res = queuePopItemByOpcode(test1, 0xa);
+    printf("Removing: %x\n", res);
+	freeQueue(test1);
+}
+
 void unitTest1() {
 	printf("\n********Running unit test 1********");
 	Cmd_Queue* test1 = createQueue(3, 2);
