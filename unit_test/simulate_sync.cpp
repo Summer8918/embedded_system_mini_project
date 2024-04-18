@@ -109,8 +109,6 @@ void ThreadLed() {
 void ThreadUart() {
     std::cout << "Uart thread running\n"; // response message
  
-    // wait for 3 seconds to imitate some work
-    // being done by the thread
     using namespace std::literals;
     queue_led_item_num = 10;
     queue_motor_item_num = 10;
@@ -132,7 +130,6 @@ void ThreadUart() {
         std::this_thread::sleep_for(10s);
     }
 }
-
 
 int main() {
     std::thread ledWorker(ThreadLed);
