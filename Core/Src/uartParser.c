@@ -197,6 +197,9 @@ void StartParseUartTask(void *argument) {
         transmitCharArray("Push command to queue success.\n");
         transmitCharArray(tmpStr);
         sendUint16BinToUart(commandOut);
+
+        // wake up router thread
+        osSemaphoreRelease(countSem01);
       } else {
         transmitCharArray("Fail to push command to queue, try again.\n");
       }

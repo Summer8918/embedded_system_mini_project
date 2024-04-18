@@ -29,6 +29,7 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_hal.h"
 #include "uartParser.h"
+#include "sync.h"
 
 extern osSemaphoreId_t binarySem03LEDWorkerHandle;
 extern osSemaphoreId_t binarySem04MotorWorkerHandle;

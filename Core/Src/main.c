@@ -27,9 +27,9 @@
 volatile uint16_t commandLED = 0;
 volatile uint16_t commandMotor = 0;
 
-//Semaphores
-osSemaphoreId_t binarySem03LEDWorkerHandle;
-osSemaphoreId_t binarySem04MotorWorkerHandle;
+// Semaphores
+// osSemaphoreId_t binarySem03LEDWorkerHandle;
+// osSemaphoreId_t binarySem04MotorWorkerHandle;
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -155,6 +155,13 @@ int main(void)
   motorTaskHandle = osThreadNew(StartMotorTask, NULL, &motorTask_attributes);
   /* creation of UARTTask */
   UARTTaskHandle = osThreadNew(StartParseUartTask, NULL, &UARTTask_attributes);
+
+  // init the resources for the synchronization of router
+  // uart parser, led and motor threads
+  uint8_t status = syncInit();
+  if (status != 0) {
+    transmitCharArray("Fail to init sync resources!\n");
+  }
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -294,26 +301,72 @@ void StartRouterTask(void *argument)
   
   for(;;)
   {
+    // wait until countSem01 >= 1
+    osSemaphoreAcquire(countSem01, osWaitForever);
+    transmitCharArray("Router: Get countSem01\n");
+
     //If queue is not empty
     if (!isQueueEmpty(cmdQueue)) {
       //Placeholder for task priorities
-      osDelay(1);
-      //Retrieve command from queue
-      commandIn = queuePop(cmdQueue);
-      //Determine which worker task corresponds to command
-        switch (commandIn & 0xF000) {
-        //LED command
-        case 0xA000:
+      //osDelay(1);
+
+      // Acquire the mutex for led status
+      osSemaphoreAcquire(ledStatusMutex, osWaitForever);
+
+      // LED worker is not busy
+      if (ledWorkerBusy > 0) {
+        osSemaphoreRelease(ledStatusMutex);
+
+        commandIn = queuePopItemByOpcode(cmdQueue, LED_COMMAND_OPCODE);
+        // There is LED command in the queue
+        if (commandIn != 0xFFFF) {
           commandLED = commandIn;
-          break;
-        //Motor command
-        case 0xB000:
-          commandMotor = commandIn;
-          break;
-        default:
-        break;
+          transmitCharArray("Wake up led worker\n");
+          //Wake up led worker thread
+          osSemaphoreRelease(ledRouterSem01);
+        } else {
+          transmitCharArray("LED thread not busy but no LED command in queue\n");
+        }
+      } else {
+        osSemaphoreRelease(ledStatusMutex);
       }
+
+      // Acquire the mutex for motor status
+      osSemaphoreAcquire(motorStatusMutex, osWaitForever);
+
+      if (motorWorkerBusy > 0) {
+        osSemaphoreRelease(motorStatusMutex);
+        commandIn = queuePopItemByOpcode(cmdQueue, MOTOR_COMMAND_OPCODE);
+        // There is Motor command in the queue
+        if (commandIn != 0xFFFF) {
+          commandMotor = commandIn;
+          transmitCharArray("Wake up motor worker\n");
+          //Wake up motor worker thread
+          osSemaphoreRelease(motorRouterSem01);
+        } else {
+          transmitCharArray("Motor thread not busy but no motor command in queue\n");
+        }
+      } else {
+        osSemaphoreRelease(motorStatusMutex);
+      }
+
+      // //Retrieve command from queue
+      // commandIn = queuePop(cmdQueue);
+      // //Determine which worker task corresponds to command
+      //   switch (commandIn & 0xF000) {
+      //   //LED command
+      //   case 0xA000:
+      //     commandLED = commandIn;
+      //     break;
+      //   //Motor command
+      //   case 0xB000:
+      //     commandMotor = commandIn;
+      //     break;
+      //   default:
+      //   break;
+      // }
     }
+    transmitCharArray("Router: go to sleep\n");
   }
 }
   /* USER CODE END 5 */
@@ -360,7 +413,7 @@ void initLEDs(void) {
 /* USER CODE END Header_StartLEDTask */
 void StartLEDTask(void *argument)
 {
-  binarySem03LEDWorkerHandle = osSemaphoreNew(1, 1, NULL);
+  //binarySem03LEDWorkerHandle = osSemaphoreNew(1, 1, NULL);
 
   extern volatile uint16_t commandLED;
   volatile uint8_t LEDColor = 0, LEDAction = 0, LEDSpeed = 0;
@@ -373,7 +426,15 @@ void StartLEDTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osSemaphoreAcquire(binarySem03LEDWorkerHandle, osWaitForever);
+    //osSemaphoreAcquire(binarySem03LEDWorkerHandle, osWaitForever);
+
+    // wait to be woken up by router
+    osSemaphoreAcquire(ledRouterSem01, osWaitForever);
+    transmitCharArray("LED worker Got the signal\n");
+
+    osSemaphoreAcquire(ledStatusMutex, osWaitForever);
+    ledWorkerBusy = 1;
+    osSemaphoreRelease(ledStatusMutex);
 
     LEDColor = (commandLED & 0x0F00) >> 8;
     LEDAction = (commandLED & 0x00F0) >> 4;
@@ -450,7 +511,13 @@ void StartLEDTask(void *argument)
 
     commandLED = 0;
 
-    osSemaphoreRelease(binarySem03LEDWorkerHandle);
+    transmitCharArray("LED worker go to sleep\n");
+
+    osSemaphoreAcquire(ledStatusMutex, osWaitForever);
+    ledWorkerBusy = 0;
+    osSemaphoreRelease(ledStatusMutex);
+
+    //osSemaphoreRelease(binarySem03LEDWorkerHandle);
   }
 }
 
@@ -476,6 +543,12 @@ void StartMotorTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
+    // wait to be woken up by router
+    osSemaphoreAcquire(motorRouterSem01, osWaitForever);
+    transmitCharArray("Motor worker Got the signal\n");
+    osSemaphoreAcquire(motorStatusMutex, osWaitForever);
+    motorWorkerBusy = 1;
+    osSemaphoreRelease(motorStatusMutex);
 
     extern volatile uint16_t commandMotor;
     // 2nd character (turn motor on, off, or adjust speed)
@@ -514,6 +587,10 @@ void StartMotorTask(void *argument)
 
     //Placeholder for task priorities
     osDelay(1);
+    osSemaphoreAcquire(motorStatusMutex, osWaitForever);
+    motorWorkerBusy = 0;
+    osSemaphoreRelease(motorStatusMutex);
+    transmitCharArray("Motor worker go to sleep\n");
   }
 }
 
