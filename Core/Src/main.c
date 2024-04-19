@@ -555,7 +555,7 @@ void StartMotorTask(void *argument)
     switch (commandMotor & 0x0F00) { 
       case 0x0100: 
         // turn motor on (will need to adjust speed)
-        speedAdjust = 1;
+        target_rpm = (commandMotor & 0x00FF);
         NVIC_EnableIRQ(TIM7_IRQn);          // Enable interrupt in NVIC
         NVIC_SetPriority(TIM7_IRQn,2);
         break;
@@ -566,27 +566,15 @@ void StartMotorTask(void *argument)
         break;
       case 0x0300:
         // change motor speed 
-        speedAdjust = 1;
+        target_rpm = (commandMotor & 0x00FF);
         break;
       default:
         break;
     }
-    if (speedAdjust == 1){
-      // 3rd & 4th character
-      target_rpm = (commandMotor & 0x00FF);
-    }
+
     commandMotor = 0;
     speedAdjust = 0;
     
-    //If motor is running
-      //Read encoder in timer 3
-      //osDelay known time
-      //Read encoder in timer 3
-      //Reset encoder value
-      //do PI update
-
-    //Placeholder for task priorities
-    osDelay(1);
     osSemaphoreAcquire(workerStatusMutex, osWaitForever);
     motorWorkerBusy = 0;
     osSemaphoreRelease(workerStatusMutex);

@@ -98,11 +98,8 @@ void encoder_init(void) {
     RCC->APB1ENR |= RCC_APB1ENR_TIM7EN;
     
     // Select PSC and ARR values that give an appropriate interrupt rate
-    //TIM7->PSC = 11;
-    //TIM7->ARR = 30000;
-    TIM7->PSC = 15;
-    TIM7->ARR = 46875;
-    
+    TIM7->PSC = 88;
+    TIM7->ARR = 30000;
     
     TIM7->DIER |= TIM_DIER_UIE;             // Enable update event interrupt
     TIM7->CR1 |= TIM_CR1_CEN;               // Enable Timer
@@ -144,15 +141,10 @@ void ADC_init(void) {
 }
 
 void PI_update(void) {
-    transmitCharArray("measured rpm:");
-    sendUint16BinToUart(motor_speed/2);
     // Run PI control loop
-    //error = target_rpm - motor_speed/2; // 2-to-1 conversion
-    //error_integral = error_integral + Ki * error; 
-    
-    error =  (target_rpm * 5) - motor_speed;
+    error =  target_rpm - motor_speed/4;
 
-    error_integral = Ki * (error_integral + error);
+    error_integral = error_integral + (Ki * error);
 
     if (error_integral < 0) {
         error_integral = 0;
@@ -162,11 +154,11 @@ void PI_update(void) {
         error_integral = 3200;
     }
     
-    int16_t output = (Kp * error) + error_integral; // Change this!
+    int16_t output = (Kp * error) + error_integral;
     
-     output = output / 32;
+     output = output >> 5;
 
-    if (output < 0) output = 0;
+    if (output < 0 || target_rpm == 0) output = 0;
     else if (output > 100) output = 100;
     pwm_setDutyCycle(output);
     duty_cycle = output;            // For debug viewing
