@@ -187,7 +187,7 @@ void StartParseUartTask(void *argument) {
   while (1) {
     //transmitCharArray("Waiting to get sem02.\n");
     osSemaphoreAcquire(binarySem02UartParserHandle, osWaitForever);
-    //transmitCharArray("get sem02!\n");
+    transmitCharArray("Uart parser get sem02!\n");
     //Command string terminated with enter key
     uint8_t error = parseCmd();
     //Command syntax correct
@@ -200,6 +200,7 @@ void StartParseUartTask(void *argument) {
 
         // wake up router thread
         osSemaphoreRelease(countSem01);
+        transmitCharArray("wake up router\n");
       } else {
         transmitCharArray("Fail to push command to queue, try again.\n");
       }
@@ -271,7 +272,7 @@ void initUsart3(void) {
   /* definition and creation of myBinarySem02 */
   // The semaphore is created with an initial count of 0 
   // ,which means it is not available initially. 
-  binarySem02UartParserHandle = osSemaphoreNew(1, 0, &semAttr_SEM1);
+  binarySem02UartParserHandle = osSemaphoreNew(1, 0, NULL);
   cmdQueue = createQueue(CMD_QUEUE_CAPACITY, 2);
 }
 

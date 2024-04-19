@@ -39,6 +39,7 @@ C_SOURCES =  \
 Core/Src/main.c \
 Core/Src/cmdQueue.c \
 Core/Src/uartParser.c \
+Core/Src/sync.c \
 Core/Src/freertos.c \
 Core/Src/stm32f0xx_it.c \
 Core/Src/stm32f0xx_hal_msp.c \
