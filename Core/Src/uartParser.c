@@ -44,6 +44,10 @@ uint8_t parseCmd(void) {
   strIndex = 0;
   cmdStrIndex = 0;
   cmdIndex = 0;
+  // Disable the receive register not empty interrupt
+  // because the uart parser thread is reading the content in tmpStr,
+  // if user send command at this time, the tmpStr will be overwritten.
+  USART3->CR1 &= ~USART_CR1_RXNEIE;
   while (strIndex < strLen) {
     if (tmpStr[strIndex] == ' ') {
       cmdIndex++;
@@ -54,6 +58,9 @@ uint8_t parseCmd(void) {
     }
     strIndex++;
   }
+  // Enable UART receive interrupt after processing the content in 
+  USART3->CR1 |= USART_CR1_RXNEIE;
+
   //Convert words into command format
   //First digit
   if (strcasecmp(cmd[0], "led") == 0) {
