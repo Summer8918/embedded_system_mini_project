@@ -542,6 +542,8 @@ void StartLEDTask(void *argument)
     ledWorkerBusy = 0;
     osSemaphoreRelease(workerStatusMutex);
 
+    osSemaphoreRelease(countSem01);
+
     //osSemaphoreRelease(binarySem03LEDWorkerHandle);
   }
 }
@@ -604,6 +606,8 @@ void StartMotorTask(void *argument)
     motorWorkerBusy = 0;
     osSemaphoreRelease(workerStatusMutex);
     transmitCharArray("Motor worker go to sleep\n");
+
+    osSemaphoreRelease(countSem01);
   }
 }
 
