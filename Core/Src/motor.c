@@ -16,12 +16,15 @@ volatile int8_t adc_value = 0;      	// ADC measured motor current
 volatile int16_t error = 0;         	// Speed error signal
 volatile uint8_t Kp = 1;            	// Proportional gain
 volatile uint8_t Ki = 1;            	// Integral gain
+//volatile uint16_t speedHistory[HIST_LEN];   //Short history of speed measurements
 
 // Sets up the entire motor drive system
 void motor_init(void) {
     pwm_init();
     encoder_init();
     ADC_init();
+    //for (int i = 0; i < HIST_LEN; i++)
+    //    speedHistory[i] = 0;
 }
 
 // Sets up the PWM and direction signals to drive the H-Bridge
@@ -116,6 +119,21 @@ void TIM7_IRQHandler(void) {
     // Call the PI update function
     PI_update();
 
+    //Track history of speed measurements
+    /*for (int i = HIST_LEN-1; i > 0; i--) {
+        speedHistory[i] = speedHistory[i-1];
+    }
+    speedHistory[0] = motor_speed;
+
+    //If speed is steady, disable interrupt
+    for (int i = 1; i < HIST_LEN; i++) {
+        if (speedHistory[i-1] != speedHistory[i])
+            break;
+        else
+            if (i == HIST_LEN-1)
+                NVIC_DisableIRQ(TIM7_IRQn);          // Disable interrupt in NVIC
+    }
+*/
     TIM7->SR &= ~TIM_SR_UIF;        // Acknowledge the interrupt
 }
 

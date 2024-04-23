@@ -38,10 +38,10 @@ build/freertos.o: Core/Src/freertos.c \
  Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_spi_ex.h \
  Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h \
  Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h \
- Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tsc.h \
- Core/Inc/uartParser.h Core/Inc/cmdQueue.h \
+ Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tsc.h Core/Inc/sync.h \
  Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h \
- Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
+ Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
+ Core/Inc/uartParser.h Core/Inc/cmdQueue.h
 Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 Core/Inc/FreeRTOSConfig.h:
 Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h:
@@ -85,7 +85,8 @@ Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_spi_ex.h:
 Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h:
 Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h:
 Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tsc.h:
-Core/Inc/uartParser.h:
-Core/Inc/cmdQueue.h:
+Core/Inc/sync.h:
 Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f072xb.h:
 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
+Core/Inc/uartParser.h:
+Core/Inc/cmdQueue.h:
