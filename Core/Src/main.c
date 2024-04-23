@@ -419,7 +419,8 @@ void StartLEDTask(void *argument)
   volatile uint8_t LEDColor = 0, LEDAction = 0, LEDSpeed = 0;
   volatile uint32_t colorMask[5] = {GPIO_ODR_6, GPIO_ODR_9, GPIO_ODR_7, GPIO_ODR_8, GPIO_ODR_6 | GPIO_ODR_7 | GPIO_ODR_8 | GPIO_ODR_9};
   volatile uint8_t blink[4] = {0,0,0,0};
-  volatile uint8_t blinkTime[4] = {0,0,0,0};
+  // volatile uint8_t blinkTime[4] = {0,0,0,0};
+  uint8_t blinkInterval = 0;
   volatile uint32_t startTime[4] = {0,0,0,0};
   volatile uint32_t currentTime = 0;
 
@@ -439,74 +440,98 @@ void StartLEDTask(void *argument)
     LEDColor = (commandLED & 0x0F00) >> 8;
     LEDAction = (commandLED & 0x00F0) >> 4;
 
+    uint8_t blinkFlag = 0;
+
+    // clear all the blink flags
+    for (int i = 0; i < 4; i++) {
+      blink[i] = 0;
+    }
     //LED action
     switch (LEDAction) {
       //On
       case 1:
         GPIOC->ODR |= colorMask[LEDColor-1];
-        if (LEDColor == 5) {
-          blink[0] = 0;
-          blink[1] = 0;
-          blink[2] = 0;
-          blink[3] = 0;
-        }
-        else
-          blink[LEDColor-1] = 0;
+        // if (LEDColor == 5) {
+        //   blink[0] = 0;
+        //   blink[1] = 0;
+        //   blink[2] = 0;
+        //   blink[3] = 0;
+        // }
+        // else
+        //   blink[LEDColor-1] = 0;
         break;
       //Off
       case 2:
         GPIOC->ODR &= ~colorMask[LEDColor-1];
-        if (LEDColor == 5) {
-          blink[0] = 0;
-          blink[1] = 0;
-          blink[2] = 0;
-          blink[3] = 0;
-        }
-        else
-          blink[LEDColor-1] = 0;
+        // if (LEDColor == 5) {
+        //   blink[0] = 0;
+        //   blink[1] = 0;
+        //   blink[2] = 0;
+        //   blink[3] = 0;
+        // }
+        // else
+        //   blink[LEDColor-1] = 0;
         break;
       //Toggle
       case 3:
         GPIOC->ODR ^= colorMask[LEDColor-1];
-        if (LEDColor == 5) {
-          blink[0] = 0;
-          blink[1] = 0;
-          blink[2] = 0;
-          blink[3] = 0;
-        }
-        else
-          blink[LEDColor-1] = 0;
+        // if (LEDColor == 5) {
+        //   blink[0] = 0;
+        //   blink[1] = 0;
+        //   blink[2] = 0;
+        //   blink[3] = 0;
+        // }
+        // else
+        //   blink[LEDColor-1] = 0;
         break;
       //Blink
       case 4:
+        blinkFlag = 1;
         if (LEDColor == 5) {
           blink[0] = 1;
-          blinkTime[0] = commandLED & 0xF;
+          // blinkTime[0] = commandLED & 0xF;
           blink[1] = 1;
-          blinkTime[1] = commandLED & 0xF;
+          // blinkTime[1] = commandLED & 0xF;
           blink[2] = 1;
-          blinkTime[2] = commandLED & 0xF;
+          // blinkTime[2] = commandLED & 0xF;
           blink[3] = 1;
-          blinkTime[3] = commandLED & 0xF;
+          // blinkTime[3] = commandLED & 0xF;
+          
         }
-        else
+        else {
           blink[LEDColor-1] = 1;
-          blinkTime[LEDColor-1] = commandLED & 0xF;
+        }
+        // blinkTime[LEDColor-1] = commandLED & 0xF;
+        blinkInterval = commandLED & 0xF;
         break;
       default:
     }
 
     //Blinking
-    currentTime = xTaskGetTickCount();
-    for (int i = 0; i < 4; i++) {
-      if (blink[i]) {
-        if (currentTime - startTime[i] > blinkTime[i]*100) {
-          GPIOC->ODR ^= colorMask[i];
-          startTime[i] = currentTime;
+    // currentTime = xTaskGetTickCount();
+    // for (int i = 0; i < 4; i++) {
+    //   if (blink[i]) {
+    //     if (currentTime - startTime[i] > blinkTime[i]*100) {
+    //       GPIOC->ODR ^= colorMask[i];
+    //       startTime[i] = currentTime;
+    //     }
+    //   }
+    //   else
+    //     startTime[i] = currentTime;
+    // }
+
+    if (blinkFlag == 1) {
+      // The LED bliks for 10s
+      int16_t loopTimes = 10000 / (100 * blinkInterval);
+      while (loopTimes > 0) {
+        for (int i = 0; i < 4; i++) {
+          if (blink[i]) {
+            GPIOC->ODR ^= colorMask[i];
+          }
         }
+        osDelay(blinkInterval * 100);
+        loopTimes--;
       }
-      else
-        startTime[i] = currentTime;
     }
 
     commandLED = 0;
