@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
   49              	.LVL2:
   50              		.loc 1 7 33 view .LVU5
   51 000c FFF7FEFF 		bl	osSemaphoreNew
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 2
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 2
 
 
   52              	.LVL3:
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
   92 0030 0023     		movs	r3, #0
   93 0032 0370     		strb	r3, [r0]
   22:Core/Src/cmdQueue.c ****     q->back = -1;
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 3
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 3
 
 
   94              		.loc 1 22 5 is_stmt 1 view .LVU25
@@ -178,7 +178,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
  143              		.loc 1 29 5 is_stmt 1 view .LVU36
  144 0004 0121     		movs	r1, #1
  145 0006 074D     		ldr	r5, .L6
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 4
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 4
 
 
  146 0008 2868     		ldr	r0, [r5]
@@ -238,7 +238,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
  196              		.cfi_def_cfa_offset 16
  197              		.cfi_offset 4, -16
  198              		.cfi_offset 5, -12
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 5
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 5
 
 
  199              		.cfi_offset 6, -8
@@ -298,7 +298,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
  249              		.thumb_func
  251              	queuePush:
  252              	.LVL25:
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 6
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 6
 
 
  253              	.LFB43:
@@ -358,7 +358,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
  299 0028 FFF7FEFF 		bl	__aeabi_idivmod
  300              	.LVL29:
   49:Core/Src/cmdQueue.c ****     q->back = pos;
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 7
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 7
 
 
  301              		.loc 1 49 5 is_stmt 1 view .LVU71
@@ -418,7 +418,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
  347 0058 F7E7     		b	.L11
  348              	.L16:
  349 005a C046     		.align	2
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 8
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 8
 
 
  350              	.L15:
@@ -478,7 +478,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
  398 001a 5BB2     		sxtb	r3, r3
  399              		.loc 1 62 28 view .LVU98
  400 001c 5B00     		lsls	r3, r3, #1
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 9
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 9
 
 
  401 001e D318     		adds	r3, r2, r3
@@ -538,7 +538,7 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
   60:Core/Src/cmdQueue.c ****     }
  449              		.loc 1 60 9 view .LVU114
   60:Core/Src/cmdQueue.c ****     }
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 10
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 10
 
 
  450              		.loc 1 60 16 is_stmt 0 view .LVU115
@@ -563,12 +563,13 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
   68:Core/Src/cmdQueue.c **** 
   69:Core/Src/cmdQueue.c **** // When the return value is 0xffff, fail to find the item
   70:Core/Src/cmdQueue.c **** // that contain the target opcode.
-  71:Core/Src/cmdQueue.c **** uint16_t queuePopItemByOpcode(Cmd_Queue *q, uint8_t targetOpcode) {
- 471              		.loc 1 71 67 is_stmt 1 view -0
+  71:Core/Src/cmdQueue.c **** //
+  72:Core/Src/cmdQueue.c **** uint16_t queuePopItemByOpcode(Cmd_Queue *q, uint8_t targetOpcode) {
+ 471              		.loc 1 72 67 is_stmt 1 view -0
  472              		.cfi_startproc
  473              		@ args = 0, pretend = 0, frame = 0
  474              		@ frame_needed = 0, uses_anonymous_args = 0
- 475              		.loc 1 71 67 is_stmt 0 view .LVU117
+ 475              		.loc 1 72 67 is_stmt 0 view .LVU117
  476 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
  477              	.LCFI5:
  478              		.cfi_def_cfa_offset 24
@@ -587,334 +588,334 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
  491              		.cfi_offset 9, -28
  492 0008 0400     		movs	r4, r0
  493 000a 8846     		mov	r8, r1
-  72:Core/Src/cmdQueue.c ****     osSemaphoreAcquire(binarySem01CmdQueueHandle, osWaitForever);
- 494              		.loc 1 72 5 is_stmt 1 view .LVU118
+  73:Core/Src/cmdQueue.c ****     osSemaphoreAcquire(binarySem01CmdQueueHandle, osWaitForever);
+ 494              		.loc 1 73 5 is_stmt 1 view .LVU118
  495 000c 0121     		movs	r1, #1
  496              	.LVL46:
- 497              		.loc 1 72 5 is_stmt 0 view .LVU119
+ 497              		.loc 1 73 5 is_stmt 0 view .LVU119
  498 000e 3E4B     		ldr	r3, .L36
  499 0010 1868     		ldr	r0, [r3]
  500              	.LVL47:
- 501              		.loc 1 72 5 view .LVU120
+ 501              		.loc 1 73 5 view .LVU120
  502 0012 4942     		rsbs	r1, r1, #0
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 11
+
+
  503 0014 FFF7FEFF 		bl	osSemaphoreAcquire
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 11
-
-
  504              	.LVL48:
-  73:Core/Src/cmdQueue.c ****     uint16_t idx = q->front;
- 505              		.loc 1 73 5 is_stmt 1 view .LVU121
- 506              		.loc 1 73 21 is_stmt 0 view .LVU122
+  74:Core/Src/cmdQueue.c ****     uint16_t idx = q->front;
+ 505              		.loc 1 74 5 is_stmt 1 view .LVU121
+ 506              		.loc 1 74 21 is_stmt 0 view .LVU122
  507 0018 2078     		ldrb	r0, [r4]
  508 001a 40B2     		sxtb	r0, r0
- 509              		.loc 1 73 14 view .LVU123
+ 509              		.loc 1 74 14 view .LVU123
  510 001c 83B2     		uxth	r3, r0
  511 001e 9946     		mov	r9, r3
  512              	.LVL49:
-  74:Core/Src/cmdQueue.c ****     if (q->itemNum == 0) {
- 513              		.loc 1 74 5 is_stmt 1 view .LVU124
- 514              		.loc 1 74 10 is_stmt 0 view .LVU125
+  75:Core/Src/cmdQueue.c ****     if (q->itemNum == 0) {
+ 513              		.loc 1 75 5 is_stmt 1 view .LVU124
+ 514              		.loc 1 75 10 is_stmt 0 view .LVU125
  515 0020 2379     		ldrb	r3, [r4, #4]
- 516              		.loc 1 74 8 view .LVU126
+ 516              		.loc 1 75 8 view .LVU126
  517 0022 002B     		cmp	r3, #0
  518 0024 01D0     		beq	.L33
-  75:Core/Src/cmdQueue.c ****         osSemaphoreRelease(binarySem01CmdQueueHandle);
-  76:Core/Src/cmdQueue.c ****         return 0xffff;
-  77:Core/Src/cmdQueue.c ****     }
-  78:Core/Src/cmdQueue.c ****     uint16_t targetItem = 0xffff;
-  79:Core/Src/cmdQueue.c ****     int8_t cnt = 0;
- 519              		.loc 1 79 12 view .LVU127
+  76:Core/Src/cmdQueue.c ****         osSemaphoreRelease(binarySem01CmdQueueHandle);
+  77:Core/Src/cmdQueue.c ****         return 0xffff;
+  78:Core/Src/cmdQueue.c ****     }
+  79:Core/Src/cmdQueue.c ****     uint16_t targetItem = 0xffff;
+  80:Core/Src/cmdQueue.c ****     int8_t cnt = 0;
+ 519              		.loc 1 80 12 view .LVU127
  520 0026 0027     		movs	r7, #0
  521 0028 08E0     		b	.L24
  522              	.L33:
-  75:Core/Src/cmdQueue.c ****         osSemaphoreRelease(binarySem01CmdQueueHandle);
- 523              		.loc 1 75 9 is_stmt 1 view .LVU128
+  76:Core/Src/cmdQueue.c ****         osSemaphoreRelease(binarySem01CmdQueueHandle);
+ 523              		.loc 1 76 9 is_stmt 1 view .LVU128
  524 002a 374B     		ldr	r3, .L36
  525 002c 1868     		ldr	r0, [r3]
  526 002e FFF7FEFF 		bl	osSemaphoreRelease
  527              	.LVL50:
-  76:Core/Src/cmdQueue.c ****     }
- 528              		.loc 1 76 9 view .LVU129
-  76:Core/Src/cmdQueue.c ****     }
- 529              		.loc 1 76 16 is_stmt 0 view .LVU130
+  77:Core/Src/cmdQueue.c ****     }
+ 528              		.loc 1 77 9 view .LVU129
+  77:Core/Src/cmdQueue.c ****     }
+ 529              		.loc 1 77 16 is_stmt 0 view .LVU130
  530 0032 364B     		ldr	r3, .L36+4
  531 0034 9846     		mov	r8, r3
  532              	.LVL51:
-  76:Core/Src/cmdQueue.c ****     }
- 533              		.loc 1 76 16 view .LVU131
+  77:Core/Src/cmdQueue.c ****     }
+ 533              		.loc 1 77 16 view .LVU131
  534 0036 61E0     		b	.L25
  535              	.LVL52:
  536              	.L26:
  537              	.LBB2:
-  80:Core/Src/cmdQueue.c ****     while (cnt < q->itemNum) {
-  81:Core/Src/cmdQueue.c ****         uint8_t curOpcode = (q->data[(idx + cnt) % q->capacity] >> 12);
-  82:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
-  83:Core/Src/cmdQueue.c ****             targetItem = q->data[(idx + cnt) % q->capacity];
-  84:Core/Src/cmdQueue.c ****             break;
-  85:Core/Src/cmdQueue.c ****         }
-  86:Core/Src/cmdQueue.c ****         cnt++;
- 538              		.loc 1 86 9 is_stmt 1 view .LVU132
- 539              		.loc 1 86 12 is_stmt 0 view .LVU133
+  81:Core/Src/cmdQueue.c ****     while (cnt < q->itemNum) {
+  82:Core/Src/cmdQueue.c ****         uint8_t curOpcode = (q->data[(idx + cnt) % q->capacity] >> 12);
+  83:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
+  84:Core/Src/cmdQueue.c ****             targetItem = q->data[(idx + cnt) % q->capacity];
+  85:Core/Src/cmdQueue.c ****             break;
+  86:Core/Src/cmdQueue.c ****         }
+  87:Core/Src/cmdQueue.c ****         cnt++;
+ 538              		.loc 1 87 9 is_stmt 1 view .LVU132
+ 539              		.loc 1 87 12 is_stmt 0 view .LVU133
  540 0038 0137     		adds	r7, r7, #1
  541              	.LVL53:
- 542              		.loc 1 86 12 view .LVU134
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 12
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 12
 
 
+ 542              		.loc 1 87 12 view .LVU134
  543 003a 7FB2     		sxtb	r7, r7
  544              	.LVL54:
  545              	.L24:
- 546              		.loc 1 86 12 view .LVU135
+ 546              		.loc 1 87 12 view .LVU135
  547              	.LBE2:
-  80:Core/Src/cmdQueue.c ****     while (cnt < q->itemNum) {
- 548              		.loc 1 80 16 is_stmt 1 view .LVU136
-  80:Core/Src/cmdQueue.c ****     while (cnt < q->itemNum) {
- 549              		.loc 1 80 19 is_stmt 0 view .LVU137
+  81:Core/Src/cmdQueue.c ****     while (cnt < q->itemNum) {
+ 548              		.loc 1 81 16 is_stmt 1 view .LVU136
+  81:Core/Src/cmdQueue.c ****     while (cnt < q->itemNum) {
+ 549              		.loc 1 81 19 is_stmt 0 view .LVU137
  550 003c 2379     		ldrb	r3, [r4, #4]
  551 003e 5BB2     		sxtb	r3, r3
-  80:Core/Src/cmdQueue.c ****     while (cnt < q->itemNum) {
- 552              		.loc 1 80 16 view .LVU138
+  81:Core/Src/cmdQueue.c ****     while (cnt < q->itemNum) {
+ 552              		.loc 1 81 16 view .LVU138
  553 0040 BB42     		cmp	r3, r7
  554 0042 18DD     		ble	.L34
  555              	.LBB3:
-  81:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
- 556              		.loc 1 81 9 is_stmt 1 view .LVU139
-  81:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
- 557              		.loc 1 81 31 is_stmt 0 view .LVU140
+  82:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
+ 556              		.loc 1 82 9 is_stmt 1 view .LVU139
+  82:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
+ 557              		.loc 1 82 31 is_stmt 0 view .LVU140
  558 0044 A568     		ldr	r5, [r4, #8]
-  81:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
- 559              		.loc 1 81 43 view .LVU141
+  82:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
+ 559              		.loc 1 82 43 view .LVU141
  560 0046 4B46     		mov	r3, r9
  561 0048 DE19     		adds	r6, r3, r7
-  81:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
- 562              		.loc 1 81 53 view .LVU142
+  82:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
+ 562              		.loc 1 82 53 view .LVU142
  563 004a A178     		ldrb	r1, [r4, #2]
  564 004c 49B2     		sxtb	r1, r1
-  81:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
- 565              		.loc 1 81 50 view .LVU143
+  82:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
+ 565              		.loc 1 82 50 view .LVU143
  566 004e 3000     		movs	r0, r6
  567 0050 FFF7FEFF 		bl	__aeabi_idivmod
  568              	.LVL55:
-  81:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
- 569              		.loc 1 81 37 view .LVU144
+  82:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
+ 569              		.loc 1 82 37 view .LVU144
  570 0054 4B00     		lsls	r3, r1, #1
  571 0056 EB18     		adds	r3, r5, r3
  572 0058 1B88     		ldrh	r3, [r3]
-  81:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
- 573              		.loc 1 81 17 view .LVU145
+  82:Core/Src/cmdQueue.c ****         if (curOpcode == targetOpcode) {
+ 573              		.loc 1 82 17 view .LVU145
  574 005a 1B0B     		lsrs	r3, r3, #12
  575              	.LVL56:
-  82:Core/Src/cmdQueue.c ****             targetItem = q->data[(idx + cnt) % q->capacity];
- 576              		.loc 1 82 9 is_stmt 1 view .LVU146
-  82:Core/Src/cmdQueue.c ****             targetItem = q->data[(idx + cnt) % q->capacity];
- 577              		.loc 1 82 12 is_stmt 0 view .LVU147
+  83:Core/Src/cmdQueue.c ****             targetItem = q->data[(idx + cnt) % q->capacity];
+ 576              		.loc 1 83 9 is_stmt 1 view .LVU146
+  83:Core/Src/cmdQueue.c ****             targetItem = q->data[(idx + cnt) % q->capacity];
+ 577              		.loc 1 83 12 is_stmt 0 view .LVU147
  578 005c 4345     		cmp	r3, r8
  579 005e EBD1     		bne	.L26
-  83:Core/Src/cmdQueue.c ****             break;
- 580              		.loc 1 83 13 is_stmt 1 view .LVU148
-  83:Core/Src/cmdQueue.c ****             break;
- 581              		.loc 1 83 49 is_stmt 0 view .LVU149
+  84:Core/Src/cmdQueue.c ****             break;
+ 580              		.loc 1 84 13 is_stmt 1 view .LVU148
+  84:Core/Src/cmdQueue.c ****             break;
+ 581              		.loc 1 84 49 is_stmt 0 view .LVU149
  582 0060 A178     		ldrb	r1, [r4, #2]
  583 0062 49B2     		sxtb	r1, r1
-  83:Core/Src/cmdQueue.c ****             break;
- 584              		.loc 1 83 46 view .LVU150
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 13
+  84:Core/Src/cmdQueue.c ****             break;
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 13
 
 
+ 584              		.loc 1 84 46 view .LVU150
  585 0064 3000     		movs	r0, r6
  586 0066 FFF7FEFF 		bl	__aeabi_idivmod
  587              	.LVL57:
-  83:Core/Src/cmdQueue.c ****             break;
- 588              		.loc 1 83 33 view .LVU151
+  84:Core/Src/cmdQueue.c ****             break;
+ 588              		.loc 1 84 33 view .LVU151
  589 006a 4900     		lsls	r1, r1, #1
  590 006c 6D18     		adds	r5, r5, r1
-  83:Core/Src/cmdQueue.c ****             break;
- 591              		.loc 1 83 24 view .LVU152
+  84:Core/Src/cmdQueue.c ****             break;
+ 591              		.loc 1 84 24 view .LVU152
  592 006e 2B88     		ldrh	r3, [r5]
  593 0070 9BB2     		uxth	r3, r3
  594 0072 9846     		mov	r8, r3
  595              	.LVL58:
-  84:Core/Src/cmdQueue.c ****         }
- 596              		.loc 1 84 13 is_stmt 1 view .LVU153
+  85:Core/Src/cmdQueue.c ****         }
+ 596              		.loc 1 85 13 is_stmt 1 view .LVU153
  597 0074 01E0     		b	.L27
  598              	.LVL59:
  599              	.L34:
-  84:Core/Src/cmdQueue.c ****         }
- 600              		.loc 1 84 13 is_stmt 0 view .LVU154
+  85:Core/Src/cmdQueue.c ****         }
+ 600              		.loc 1 85 13 is_stmt 0 view .LVU154
  601              	.LBE3:
-  78:Core/Src/cmdQueue.c ****     int8_t cnt = 0;
- 602              		.loc 1 78 14 view .LVU155
+  79:Core/Src/cmdQueue.c ****     int8_t cnt = 0;
+ 602              		.loc 1 79 14 view .LVU155
  603 0076 254B     		ldr	r3, .L36+4
  604 0078 9846     		mov	r8, r3
  605              	.L27:
  606              	.LVL60:
-  87:Core/Src/cmdQueue.c ****     }
-  88:Core/Src/cmdQueue.c ****     if (targetItem == 0xffff) {
- 607              		.loc 1 88 5 is_stmt 1 view .LVU156
- 608              		.loc 1 88 8 is_stmt 0 view .LVU157
+  88:Core/Src/cmdQueue.c ****     }
+  89:Core/Src/cmdQueue.c ****     if (targetItem == 0xffff) {
+ 607              		.loc 1 89 5 is_stmt 1 view .LVU156
+ 608              		.loc 1 89 8 is_stmt 0 view .LVU157
  609 007a 244B     		ldr	r3, .L36+4
  610 007c 9845     		cmp	r8, r3
  611 007e 0AD0     		beq	.L35
-  89:Core/Src/cmdQueue.c ****         osSemaphoreRelease(binarySem01CmdQueueHandle);
-  90:Core/Src/cmdQueue.c ****         return 0xffff;
-  91:Core/Src/cmdQueue.c ****     }
-  92:Core/Src/cmdQueue.c ****     // Delete the item in the queue
-  93:Core/Src/cmdQueue.c ****     idx = ((idx + cnt) % q->capacity);
- 612              		.loc 1 93 5 is_stmt 1 view .LVU158
- 613              		.loc 1 93 17 is_stmt 0 view .LVU159
+  90:Core/Src/cmdQueue.c ****         osSemaphoreRelease(binarySem01CmdQueueHandle);
+  91:Core/Src/cmdQueue.c ****         return 0xffff;
+  92:Core/Src/cmdQueue.c ****     }
+  93:Core/Src/cmdQueue.c ****     // Delete the item in the queue
+  94:Core/Src/cmdQueue.c ****     idx = ((idx + cnt) % q->capacity);
+ 612              		.loc 1 94 5 is_stmt 1 view .LVU158
+ 613              		.loc 1 94 17 is_stmt 0 view .LVU159
  614 0080 4B46     		mov	r3, r9
  615 0082 D819     		adds	r0, r3, r7
- 616              		.loc 1 93 27 view .LVU160
+ 616              		.loc 1 94 27 view .LVU160
  617 0084 A178     		ldrb	r1, [r4, #2]
  618 0086 49B2     		sxtb	r1, r1
- 619              		.loc 1 93 24 view .LVU161
+ 619              		.loc 1 94 24 view .LVU161
  620 0088 FFF7FEFF 		bl	__aeabi_idivmod
  621              	.LVL61:
- 622              		.loc 1 93 9 view .LVU162
+ 622              		.loc 1 94 9 view .LVU162
  623 008c 8DB2     		uxth	r5, r1
  624              	.LVL62:
-  94:Core/Src/cmdQueue.c ****     int8_t remain = q->itemNum - cnt;  //remaining elements number
- 625              		.loc 1 94 5 is_stmt 1 view .LVU163
- 626              		.loc 1 94 22 is_stmt 0 view .LVU164
+  95:Core/Src/cmdQueue.c ****     int8_t remain = q->itemNum - cnt;  //remaining elements number
+ 625              		.loc 1 95 5 is_stmt 1 view .LVU163
+ 626              		.loc 1 95 22 is_stmt 0 view .LVU164
  627 008e 2679     		ldrb	r6, [r4, #4]
- 628              		.loc 1 94 32 view .LVU165
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 14
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 14
 
 
+ 628              		.loc 1 95 32 view .LVU165
  629 0090 F61B     		subs	r6, r6, r7
- 630              		.loc 1 94 12 view .LVU166
+ 630              		.loc 1 95 12 view .LVU166
  631 0092 76B2     		sxtb	r6, r6
  632              	.LVL63:
-  95:Core/Src/cmdQueue.c ****     while (remain > 0) {
- 633              		.loc 1 95 5 is_stmt 1 view .LVU167
- 634              		.loc 1 95 11 is_stmt 0 view .LVU168
+  96:Core/Src/cmdQueue.c ****     while (remain > 0) {
+ 633              		.loc 1 96 5 is_stmt 1 view .LVU167
+ 634              		.loc 1 96 11 is_stmt 0 view .LVU168
  635 0094 1BE0     		b	.L30
  636              	.LVL64:
  637              	.L35:
-  89:Core/Src/cmdQueue.c ****         osSemaphoreRelease(binarySem01CmdQueueHandle);
- 638              		.loc 1 89 9 is_stmt 1 view .LVU169
+  90:Core/Src/cmdQueue.c ****         osSemaphoreRelease(binarySem01CmdQueueHandle);
+ 638              		.loc 1 90 9 is_stmt 1 view .LVU169
  639 0096 1C4B     		ldr	r3, .L36
  640 0098 1868     		ldr	r0, [r3]
  641 009a FFF7FEFF 		bl	osSemaphoreRelease
  642              	.LVL65:
-  90:Core/Src/cmdQueue.c ****     }
- 643              		.loc 1 90 9 view .LVU170
-  90:Core/Src/cmdQueue.c ****     }
- 644              		.loc 1 90 16 is_stmt 0 view .LVU171
+  91:Core/Src/cmdQueue.c ****     }
+ 643              		.loc 1 91 9 view .LVU170
+  91:Core/Src/cmdQueue.c ****     }
+ 644              		.loc 1 91 16 is_stmt 0 view .LVU171
  645 009e 2DE0     		b	.L25
  646              	.LVL66:
  647              	.L31:
  648              	.LBB4:
-  96:Core/Src/cmdQueue.c ****         uint16_t nextIdx = ((idx + 1) % q->capacity);
- 649              		.loc 1 96 9 is_stmt 1 view .LVU172
- 650              		.loc 1 96 34 is_stmt 0 view .LVU173
+  97:Core/Src/cmdQueue.c ****         uint16_t nextIdx = ((idx + 1) % q->capacity);
+ 649              		.loc 1 97 9 is_stmt 1 view .LVU172
+ 650              		.loc 1 97 34 is_stmt 0 view .LVU173
  651 00a0 6F1C     		adds	r7, r5, #1
- 652              		.loc 1 96 42 view .LVU174
+ 652              		.loc 1 97 42 view .LVU174
  653 00a2 A178     		ldrb	r1, [r4, #2]
  654 00a4 49B2     		sxtb	r1, r1
- 655              		.loc 1 96 39 view .LVU175
+ 655              		.loc 1 97 39 view .LVU175
  656 00a6 3800     		movs	r0, r7
  657 00a8 FFF7FEFF 		bl	__aeabi_idivmod
  658              	.LVL67:
-  97:Core/Src/cmdQueue.c ****         q->data[idx] = q->data[nextIdx];
- 659              		.loc 1 97 9 is_stmt 1 view .LVU176
- 660              		.loc 1 97 25 is_stmt 0 view .LVU177
+  98:Core/Src/cmdQueue.c ****         q->data[idx] = q->data[nextIdx];
+ 659              		.loc 1 98 9 is_stmt 1 view .LVU176
+ 660              		.loc 1 98 25 is_stmt 0 view .LVU177
  661 00ac A268     		ldr	r2, [r4, #8]
- 662              		.loc 1 97 31 view .LVU178
+ 662              		.loc 1 98 31 view .LVU178
  663 00ae 0B04     		lsls	r3, r1, #16
  664 00b0 DB0B     		lsrs	r3, r3, #15
  665 00b2 D318     		adds	r3, r2, r3
- 666              		.loc 1 97 16 view .LVU179
+ 666              		.loc 1 98 16 view .LVU179
  667 00b4 6D00     		lsls	r5, r5, #1
  668              	.LVL68:
- 669              		.loc 1 97 16 view .LVU180
+ 669              		.loc 1 98 16 view .LVU180
  670 00b6 5219     		adds	r2, r2, r5
- 671              		.loc 1 97 31 view .LVU181
+ 671              		.loc 1 98 31 view .LVU181
  672 00b8 1B88     		ldrh	r3, [r3]
  673 00ba 9BB2     		uxth	r3, r3
- 674              		.loc 1 97 22 view .LVU182
+ 674              		.loc 1 98 22 view .LVU182
  675 00bc 1380     		strh	r3, [r2]
-  98:Core/Src/cmdQueue.c ****         idx = ((idx + 1) % q->capacity);
- 676              		.loc 1 98 9 is_stmt 1 view .LVU183
- 677              		.loc 1 98 29 is_stmt 0 view .LVU184
+  99:Core/Src/cmdQueue.c ****         idx = ((idx + 1) % q->capacity);
+ 676              		.loc 1 99 9 is_stmt 1 view .LVU183
+ 677              		.loc 1 99 29 is_stmt 0 view .LVU184
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 15
+
+
  678 00be A178     		ldrb	r1, [r4, #2]
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 15
-
-
  679              	.LVL69:
- 680              		.loc 1 98 29 view .LVU185
+ 680              		.loc 1 99 29 view .LVU185
  681 00c0 49B2     		sxtb	r1, r1
- 682              		.loc 1 98 26 view .LVU186
+ 682              		.loc 1 99 26 view .LVU186
  683 00c2 3800     		movs	r0, r7
  684 00c4 FFF7FEFF 		bl	__aeabi_idivmod
  685              	.LVL70:
- 686              		.loc 1 98 13 view .LVU187
+ 686              		.loc 1 99 13 view .LVU187
  687 00c8 8DB2     		uxth	r5, r1
  688              	.LVL71:
-  99:Core/Src/cmdQueue.c ****         remain--;
- 689              		.loc 1 99 9 is_stmt 1 view .LVU188
- 690              		.loc 1 99 15 is_stmt 0 view .LVU189
+ 100:Core/Src/cmdQueue.c ****         remain--;
+ 689              		.loc 1 100 9 is_stmt 1 view .LVU188
+ 690              		.loc 1 100 15 is_stmt 0 view .LVU189
  691 00ca 013E     		subs	r6, r6, #1
  692              	.LVL72:
- 693              		.loc 1 99 15 view .LVU190
+ 693              		.loc 1 100 15 view .LVU190
  694 00cc 76B2     		sxtb	r6, r6
  695              	.LVL73:
  696              	.L30:
- 697              		.loc 1 99 15 view .LVU191
+ 697              		.loc 1 100 15 view .LVU191
  698              	.LBE4:
-  95:Core/Src/cmdQueue.c ****         uint16_t nextIdx = ((idx + 1) % q->capacity);
- 699              		.loc 1 95 19 is_stmt 1 view .LVU192
+  96:Core/Src/cmdQueue.c ****         uint16_t nextIdx = ((idx + 1) % q->capacity);
+ 699              		.loc 1 96 19 is_stmt 1 view .LVU192
  700 00ce 002E     		cmp	r6, #0
  701 00d0 E6DC     		bgt	.L31
- 100:Core/Src/cmdQueue.c ****     }
- 101:Core/Src/cmdQueue.c ****     q->itemNum--;
- 702              		.loc 1 101 5 view .LVU193
- 703              		.loc 1 101 6 is_stmt 0 view .LVU194
+ 101:Core/Src/cmdQueue.c ****     }
+ 102:Core/Src/cmdQueue.c ****     q->itemNum--;
+ 702              		.loc 1 102 5 view .LVU193
+ 703              		.loc 1 102 6 is_stmt 0 view .LVU194
  704 00d2 2379     		ldrb	r3, [r4, #4]
  705 00d4 5BB2     		sxtb	r3, r3
- 706              		.loc 1 101 15 view .LVU195
+ 706              		.loc 1 102 15 view .LVU195
  707 00d6 013B     		subs	r3, r3, #1
  708 00d8 5BB2     		sxtb	r3, r3
  709 00da 2371     		strb	r3, [r4, #4]
- 102:Core/Src/cmdQueue.c ****     q->back = ((q->back - 1 + q->capacity) % q->capacity);
- 710              		.loc 1 102 5 is_stmt 1 view .LVU196
- 711              		.loc 1 102 18 is_stmt 0 view .LVU197
+ 103:Core/Src/cmdQueue.c ****     q->back = ((q->back - 1 + q->capacity) % q->capacity);
+ 710              		.loc 1 103 5 is_stmt 1 view .LVU196
+ 711              		.loc 1 103 18 is_stmt 0 view .LVU197
  712 00dc 6078     		ldrb	r0, [r4, #1]
  713 00de 40B2     		sxtb	r0, r0
- 714              		.loc 1 102 25 view .LVU198
+ 714              		.loc 1 103 25 view .LVU198
  715 00e0 0138     		subs	r0, r0, #1
- 716              		.loc 1 102 32 view .LVU199
+ 716              		.loc 1 103 32 view .LVU199
  717 00e2 A378     		ldrb	r3, [r4, #2]
  718 00e4 5BB2     		sxtb	r3, r3
- 719              		.loc 1 102 29 view .LVU200
+ 719              		.loc 1 103 29 view .LVU200
  720 00e6 C018     		adds	r0, r0, r3
- 721              		.loc 1 102 47 view .LVU201
+ 721              		.loc 1 103 47 view .LVU201
  722 00e8 A178     		ldrb	r1, [r4, #2]
  723 00ea 49B2     		sxtb	r1, r1
- 724              		.loc 1 102 44 view .LVU202
+ 724              		.loc 1 103 44 view .LVU202
  725 00ec FFF7FEFF 		bl	__aeabi_idivmod
  726              	.LVL74:
- 727              		.loc 1 102 13 view .LVU203
+ 727              		.loc 1 103 13 view .LVU203
  728 00f0 49B2     		sxtb	r1, r1
  729 00f2 6170     		strb	r1, [r4, #1]
- 103:Core/Src/cmdQueue.c ****     osSemaphoreRelease(binarySem01CmdQueueHandle);
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 16
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 16
 
 
- 730              		.loc 1 103 5 is_stmt 1 view .LVU204
+ 104:Core/Src/cmdQueue.c ****     osSemaphoreRelease(binarySem01CmdQueueHandle);
+ 730              		.loc 1 104 5 is_stmt 1 view .LVU204
  731 00f4 044B     		ldr	r3, .L36
  732 00f6 1868     		ldr	r0, [r3]
  733 00f8 FFF7FEFF 		bl	osSemaphoreRelease
  734              	.LVL75:
- 104:Core/Src/cmdQueue.c ****     return targetItem;
- 735              		.loc 1 104 5 view .LVU205
+ 105:Core/Src/cmdQueue.c ****     return targetItem;
+ 735              		.loc 1 105 5 view .LVU205
  736              	.L25:
- 105:Core/Src/cmdQueue.c **** }
- 737              		.loc 1 105 1 is_stmt 0 view .LVU206
+ 106:Core/Src/cmdQueue.c **** }
+ 737              		.loc 1 106 1 is_stmt 0 view .LVU206
  738 00fc 4046     		mov	r0, r8
  739              		@ sp needed
  740              	.LVL76:
- 741              		.loc 1 105 1 view .LVU207
+ 741              		.loc 1 106 1 view .LVU207
  742 00fe C0BC     		pop	{r6, r7}
  743 0100 B946     		mov	r9, r7
  744 0102 B046     		mov	r8, r6
@@ -935,13 +936,13 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
  761              	freeQueue:
  762              	.LVL77:
  763              	.LFB46:
- 106:Core/Src/cmdQueue.c **** 
- 107:Core/Src/cmdQueue.c **** void freeQueue(Cmd_Queue* q) {
- 764              		.loc 1 107 30 is_stmt 1 view -0
+ 107:Core/Src/cmdQueue.c **** 
+ 108:Core/Src/cmdQueue.c **** void freeQueue(Cmd_Queue* q) {
+ 764              		.loc 1 108 30 is_stmt 1 view -0
  765              		.cfi_startproc
  766              		@ args = 0, pretend = 0, frame = 0
  767              		@ frame_needed = 0, uses_anonymous_args = 0
- 768              		.loc 1 107 30 is_stmt 0 view .LVU209
+ 768              		.loc 1 108 30 is_stmt 0 view .LVU209
  769 0000 70B5     		push	{r4, r5, r6, lr}
  770              	.LCFI7:
  771              		.cfi_def_cfa_offset 16
@@ -950,34 +951,34 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
  774              		.cfi_offset 6, -8
  775              		.cfi_offset 14, -4
  776 0002 0400     		movs	r4, r0
- 108:Core/Src/cmdQueue.c ****     osSemaphoreAcquire(binarySem01CmdQueueHandle, osWaitForever);
- 777              		.loc 1 108 5 is_stmt 1 view .LVU210
+ 109:Core/Src/cmdQueue.c ****     osSemaphoreAcquire(binarySem01CmdQueueHandle, osWaitForever);
+ 777              		.loc 1 109 5 is_stmt 1 view .LVU210
  778 0004 0121     		movs	r1, #1
  779 0006 064D     		ldr	r5, .L39
  780 0008 2868     		ldr	r0, [r5]
  781              	.LVL78:
- 782              		.loc 1 108 5 is_stmt 0 view .LVU211
+ 782              		.loc 1 109 5 is_stmt 0 view .LVU211
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 17
+
+
  783 000a 4942     		rsbs	r1, r1, #0
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 17
-
-
  784 000c FFF7FEFF 		bl	osSemaphoreAcquire
  785              	.LVL79:
- 109:Core/Src/cmdQueue.c **** 	vPortFree(q);
- 786              		.loc 1 109 2 is_stmt 1 view .LVU212
+ 110:Core/Src/cmdQueue.c **** 	vPortFree(q);
+ 786              		.loc 1 110 2 is_stmt 1 view .LVU212
  787 0010 2000     		movs	r0, r4
  788 0012 FFF7FEFF 		bl	vPortFree
  789              	.LVL80:
- 110:Core/Src/cmdQueue.c ****     osSemaphoreRelease(binarySem01CmdQueueHandle);
- 790              		.loc 1 110 5 view .LVU213
+ 111:Core/Src/cmdQueue.c ****     osSemaphoreRelease(binarySem01CmdQueueHandle);
+ 790              		.loc 1 111 5 view .LVU213
  791 0016 2868     		ldr	r0, [r5]
  792 0018 FFF7FEFF 		bl	osSemaphoreRelease
  793              	.LVL81:
- 111:Core/Src/cmdQueue.c **** }
- 794              		.loc 1 111 1 is_stmt 0 view .LVU214
+ 112:Core/Src/cmdQueue.c **** }
+ 794              		.loc 1 112 1 is_stmt 0 view .LVU214
  795              		@ sp needed
  796              	.LVL82:
- 797              		.loc 1 111 1 view .LVU215
+ 797              		.loc 1 112 1 view .LVU215
  798 001c 70BD     		pop	{r4, r5, r6, pc}
  799              	.L40:
  800 001e C046     		.align	2
@@ -996,34 +997,34 @@ ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 1
  816              		.file 3 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
  817              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
  818              		.file 5 "Core/Inc/cmdQueue.h"
-ARM GAS  /var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s 			page 18
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s 			page 18
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 cmdQueue.c
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:19     .text.createQueue:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:25     .text.createQueue:00000000 createQueue
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:116    .text.createQueue:00000040 $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:811    .bss.binarySem01CmdQueueHandle:00000000 binarySem01CmdQueueHandle
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:121    .text.isQueueEmpty:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:127    .text.isQueueEmpty:00000000 isQueueEmpty
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:175    .text.isQueueEmpty:00000024 $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:180    .text.isQueueFull:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:186    .text.isQueueFull:00000000 isQueueFull
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:239    .text.isQueueFull:0000002c $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:245    .text.queuePush:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:251    .text.queuePush:00000000 queuePush
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:351    .text.queuePush:0000005c $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:356    .text.queuePop:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:362    .text.queuePop:00000000 queuePop
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:456    .text.queuePop:00000058 $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:462    .text.queuePopItemByOpcode:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:468    .text.queuePopItemByOpcode:00000000 queuePopItemByOpcode
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:749    .text.queuePopItemByOpcode:00000108 $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:755    .text.freeQueue:00000000 $t
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:761    .text.freeQueue:00000000 freeQueue
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:802    .text.freeQueue:00000020 $d
-/var/folders/5r/xb8hq6p128d37tsfvtb6dnd00000gn/T//ccFK2jPO.s:808    .bss.binarySem01CmdQueueHandle:00000000 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:19     .text.createQueue:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:25     .text.createQueue:00000000 createQueue
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:116    .text.createQueue:00000040 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:811    .bss.binarySem01CmdQueueHandle:00000000 binarySem01CmdQueueHandle
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:121    .text.isQueueEmpty:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:127    .text.isQueueEmpty:00000000 isQueueEmpty
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:175    .text.isQueueEmpty:00000024 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:180    .text.isQueueFull:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:186    .text.isQueueFull:00000000 isQueueFull
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:239    .text.isQueueFull:0000002c $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:245    .text.queuePush:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:251    .text.queuePush:00000000 queuePush
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:351    .text.queuePush:0000005c $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:356    .text.queuePop:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:362    .text.queuePop:00000000 queuePop
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:456    .text.queuePop:00000058 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:462    .text.queuePopItemByOpcode:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:468    .text.queuePopItemByOpcode:00000000 queuePopItemByOpcode
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:749    .text.queuePopItemByOpcode:00000108 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:755    .text.freeQueue:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:761    .text.freeQueue:00000000 freeQueue
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:802    .text.freeQueue:00000020 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc6aB07u.s:808    .bss.binarySem01CmdQueueHandle:00000000 $d
 
 UNDEFINED SYMBOLS
 osSemaphoreNew

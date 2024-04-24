@@ -558,7 +558,8 @@ void StartLEDTask(void *argument)
 void StartMotorTask(void *argument)
 {
   extern volatile uint16_t commandMotor;
-  int speedAdjust = 0; // boolean that says if speed needs to be adjusted: speed accounted for 3rd and 4th digit
+  uint8_t motorOn = 0;
+  uint8_t lastSpeed = 0;
   //command 0xB-[1/2/3/4]
   /* 2nd Digit
   *   - 1: Turn motor on (enable 3rd and 4th digit)
@@ -581,27 +582,37 @@ void StartMotorTask(void *argument)
     // 2nd character (turn motor on, off, or adjust speed)
     switch (commandMotor & 0x0F00) { 
       case 0x0100: 
-        // turn motor on (will need to adjust speed)
-        target_rpm = (commandMotor & 0x00FF);
-        NVIC_EnableIRQ(TIM7_IRQn);          // Enable interrupt in NVIC
-        NVIC_SetPriority(TIM7_IRQn,2);
+        // turn motor on
+        motorOn = 1;
+        if ((commandMotor & 0x00FF) != 0) {
+          target_rpm = (commandMotor & 0x00FF);
+          lastSpeed = target_rpm;
+        }
+        else {
+          target_rpm = lastSpeed;
+        }
         break;
       case 0x0200:
         // turn motor off
+        motorOn = 0;
         target_rpm = 0;
-        //NVIC_DisableIRQ(TIM7_IRQn);          // Enable interrupt in NVIC
         break;
       case 0x0300:
         // change motor speed 
-        target_rpm = (commandMotor & 0x00FF);
+        if (motorOn) {
+          target_rpm = (commandMotor & 0x00FF);
+        }
+        lastSpeed = commandMotor & 0x00FF;
         break;
       default:
         break;
     }
 
     commandMotor = 0;
-    speedAdjust = 0;
     
+    NVIC_EnableIRQ(TIM7_IRQn);          // Enable interrupt in NVIC
+    NVIC_SetPriority(TIM7_IRQn,2);
+
     osSemaphoreAcquire(workerStatusMutex, osWaitForever);
     motorWorkerBusy = 0;
     osSemaphoreRelease(workerStatusMutex);

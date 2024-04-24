@@ -14,17 +14,17 @@ extern volatile int16_t target_rpm;
 volatile int16_t motor_speed = 0;   	// Measured motor speed
 volatile int8_t adc_value = 0;      	// ADC measured motor current
 volatile int16_t error = 0;         	// Speed error signal
-volatile uint8_t Kp = 1;            	// Proportional gain
-volatile uint8_t Ki = 1;            	// Integral gain
-//volatile uint16_t speedHistory[HIST_LEN];   //Short history of speed measurements
+volatile uint8_t Kp = 5;            	// Proportional gain
+volatile uint8_t Ki = 5;            	// Integral gain
+volatile uint16_t speedHistory[HIST_LEN];   //Short history of speed measurements
 
 // Sets up the entire motor drive system
 void motor_init(void) {
     pwm_init();
     encoder_init();
     ADC_init();
-    //for (int i = 0; i < HIST_LEN; i++)
-    //    speedHistory[i] = 0;
+    for (int i = 0; i < HIST_LEN; i++)
+        speedHistory[i] = i;
 }
 
 // Sets up the PWM and direction signals to drive the H-Bridge
@@ -101,8 +101,8 @@ void encoder_init(void) {
     RCC->APB1ENR |= RCC_APB1ENR_TIM7EN;
     
     // Select PSC and ARR values that give an appropriate interrupt rate
-    TIM7->PSC = 88;
-    TIM7->ARR = 30000;
+    TIM7->PSC = 23999;
+    TIM7->ARR = 75;
     
     TIM7->DIER |= TIM_DIER_UIE;             // Enable update event interrupt
     TIM7->CR1 |= TIM_CR1_CEN;               // Enable Timer
@@ -120,20 +120,24 @@ void TIM7_IRQHandler(void) {
     PI_update();
 
     //Track history of speed measurements
-    /*for (int i = HIST_LEN-1; i > 0; i--) {
+    for (int i = HIST_LEN-1; i > 0; i--) {
         speedHistory[i] = speedHistory[i-1];
     }
     speedHistory[0] = motor_speed;
 
     //If speed is steady, disable interrupt
     for (int i = 1; i < HIST_LEN; i++) {
-        if (speedHistory[i-1] != speedHistory[i])
+        if (speedHistory[i-1] != speedHistory[i] || speedHistory[i]/2 < target_rpm - 2 || speedHistory[i]/2 > target_rpm + 2)
             break;
         else
-            if (i == HIST_LEN-1)
+            if (i == HIST_LEN-1) {
                 NVIC_DisableIRQ(TIM7_IRQn);          // Disable interrupt in NVIC
+                //transmitCharArray("Motor interrupt disabled\n");
+                for (int i = 0; i < HIST_LEN; i++)
+                    speedHistory[i] = i;
+            }
     }
-*/
+
     TIM7->SR &= ~TIM_SR_UIF;        // Acknowledge the interrupt
 }
 
@@ -160,7 +164,7 @@ void ADC_init(void) {
 
 void PI_update(void) {
     // Run PI control loop
-    error =  target_rpm - motor_speed/4;
+    error =  target_rpm - motor_speed/2;
 
     error_integral = error_integral + (Ki * error);
 

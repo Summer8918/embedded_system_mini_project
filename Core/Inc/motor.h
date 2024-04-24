@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "stm32f0xx.h"
 
-//#define HIST_LEN 5  //Number of previous speeds to check for steady state
+#define HIST_LEN 10  //Number of previous speeds to check for steady state
 
 
 /* -------------------------------------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ extern volatile int8_t adc_value;      // ADC measured motor current
 extern volatile int16_t error;         // Speed error signal
 extern volatile uint8_t Kp;            // Proportional gain
 extern volatile uint8_t Ki;            // Integral gain
-//extern volatile uint16_t speedHistory[HIST_LEN];    //Short history of speed measurements
+extern volatile uint16_t speedHistory[HIST_LEN];    //Short history of speed measurements
 
 
 /* -------------------------------------------------------------------------------------------------------------
