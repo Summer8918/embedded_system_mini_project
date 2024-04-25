@@ -3,8 +3,6 @@
 osSemaphoreId_t countSem01;
 osSemaphoreId_t ledRouterSem01;
 osSemaphoreId_t motorRouterSem01;
-// osSemaphoreId_t ledStatusMutex;
-// osSemaphoreId_t motorStatusMutex;
 osSemaphoreId_t workerStatusMutex;
 volatile uint8_t ledWorkerBusy = 0;
 volatile uint8_t motorWorkerBusy = 0;
@@ -33,14 +31,5 @@ int8_t syncInit(void) {
         //transmitCharArray("Fail to create workerStatusMutex\n");
         return -1;
     }
-
-    // The motorStatusMutex is NULL.
-    // Reason: out of heap resources
-    // worker threads busy status use same mutex
-    // motorStatusMutex = osSemaphoreNew(1, 1, NULL);
-    // if (motorStatusMutex == NULL) {
-    //     transmitCharArray("Fail to create motorStatusMutex\n");
-    //     return -1;
-    // }
     return 0;
 }

@@ -7,3 +7,10 @@ Then run command:
 
 The stdout is stored in file res.txt
 Currently, led and motor thread will be woken up 55 times, it works as expected.
+
+command_queue_test.cpp test all the functions of command_queue,
+To test command_queue_test.cpp, run the following command in PC to compile:
+g++ command_queue_test.cpp -std=c++20 -o commandQueueTest
+Then run command:
+./commandQueueTest > res.txt
+The stdout is stored in file res.txt

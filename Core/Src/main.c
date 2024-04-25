@@ -27,10 +27,6 @@
 volatile uint16_t commandLED = 0;
 volatile uint16_t commandMotor = 0;
 
-// Semaphores
-// osSemaphoreId_t binarySem03LEDWorkerHandle;
-// osSemaphoreId_t binarySem04MotorWorkerHandle;
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -296,9 +292,8 @@ void StartRouterTask(void *argument)
   extern volatile uint16_t commandMotor;
   //Command popped from queue
   uint16_t commandIn = 0;
+
   /* Infinite loop */
-  //uint16_t item = queuePop(cmdQueue);
-  
   for(;;)
   {
     // wait until countSem01 >= 1
@@ -307,9 +302,6 @@ void StartRouterTask(void *argument)
 
     //If queue is not empty
     if (!isQueueEmpty(cmdQueue)) {
-      //Placeholder for task priorities
-      //osDelay(1);
-
       // Acquire the mutex for led status
       osSemaphoreAcquire(workerStatusMutex, osWaitForever);
 
@@ -343,30 +335,11 @@ void StartRouterTask(void *argument)
           transmitCharArray("Wake up motor worker\n");
           //Wake up motor worker thread
           osSemaphoreRelease(motorRouterSem01);
-        } else {
-          //transmitCharArray("Motor thread not busy but no motor command in queue\n");
         }
       } else {
         osSemaphoreRelease(workerStatusMutex);
       }
-
-      // //Retrieve command from queue
-      // commandIn = queuePop(cmdQueue);
-      // //Determine which worker task corresponds to command
-      //   switch (commandIn & 0xF000) {
-      //   //LED command
-      //   case 0xA000:
-      //     commandLED = commandIn;
-      //     break;
-      //   //Motor command
-      //   case 0xB000:
-      //     commandMotor = commandIn;
-      //     break;
-      //   default:
-      //   break;
-      // }
     }
-    //transmitCharArray("Router: go to sleep\n");
   }
 }
   /* USER CODE END 5 */
@@ -413,13 +386,10 @@ void initLEDs(void) {
 /* USER CODE END Header_StartLEDTask */
 void StartLEDTask(void *argument)
 {
-  //binarySem03LEDWorkerHandle = osSemaphoreNew(1, 1, NULL);
-
   extern volatile uint16_t commandLED;
   volatile uint8_t LEDColor = 0, LEDAction = 0, LEDSpeed = 0;
   volatile uint32_t colorMask[5] = {GPIO_ODR_6, GPIO_ODR_9, GPIO_ODR_7, GPIO_ODR_8, GPIO_ODR_6 | GPIO_ODR_7 | GPIO_ODR_8 | GPIO_ODR_9};
   volatile uint8_t blink[4] = {0,0,0,0};
-  // volatile uint8_t blinkTime[4] = {0,0,0,0};
   uint8_t blinkInterval = 0;
   volatile uint32_t startTime[4] = {0,0,0,0};
   volatile uint32_t currentTime = 0;
@@ -427,8 +397,6 @@ void StartLEDTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    //osSemaphoreAcquire(binarySem03LEDWorkerHandle, osWaitForever);
-
     // wait to be woken up by router
     osSemaphoreAcquire(ledRouterSem01, osWaitForever);
     transmitCharArray("LED worker Got the signal\n");
@@ -451,74 +419,31 @@ void StartLEDTask(void *argument)
       //On
       case 1:
         GPIOC->ODR |= colorMask[LEDColor-1];
-        // if (LEDColor == 5) {
-        //   blink[0] = 0;
-        //   blink[1] = 0;
-        //   blink[2] = 0;
-        //   blink[3] = 0;
-        // }
-        // else
-        //   blink[LEDColor-1] = 0;
         break;
       //Off
       case 2:
         GPIOC->ODR &= ~colorMask[LEDColor-1];
-        // if (LEDColor == 5) {
-        //   blink[0] = 0;
-        //   blink[1] = 0;
-        //   blink[2] = 0;
-        //   blink[3] = 0;
-        // }
-        // else
-        //   blink[LEDColor-1] = 0;
         break;
       //Toggle
       case 3:
         GPIOC->ODR ^= colorMask[LEDColor-1];
-        // if (LEDColor == 5) {
-        //   blink[0] = 0;
-        //   blink[1] = 0;
-        //   blink[2] = 0;
-        //   blink[3] = 0;
-        // }
-        // else
-        //   blink[LEDColor-1] = 0;
         break;
       //Blink
       case 4:
         blinkFlag = 1;
         if (LEDColor == 5) {
           blink[0] = 1;
-          // blinkTime[0] = commandLED & 0xF;
           blink[1] = 1;
-          // blinkTime[1] = commandLED & 0xF;
           blink[2] = 1;
-          // blinkTime[2] = commandLED & 0xF;
           blink[3] = 1;
-          // blinkTime[3] = commandLED & 0xF;
-          
         }
         else {
           blink[LEDColor-1] = 1;
         }
-        // blinkTime[LEDColor-1] = commandLED & 0xF;
         blinkInterval = commandLED & 0xF;
         break;
       default:
     }
-
-    //Blinking
-    // currentTime = xTaskGetTickCount();
-    // for (int i = 0; i < 4; i++) {
-    //   if (blink[i]) {
-    //     if (currentTime - startTime[i] > blinkTime[i]*100) {
-    //       GPIOC->ODR ^= colorMask[i];
-    //       startTime[i] = currentTime;
-    //     }
-    //   }
-    //   else
-    //     startTime[i] = currentTime;
-    // }
 
     if (blinkFlag == 1) {
       // The LED bliks for 10s
@@ -541,10 +466,7 @@ void StartLEDTask(void *argument)
     osSemaphoreAcquire(workerStatusMutex, osWaitForever);
     ledWorkerBusy = 0;
     osSemaphoreRelease(workerStatusMutex);
-
     osSemaphoreRelease(countSem01);
-
-    //osSemaphoreRelease(binarySem03LEDWorkerHandle);
   }
 }
 
