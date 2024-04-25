@@ -20,3 +20,9 @@ We built a simple command-line interface for some basic tasks using an RTOS to i
 
 
 ![screenshot](./pictures/systemcommands.png)
+
+## Threads Synchronization
+The synchronization between different threads are shown in the following picture.
+![screenshot](./pictures/thread_synchronization.png)
+* We use a semaphore counter to wake up Router thread. The UART thread releases the semaphore counter when it adds a new command to the command queue. When the LED thread completes its task, before it goes to sleep, it releases the semaphore counter; meanwhile when the Motor thread completes its task, before it goes to sleep, it releases the semaphore counter. The release operation will increase the semaphore counter by one. The router thread tries to acquire semaphore ocunter, when the counter is greater than one, it will be woken up, when the counter is 0, it is in sleep.
+* We use a binary semaphore for Router to wake up the LED thread and Motor thread separately. The LED and Motor thread will go to sleep by acquiring the binary semaphore, and Router thread releases the specific semaphore when it gets a related command for the thread to handle.
