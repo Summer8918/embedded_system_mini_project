@@ -1,4 +1,4 @@
-# embedded_system_mini_project
+# RTOSCommander: Controls the RTOS through a command-line interface
 Group members: Jie Yang, Sanjay Gounder, Adam Blakeslee
 
 ## Project Overview
