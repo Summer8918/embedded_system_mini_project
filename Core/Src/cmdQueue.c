@@ -66,9 +66,6 @@ uint16_t queuePop(Cmd_Queue *q) {
     return item;
 }
 
-// When the return value is 0xffff, fail to find the item
-// that contain the target opcode.
-//
 uint16_t queuePopItemByOpcode(Cmd_Queue *q, uint8_t targetOpcode) {
     osSemaphoreAcquire(binarySem01CmdQueueHandle, osWaitForever);
     uint16_t idx = q->front;

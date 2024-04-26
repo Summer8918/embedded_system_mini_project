@@ -7,8 +7,6 @@ osSemaphoreId_t workerStatusMutex;
 volatile uint8_t ledWorkerBusy = 0;
 volatile uint8_t motorWorkerBusy = 0;
 
-// Return -1, osSemaphoreNew == NULL
-// Return 0, init success
 int8_t syncInit(void) {
     int8_t status = 0;
     countSem01 = osSemaphoreNew(3, 0, NULL);
