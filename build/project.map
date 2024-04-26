@@ -3255,30 +3255,30 @@ LOAD /Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/bin/../lib/gcc/arm-no
  .debug_ranges  0x000012e0       0x78 build/port.o
  .debug_ranges  0x00001358       0x20 build/startup_stm32f072xb.o
 
-.debug_line     0x00000000    0x134cb
- .debug_line    0x00000000      0xe2c build/main.o
- .debug_line    0x00000e2c      0x468 build/cmdQueue.o
- .debug_line    0x00001294      0xa13 build/uartParser.o
- .debug_line    0x00001ca7      0x1ca build/sync.o
- .debug_line    0x00001e71      0x1eb build/stm32f0xx_it.o
- .debug_line    0x0000205c      0x51c build/stm32f0xx_hal_msp.o
- .debug_line    0x00002578      0x2f9 build/stm32f0xx_hal_timebase_tim.o
- .debug_line    0x00002871      0xd27 build/stm32f0xx_hal_rcc.o
- .debug_line    0x00003598      0x921 build/stm32f0xx_hal_rcc_ex.o
- .debug_line    0x00003eb9      0x513 build/stm32f0xx_hal.o
- .debug_line    0x000043cc      0x6ad build/stm32f0xx_hal_gpio.o
- .debug_line    0x00004a79      0x523 build/stm32f0xx_hal_cortex.o
- .debug_line    0x00004f9c     0x4952 build/stm32f0xx_hal_tim.o
- .debug_line    0x000098ee     0x1ab3 build/stm32f0xx_hal_tim_ex.o
- .debug_line    0x0000b3a1      0x235 build/system_stm32f0xx.o
- .debug_line    0x0000b5d6      0x35e build/list.o
- .debug_line    0x0000b934     0x193f build/queue.o
- .debug_line    0x0000d273     0x22d2 build/tasks.o
- .debug_line    0x0000f545      0xb85 build/timers.o
- .debug_line    0x000100ca     0x29a1 build/cmsis_os2.o
- .debug_line    0x00012a6b      0x5e5 build/heap_4.o
- .debug_line    0x00013050      0x407 build/port.o
- .debug_line    0x00013457       0x74 build/startup_stm32f072xb.o
+.debug_line     0x00000000    0x134bd
+ .debug_line    0x00000000      0xe20 build/main.o
+ .debug_line    0x00000e20      0x468 build/cmdQueue.o
+ .debug_line    0x00001288      0xa13 build/uartParser.o
+ .debug_line    0x00001c9b      0x1c8 build/sync.o
+ .debug_line    0x00001e63      0x1eb build/stm32f0xx_it.o
+ .debug_line    0x0000204e      0x51c build/stm32f0xx_hal_msp.o
+ .debug_line    0x0000256a      0x2f9 build/stm32f0xx_hal_timebase_tim.o
+ .debug_line    0x00002863      0xd27 build/stm32f0xx_hal_rcc.o
+ .debug_line    0x0000358a      0x921 build/stm32f0xx_hal_rcc_ex.o
+ .debug_line    0x00003eab      0x513 build/stm32f0xx_hal.o
+ .debug_line    0x000043be      0x6ad build/stm32f0xx_hal_gpio.o
+ .debug_line    0x00004a6b      0x523 build/stm32f0xx_hal_cortex.o
+ .debug_line    0x00004f8e     0x4952 build/stm32f0xx_hal_tim.o
+ .debug_line    0x000098e0     0x1ab3 build/stm32f0xx_hal_tim_ex.o
+ .debug_line    0x0000b393      0x235 build/system_stm32f0xx.o
+ .debug_line    0x0000b5c8      0x35e build/list.o
+ .debug_line    0x0000b926     0x193f build/queue.o
+ .debug_line    0x0000d265     0x22d2 build/tasks.o
+ .debug_line    0x0000f537      0xb85 build/timers.o
+ .debug_line    0x000100bc     0x29a1 build/cmsis_os2.o
+ .debug_line    0x00012a5d      0x5e5 build/heap_4.o
+ .debug_line    0x00013042      0x407 build/port.o
+ .debug_line    0x00013449       0x74 build/startup_stm32f072xb.o
 
 .debug_str      0x00000000     0x6997
  .debug_str     0x00000000     0x6997 build/main.o

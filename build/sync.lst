@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s 			page 1
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -31,16 +31,14 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s 			page 1
    3:Core/Src/sync.c **** osSemaphoreId_t countSem01;
    4:Core/Src/sync.c **** osSemaphoreId_t ledRouterSem01;
    5:Core/Src/sync.c **** osSemaphoreId_t motorRouterSem01;
-   6:Core/Src/sync.c **** // osSemaphoreId_t ledStatusMutex;
-   7:Core/Src/sync.c **** // osSemaphoreId_t motorStatusMutex;
-   8:Core/Src/sync.c **** osSemaphoreId_t workerStatusMutex;
-   9:Core/Src/sync.c **** volatile uint8_t ledWorkerBusy = 0;
-  10:Core/Src/sync.c **** volatile uint8_t motorWorkerBusy = 0;
-  11:Core/Src/sync.c **** 
-  12:Core/Src/sync.c **** // Return -1, osSemaphoreNew == NULL
-  13:Core/Src/sync.c **** // Return 0, init success
-  14:Core/Src/sync.c **** int8_t syncInit(void) {
-  27              		.loc 1 14 23 view -0
+   6:Core/Src/sync.c **** osSemaphoreId_t workerStatusMutex;
+   7:Core/Src/sync.c **** volatile uint8_t ledWorkerBusy = 0;
+   8:Core/Src/sync.c **** volatile uint8_t motorWorkerBusy = 0;
+   9:Core/Src/sync.c **** 
+  10:Core/Src/sync.c **** // Return -1, osSemaphoreNew == NULL
+  11:Core/Src/sync.c **** // Return 0, init success
+  12:Core/Src/sync.c **** int8_t syncInit(void) {
+  27              		.loc 1 12 23 view -0
   28              		.cfi_startproc
   29              		@ args = 0, pretend = 0, frame = 0
   30              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -49,138 +47,126 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s 			page 1
   33              		.cfi_def_cfa_offset 8
   34              		.cfi_offset 4, -8
   35              		.cfi_offset 14, -4
-  15:Core/Src/sync.c ****     int8_t status = 0;
-  36              		.loc 1 15 5 view .LVU1
+  13:Core/Src/sync.c ****     int8_t status = 0;
+  36              		.loc 1 13 5 view .LVU1
   37              	.LVL0:
-  16:Core/Src/sync.c ****     countSem01 = osSemaphoreNew(3, 0, NULL);
-  38              		.loc 1 16 5 view .LVU2
-  39              		.loc 1 16 18 is_stmt 0 view .LVU3
+  14:Core/Src/sync.c ****     countSem01 = osSemaphoreNew(3, 0, NULL);
+  38              		.loc 1 14 5 view .LVU2
+  39              		.loc 1 14 18 is_stmt 0 view .LVU3
   40 0002 0022     		movs	r2, #0
   41 0004 0021     		movs	r1, #0
   42 0006 0320     		movs	r0, #3
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s 			page 2
-
-
   43 0008 FFF7FEFF 		bl	osSemaphoreNew
   44              	.LVL1:
-  45              		.loc 1 16 16 discriminator 1 view .LVU4
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s 			page 2
+
+
+  45              		.loc 1 14 16 discriminator 1 view .LVU4
   46 000c 164B     		ldr	r3, .L7
   47 000e 1860     		str	r0, [r3]
-  17:Core/Src/sync.c ****     if (countSem01 == NULL) {
-  48              		.loc 1 17 5 is_stmt 1 view .LVU5
-  49              		.loc 1 17 8 is_stmt 0 view .LVU6
+  15:Core/Src/sync.c ****     if (countSem01 == NULL) {
+  48              		.loc 1 15 5 is_stmt 1 view .LVU5
+  49              		.loc 1 15 8 is_stmt 0 view .LVU6
   50 0010 0028     		cmp	r0, #0
   51 0012 1CD0     		beq	.L3
-  18:Core/Src/sync.c ****         //transmitCharArray("Fail to create countSem01\n");
-  19:Core/Src/sync.c ****         return -1;
-  20:Core/Src/sync.c ****     }
-  21:Core/Src/sync.c ****     ledRouterSem01 = osSemaphoreNew(1, 0, NULL);
-  52              		.loc 1 21 5 is_stmt 1 view .LVU7
-  53              		.loc 1 21 22 is_stmt 0 view .LVU8
+  16:Core/Src/sync.c ****         //transmitCharArray("Fail to create countSem01\n");
+  17:Core/Src/sync.c ****         return -1;
+  18:Core/Src/sync.c ****     }
+  19:Core/Src/sync.c ****     ledRouterSem01 = osSemaphoreNew(1, 0, NULL);
+  52              		.loc 1 19 5 is_stmt 1 view .LVU7
+  53              		.loc 1 19 22 is_stmt 0 view .LVU8
   54 0014 0022     		movs	r2, #0
   55 0016 0021     		movs	r1, #0
   56 0018 0120     		movs	r0, #1
   57 001a FFF7FEFF 		bl	osSemaphoreNew
   58              	.LVL2:
-  59              		.loc 1 21 20 discriminator 1 view .LVU9
+  59              		.loc 1 19 20 discriminator 1 view .LVU9
   60 001e 134B     		ldr	r3, .L7+4
   61 0020 1860     		str	r0, [r3]
-  22:Core/Src/sync.c ****     if (ledRouterSem01 == NULL) {
-  62              		.loc 1 22 5 is_stmt 1 view .LVU10
-  63              		.loc 1 22 8 is_stmt 0 view .LVU11
+  20:Core/Src/sync.c ****     if (ledRouterSem01 == NULL) {
+  62              		.loc 1 20 5 is_stmt 1 view .LVU10
+  63              		.loc 1 20 8 is_stmt 0 view .LVU11
   64 0022 0028     		cmp	r0, #0
   65 0024 16D0     		beq	.L4
-  23:Core/Src/sync.c ****         //transmitCharArray("Fail to create ledRouterSem01\n");
-  24:Core/Src/sync.c ****         return -1;
-  25:Core/Src/sync.c ****     }
-  26:Core/Src/sync.c ****     motorRouterSem01 = osSemaphoreNew(1, 0, NULL);
-  66              		.loc 1 26 5 is_stmt 1 view .LVU12
-  67              		.loc 1 26 24 is_stmt 0 view .LVU13
+  21:Core/Src/sync.c ****         //transmitCharArray("Fail to create ledRouterSem01\n");
+  22:Core/Src/sync.c ****         return -1;
+  23:Core/Src/sync.c ****     }
+  24:Core/Src/sync.c ****     motorRouterSem01 = osSemaphoreNew(1, 0, NULL);
+  66              		.loc 1 24 5 is_stmt 1 view .LVU12
+  67              		.loc 1 24 24 is_stmt 0 view .LVU13
   68 0026 0022     		movs	r2, #0
   69 0028 0021     		movs	r1, #0
   70 002a 0120     		movs	r0, #1
   71 002c FFF7FEFF 		bl	osSemaphoreNew
   72              	.LVL3:
-  73              		.loc 1 26 22 discriminator 1 view .LVU14
+  73              		.loc 1 24 22 discriminator 1 view .LVU14
   74 0030 0F4B     		ldr	r3, .L7+8
   75 0032 1860     		str	r0, [r3]
-  27:Core/Src/sync.c ****     if (motorRouterSem01 == NULL) {
-  76              		.loc 1 27 5 is_stmt 1 view .LVU15
-  77              		.loc 1 27 8 is_stmt 0 view .LVU16
+  25:Core/Src/sync.c ****     if (motorRouterSem01 == NULL) {
+  76              		.loc 1 25 5 is_stmt 1 view .LVU15
+  77              		.loc 1 25 8 is_stmt 0 view .LVU16
   78 0034 0028     		cmp	r0, #0
   79 0036 10D0     		beq	.L5
-  28:Core/Src/sync.c ****         //transmitCharArray("Fail to create motorRouterSem01\n");
-  29:Core/Src/sync.c ****         return -1;
-  30:Core/Src/sync.c ****     }
-  31:Core/Src/sync.c ****     workerStatusMutex = osSemaphoreNew(1, 1, NULL);
-  80              		.loc 1 31 5 is_stmt 1 view .LVU17
-  81              		.loc 1 31 25 is_stmt 0 view .LVU18
+  26:Core/Src/sync.c ****         //transmitCharArray("Fail to create motorRouterSem01\n");
+  27:Core/Src/sync.c ****         return -1;
+  28:Core/Src/sync.c ****     }
+  29:Core/Src/sync.c ****     workerStatusMutex = osSemaphoreNew(1, 1, NULL);
+  80              		.loc 1 29 5 is_stmt 1 view .LVU17
+  81              		.loc 1 29 25 is_stmt 0 view .LVU18
   82 0038 0022     		movs	r2, #0
   83 003a 0121     		movs	r1, #1
   84 003c 0120     		movs	r0, #1
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s 			page 3
-
-
   85 003e FFF7FEFF 		bl	osSemaphoreNew
   86              	.LVL4:
-  87              		.loc 1 31 23 discriminator 1 view .LVU19
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s 			page 3
+
+
+  87              		.loc 1 29 23 discriminator 1 view .LVU19
   88 0042 0C4B     		ldr	r3, .L7+12
   89 0044 1860     		str	r0, [r3]
-  32:Core/Src/sync.c ****     if (workerStatusMutex == NULL) {
-  90              		.loc 1 32 5 is_stmt 1 view .LVU20
-  91              		.loc 1 32 8 is_stmt 0 view .LVU21
+  30:Core/Src/sync.c ****     if (workerStatusMutex == NULL) {
+  90              		.loc 1 30 5 is_stmt 1 view .LVU20
+  91              		.loc 1 30 8 is_stmt 0 view .LVU21
   92 0046 0028     		cmp	r0, #0
   93 0048 0AD0     		beq	.L6
-  33:Core/Src/sync.c ****         //transmitCharArray("Fail to create workerStatusMutex\n");
-  34:Core/Src/sync.c ****         return -1;
-  35:Core/Src/sync.c ****     }
-  36:Core/Src/sync.c **** 
-  37:Core/Src/sync.c ****     // The motorStatusMutex is NULL.
-  38:Core/Src/sync.c ****     // Reason: out of heap resources
-  39:Core/Src/sync.c ****     // worker threads busy status use same mutex
-  40:Core/Src/sync.c ****     // motorStatusMutex = osSemaphoreNew(1, 1, NULL);
-  41:Core/Src/sync.c ****     // if (motorStatusMutex == NULL) {
-  42:Core/Src/sync.c ****     //     transmitCharArray("Fail to create motorStatusMutex\n");
-  43:Core/Src/sync.c ****     //     return -1;
-  44:Core/Src/sync.c ****     // }
-  45:Core/Src/sync.c ****     return 0;
-  94              		.loc 1 45 12 view .LVU22
+  31:Core/Src/sync.c ****         //transmitCharArray("Fail to create workerStatusMutex\n");
+  32:Core/Src/sync.c ****         return -1;
+  33:Core/Src/sync.c ****     }
+  34:Core/Src/sync.c ****     return 0;
+  94              		.loc 1 34 12 view .LVU22
   95 004a 0020     		movs	r0, #0
   96              	.L2:
-  46:Core/Src/sync.c **** }...
-  97              		.loc 1 46 1 view .LVU23
+  35:Core/Src/sync.c **** }...
+  97              		.loc 1 35 1 view .LVU23
   98              		@ sp needed
   99 004c 10BD     		pop	{r4, pc}
  100              	.L3:
-  19:Core/Src/sync.c ****         return -1;
- 101              		.loc 1 19 16 view .LVU24
+  17:Core/Src/sync.c ****         return -1;
+ 101              		.loc 1 17 16 view .LVU24
  102 004e 0120     		movs	r0, #1
  103 0050 4042     		rsbs	r0, r0, #0
  104 0052 FBE7     		b	.L2
  105              	.L4:
-  24:Core/Src/sync.c ****         return -1;
- 106              		.loc 1 24 16 view .LVU25
+  22:Core/Src/sync.c ****         return -1;
+ 106              		.loc 1 22 16 view .LVU25
  107 0054 0120     		movs	r0, #1
  108 0056 4042     		rsbs	r0, r0, #0
  109 0058 F8E7     		b	.L2
  110              	.L5:
-  29:Core/Src/sync.c ****         return -1;
- 111              		.loc 1 29 16 view .LVU26
+  27:Core/Src/sync.c ****         return -1;
+ 111              		.loc 1 27 16 view .LVU26
  112 005a 0120     		movs	r0, #1
  113 005c 4042     		rsbs	r0, r0, #0
  114 005e F5E7     		b	.L2
  115              	.L6:
-  34:Core/Src/sync.c ****         return -1;
- 116              		.loc 1 34 16 view .LVU27
+  32:Core/Src/sync.c ****         return -1;
+ 116              		.loc 1 32 16 view .LVU27
  117 0060 0120     		movs	r0, #1
  118 0062 4042     		rsbs	r0, r0, #0
  119 0064 F2E7     		b	.L2
  120              	.L8:
  121 0066 C046     		.align	2
  122              	.L7:
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s 			page 4
-
-
  123 0068 00000000 		.word	countSem01
  124 006c 00000000 		.word	ledRouterSem01
  125 0070 00000000 		.word	motorRouterSem01
@@ -192,6 +178,9 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s 			page 1
  134              	motorWorkerBusy:
  135 0000 00       		.space	1
  136              		.global	ledWorkerBusy
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s 			page 4
+
+
  137              		.section	.bss.ledWorkerBusy,"aw",%nobits
  140              	ledWorkerBusy:
  141 0000 00       		.space	1
@@ -221,26 +210,26 @@ ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s 			page 1
  173              		.file 3 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
  174              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
  175              		.file 5 "Core/Inc/sync.h"
-ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s 			page 5
+ARM GAS  /var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 sync.c
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:19     .text.syncInit:00000000 $t
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:25     .text.syncInit:00000000 syncInit
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:123    .text.syncInit:00000068 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:168    .bss.countSem01:00000000 countSem01
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:161    .bss.ledRouterSem01:00000000 ledRouterSem01
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:154    .bss.motorRouterSem01:00000000 motorRouterSem01
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:147    .bss.workerStatusMutex:00000000 workerStatusMutex
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:134    .bss.motorWorkerBusy:00000000 motorWorkerBusy
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:135    .bss.motorWorkerBusy:00000000 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:140    .bss.ledWorkerBusy:00000000 ledWorkerBusy
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:141    .bss.ledWorkerBusy:00000000 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:144    .bss.workerStatusMutex:00000000 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:151    .bss.motorRouterSem01:00000000 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:158    .bss.ledRouterSem01:00000000 $d
-/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//ccVK958G.s:165    .bss.countSem01:00000000 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:19     .text.syncInit:00000000 $t
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:25     .text.syncInit:00000000 syncInit
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:123    .text.syncInit:00000068 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:168    .bss.countSem01:00000000 countSem01
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:161    .bss.ledRouterSem01:00000000 ledRouterSem01
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:154    .bss.motorRouterSem01:00000000 motorRouterSem01
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:147    .bss.workerStatusMutex:00000000 workerStatusMutex
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:134    .bss.motorWorkerBusy:00000000 motorWorkerBusy
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:135    .bss.motorWorkerBusy:00000000 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:140    .bss.ledWorkerBusy:00000000 ledWorkerBusy
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:141    .bss.ledWorkerBusy:00000000 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:144    .bss.workerStatusMutex:00000000 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:151    .bss.motorRouterSem01:00000000 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:158    .bss.ledRouterSem01:00000000 $d
+/var/folders/kr/g9ry2bg56g773797gdtkvvkw0000gn/T//cc4DupUr.s:165    .bss.countSem01:00000000 $d
 
 UNDEFINED SYMBOLS
 osSemaphoreNew

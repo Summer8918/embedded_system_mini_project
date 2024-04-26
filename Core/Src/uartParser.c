@@ -189,7 +189,6 @@ uint8_t convertSpeed(char *ascii) {
   */
 /* USER CODE END Header_StartLEDTask */
 void StartParseUartTask(void *argument) {
-  // TODO: add a timer to limit the max execution time
 
   while (1) {
     //transmitCharArray("Waiting to get sem02.\n");
@@ -229,14 +228,6 @@ void StartParseUartTask(void *argument) {
     //Reset commandOut before starting next command receive
     commandOut = 0;
   }
-/*
-  // test queue pop
-  uint16_t item = queuePop(cmdQueue);
-  transmitCharArray("Pop items from queue\n");
-  while (item != 0xffff) {
-    sendUint16BinToUart(item);
-    item = queuePop(cmdQueue);
-  }*/
 }
 
 //Initialize USART3 - PC4 TX, PC5 RX

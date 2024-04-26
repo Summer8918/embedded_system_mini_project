@@ -8,7 +8,6 @@
 
 volatile int16_t error_integral = 0;    // Integrated error signal
 volatile uint8_t duty_cycle = 0;    	// Output PWM duty cycle
-// volatile int16_t target_rpm = 0;    	// Desired speed target
 //Global variables to pass command to worker threads
 extern volatile int16_t target_rpm;
 volatile int16_t motor_speed = 0;   	// Measured motor speed
@@ -131,8 +130,7 @@ void TIM7_IRQHandler(void) {
             break;
         else
             if (i == HIST_LEN-1) {
-                NVIC_DisableIRQ(TIM7_IRQn);          // Disable interrupt in NVIC
-                //transmitCharArray("Motor interrupt disabled\n");
+                NVIC_DisableIRQ(TIM7_IRQn);    
                 for (int i = 0; i < HIST_LEN; i++)
                     speedHistory[i] = i;
             }
@@ -165,21 +163,15 @@ void ADC_init(void) {
 void PI_update(void) {
     // Run PI control loop
     error =  target_rpm - motor_speed/2;
-
     error_integral = error_integral + (Ki * error);
-
     if (error_integral < 0) {
         error_integral = 0;
     }
-
     else if (error_integral > 3200){
         error_integral = 3200;
     }
-    
     int16_t output = (Kp * error) + error_integral;
-    
-     output = output >> 5;
-
+    output = output >> 5;
     if (output < 0 || target_rpm == 0) output = 0;
     else if (output > 100) output = 100;
     pwm_setDutyCycle(output);

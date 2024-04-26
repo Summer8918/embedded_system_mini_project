@@ -91,10 +91,6 @@ const osThreadAttr_t motorTask_attributes = {
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_I2C2_Init(void);
-static void MX_SPI2_Init(void);
-static void MX_TSC_Init(void);
-static void MX_USB_PCD_Init(void);
 void StartRouterTask(void *argument);
 void StartMotorTask(void *argument);
 void StartLEDTask(void *argument);
@@ -405,6 +401,7 @@ void StartLEDTask(void *argument)
     ledWorkerBusy = 1;
     osSemaphoreRelease(workerStatusMutex);
 
+    //Extract LED color and action from command
     LEDColor = (commandLED & 0x0F00) >> 8;
     LEDAction = (commandLED & 0x00F0) >> 4;
 
@@ -482,13 +479,6 @@ void StartMotorTask(void *argument)
   extern volatile uint16_t commandMotor;
   uint8_t motorOn = 0;
   uint8_t lastSpeed = 0;
-  //command 0xB-[1/2/3/4]
-  /* 2nd Digit
-  *   - 1: Turn motor on (enable 3rd and 4th digit)
-  *   - 2: Turn motor off
-  *   - 3: Change motor speed (enable 3rd and 4th digit)
-  * 3rd & 4th Digit: RPM of speed --> Clamped at < 100, done in motor.c 
-  */
 
   /* Infinite loop */
   for(;;)
