@@ -34,7 +34,7 @@ The synchronization between different threads are shown in the following picture
 
 ## Instructions how to set it up
 1. Connect UART and motor driver to pins shown in the following table.
-
+![screenshot](./pictures/pintable.png)
 2. Open a serial terminal on your computer with the following parameters.
-
+![screenshot](./pictures/uarttable.png)
 3. Power on the discovery board. The system will transmit "UART Enabled" to the terminal to indicate the system is ready to receive commands.
