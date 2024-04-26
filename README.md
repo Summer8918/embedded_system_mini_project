@@ -18,11 +18,18 @@ We built a simple command-line interface for some basic tasks using an RTOS to i
 5. When the worker thread (currently LED and Motor thread) is idle, the router thread will fetch the command for that worker thread, assign the task to the worker thread, and then wake up the worker thread.
 6. When a worker thread finishes the task, it will go to sleep and wake up the router thread to schedule tasks.
 
-
+## User command format
+The User command format is shown in the following picture.
 ![screenshot](./pictures/systemcommands.png)
+
+* We support two types of commands: LED and Motor. Each command begins with the type of operation indicated as the first word.
+* For LED command,  the second word specifies the color (red, blue, green, orange, or all), while the third word denotes the operation (turn on, turn off, or blink). If 'blink' is selected, the fourth word sets the blink interval in increments of 100 milliseconds within the range of 0 to 15.
+* Motor commands offer three operations: turn on, turn off, and adjust speed. When turning on or adjusting speed, the user specifies the desired revolutions per minute (RPM), ranging from 0 to 100.
 
 ## Threads Synchronization
 The synchronization between different threads are shown in the following picture.
 ![screenshot](./pictures/thread_synchronization.png)
 * We employ a semaphore counter mechanism to facilitate communication between threads in our system. The UART thread releases the semaphore counter when it pushes a new command to the command queue. When the LED thread completes its task, before transitioning to a sleep state, it releases the semaphore counter; meanwhile when the Motor thread completes its task, before transitioning to a sleep state, it releases the semaphore counter. The release operation will increase the semaphore counter by one. The router thread tries to acquire semaphore ocunter, when the counter is greater than 0, it will be woken up and the semaphore counter subtract 1, when the counter is 0, it keeps sleep.
 * We use two separate binary semaphore for Router to wake up the LED thread and Motor thread respectively. When the Router thread receives a command relevant to a specific thread and the thread is idle, it releases the corresponding binary semaphore, thereby waking up the designated thread to process the received command.
+
+## Instructions how to set it up
