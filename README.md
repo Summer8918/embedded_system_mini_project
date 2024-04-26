@@ -33,3 +33,8 @@ The synchronization between different threads are shown in the following picture
 * We use two separate binary semaphore for Router to wake up the LED thread and Motor thread respectively. When the Router thread receives a command relevant to a specific thread and the thread is idle, it releases the corresponding binary semaphore, thereby waking up the designated thread to process the received command.
 
 ## Instructions how to set it up
+1. Connect UART and motor driver to pins shown in the following table.
+
+2. Open a serial terminal on your computer with the following parameters.
+
+3. Power on the discovery board. The system will transmit "UART Enabled" to the terminal to indicate the system is ready to receive commands.
